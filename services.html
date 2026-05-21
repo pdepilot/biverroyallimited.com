@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Biver Royalty Homes - Premium real estate services in Nigeria. Property sales, rentals, estate management, development, and consulting.">
+  <meta name="keywords" content="real estate services Nigeria, property management, estate development, property sales, property rental, Biver Royalty">
+  <meta name="author" content="Biver Royalty Homes Ltd">
+  <title>Our Services | Biver Royalty Homes - Premium Real Estate Services</title>
+  <link rel="shortcut icon" href="./assets/images/BIVER ROYALTY HOMES LTD LOGO_052927 (1).png" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* =============================================
+       RESET & VARIABLES
+    ============================================= */
+    :root {
+      --prussian-blue: #371801;
+      --gold: #D4AF37;
+      --gold-light: #FFD700;
+      --gold-dark: #B8860B;
+      --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #FFD700 50%, #B8860B 100%);
+      --gold-gradient-horizontal: linear-gradient(90deg, #D4AF37 0%, #FFD700 50%, #B8860B 100%);
+      --raisin-black-1: hsl(31, 94%, 12%);
+      --cultured-1: hsl(0, 0%, 93%);
+      --cultured-2: hsl(192, 24%, 96%);
+      --cadet: hsl(200, 15%, 43%);
+      --white: #ffffff;
+      --black: #000000;
+      --dark-jungle-green: hsl(188, 63%, 7%);
+      --shadow-1: 0 5px 20px 0 hsla(219, 56%, 21%, 0.1);
+      --shadow-2: 0 16px 32px hsla(188, 63%, 7%, 0.1);
+      --shadow-gold: 0 8px 32px rgba(212, 175, 55, 0.25);
+      --shadow-gold-lg: 0 20px 40px rgba(212, 175, 55, 0.15);
+      --ff-display: 'Cormorant Garamond', serif;
+      --ff-body: 'Outfit', sans-serif;
+      --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      --section-padding: 100px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: var(--ff-body); background: var(--white); overflow-x: hidden; color: var(--dark-jungle-green); }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--prussian-blue); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+    /* =============================================
+       TOP BAR & HEADER (from index)
+    ============================================= */
+    .topbar {
+      background: var(--prussian-blue);
+      padding-block: 10px;
+      position: relative;
+      z-index: 1001;
+      overflow: hidden;
+    }
+    .topbar::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px; background: var(--gold-gradient-horizontal); }
+    .topbar-inner { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; padding-inline: 20px; }
+    .topbar-left { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .topbar-link { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.75); font-size: 12px; font-weight: 500; text-decoration: none; transition: color 0.3s; }
+    .topbar-link ion-icon { color: var(--gold); font-size: 14px; }
+    .topbar-link:hover { color: var(--gold-light); }
+    .topbar-divider { width: 1px; height: 14px; background: rgba(255,255,255,0.15); }
+    .topbar-right { display: flex; align-items: center; gap: 16px; }
+    .topbar-socials { display: flex; align-items: center; gap: 6px; }
+    .topbar-social-link { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; border: 1px solid rgba(212,175,55,0.3); color: rgba(255,255,255,0.6); font-size: 13px; transition: all 0.3s; text-decoration: none; }
+    .topbar-social-link:hover { background: var(--gold); color: var(--prussian-blue); border-color: var(--gold); transform: translateY(-2px); }
+    .topbar-cta { background: var(--gold-gradient-horizontal); color: var(--prussian-blue); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 16px; border-radius: 2px; text-decoration: none; transition: all 0.3s; }
+    .topbar-cta:hover { background: var(--white); color: var(--prussian-blue); box-shadow: 0 4px 15px rgba(212,175,55,0.4); }
+
+    .header { position: sticky; top: 0; z-index: 1000; }
+    .header-bottom { background: rgba(255,255,255,0.98); backdrop-filter: blur(20px); padding-block: 18px; border-bottom: 1px solid rgba(212,175,55,0.15); transition: all 0.4s; box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
+    .header.scrolled .header-bottom { background: var(--prussian-blue); border-bottom-color: rgba(212,175,55,0.3); padding-block: 12px; box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+    .header.scrolled .navbar-link { color: rgba(255,255,255,0.75); }
+    .header.scrolled .navbar-link:hover { color: var(--gold-light); }
+    .header.scrolled .header-bottom-actions-btn ion-icon { color: rgba(255,255,255,0.8); }
+    .header-bottom .container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding-inline: 20px; gap: 20px; }
+    .logo img { height: 50px; width: auto; transition: transform 0.3s; }
+    .logo:hover img { transform: scale(1.03); }
+
+    .navbar { background: var(--white); position: fixed; top: 0; left: -320px; max-width: 310px; width: 100%; height: 100%; box-shadow: 5px 0 30px rgba(0,0,0,0.15); z-index: 1002; padding: 60px 30px; visibility: hidden; transition: transform 0.4s; }
+    .navbar.active { visibility: visible; transform: translateX(320px); }
+    .navbar-top { display: flex; justify-content: space-between; align-items: center; padding-bottom: 35px; border-bottom: 1px solid rgba(212,175,55,0.2); margin-bottom: 30px; }
+    .nav-close-btn { background: none; border: none; cursor: pointer; }
+    .nav-close-btn ion-icon { font-size: 22px; color: var(--prussian-blue); }
+    .navbar-link { color: var(--dark-jungle-green); font-size: 14px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; padding-block: 14px; border-bottom: 1px solid rgba(0,0,0,0.04); display: flex; align-items: center; justify-content: space-between; text-decoration: none; transition: all 0.3s; }
+    .navbar-link:hover { color: var(--gold-dark); padding-left: 6px; }
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.65); opacity: 0; pointer-events: none; transition: opacity 0.4s; z-index: 1001; backdrop-filter: blur(3px); }
+    .overlay.active { opacity: 1; pointer-events: all; }
+    .header-bottom-actions { display: flex; align-items: center; gap: 6px; }
+    .header-bottom-actions-btn { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; background: none; border: none; cursor: pointer; text-decoration: none; transition: all 0.3s; }
+    .header-bottom-actions-btn ion-icon { font-size: 20px; color: var(--prussian-blue); }
+    .header-bottom-actions-btn span { color: var(--gold-dark); font-size: 10px; font-weight: 600; display: none; }
+    .cart-count-badge { position: absolute; top: 2px; right: 2px; background: var(--gold); color: var(--prussian-blue); font-size: 10px; font-weight: 700; min-width: 16px; height: 16px; border-radius: 16px; display: flex; align-items: center; justify-content: center; padding: 0 4px; border: 2px solid white; }
+
+    @media (min-width: 1200px) {
+      .navbar, .navbar.active { all: unset; }
+      .navbar-bottom { display: flex; align-items: center; }
+      .navbar-list { display: flex; align-items: center; gap: 8px; margin: 0; padding: 0; }
+      .navbar-top, .overlay, .header-bottom-actions-btn:last-child { display: none; }
+      .navbar-link { color: var(--dark-jungle-green); font-size: 12px; letter-spacing: 1.5px; padding: 10px 14px; border-bottom: none; border-radius: 4px; position: relative; }
+      .navbar-link::after { content: ''; position: absolute; bottom: 4px; left: 14px; width: 0; height: 1.5px; background: var(--gold-gradient-horizontal); transition: width 0.3s; }
+      .navbar-link:hover::after { width: calc(100% - 28px); }
+      .header.scrolled .navbar-link { color: rgba(255,255,255,0.8); }
+    }
+    @media (max-width: 767px) {
+      .header-bottom-actions { background: var(--white); position: fixed; bottom: 0; left: 0; width: 100%; display: flex; justify-content: space-evenly; padding-block: 12px 10px; z-index: 100; border-top: 1px solid rgba(212,175,55,0.2); }
+      .header-bottom-actions-btn { flex-direction: column; height: auto; width: auto; padding: 4px 10px; border-radius: 8px; }
+      .header-bottom-actions-btn span { display: block; }
+      .footer { margin-bottom: 70px; }
+    }
+
+    /* =============================================
+       SERVICES PAGE STYLES - STUNNING DESIGN
+    ============================================= */
+    .container { max-width: 1200px; margin: 0 auto; padding-inline: 30px; }
+
+    /* Hero Section - Dramatic */
+    .services-hero {
+      position: relative;
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(125deg, var(--prussian-blue) 0%, #1f0d02 50%, #0a0500 100%);
+      overflow: hidden;
+    }
+    .services-hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -30%;
+      width: 80%;
+      height: 150%;
+      background: radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .services-hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 30%;
+      background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+      pointer-events: none;
+    }
+    .hero-shape {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 120px;
+      background: linear-gradient(135deg, transparent 25%, var(--white) 25%);
+      background-size: 40px 40px;
+      opacity: 0.03;
+    }
+    .services-hero .container { position: relative; z-index: 2; }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards;
+    }
+    .hero-badge .line { width: 50px; height: 2px; background: var(--gold-gradient-horizontal); }
+    .hero-badge span { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+    .services-hero h1 {
+      font-family: var(--ff-display);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 20px;
+      max-width: 800px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s ease 0.15s forwards;
+    }
+    .services-hero h1 .gold-accent {
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-style: italic;
+    }
+    .hero-description {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.7);
+      max-width: 600px;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s ease 0.3s forwards;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.45s forwards;
+    }
+    .hero-stat { text-align: left; }
+    .hero-stat .number { font-family: var(--ff-display); font-size: 2.2rem; font-weight: 700; color: var(--gold-light); line-height: 1; }
+    .hero-stat .label { font-size: 11px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; }
+
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    /* Services Grid - Premium Cards */
+    .services-showcase {
+      padding-block: var(--section-padding);
+      background: var(--white);
+      position: relative;
+    }
+    .section-eyebrow {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .section-eyebrow .line { width: 40px; height: 1px; background: var(--gold); }
+    .section-eyebrow span { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold-dark); font-weight: 600; }
+    .section-title {
+      text-align: center;
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      margin-bottom: 60px;
+      color: var(--prussian-blue);
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 35px;
+    }
+    .service-card-premium {
+      background: var(--white);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      box-shadow: var(--shadow-1);
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+    .service-card-premium::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--gold-gradient-horizontal);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s ease;
+      z-index: 2;
+    }
+    .service-card-premium:hover::before { transform: scaleX(1); }
+    .service-card-premium:hover {
+      transform: translateY(-12px);
+      box-shadow: var(--shadow-gold-lg);
+      border-color: rgba(212,175,55,0.2);
+    }
+    .service-icon-wrapper {
+      background: linear-gradient(135deg, rgba(212,175,55,0.05) 0%, rgba(212,175,55,0.12) 100%);
+      padding: 40px 0 20px;
+      text-align: center;
+      border-bottom: 1px solid rgba(212,175,55,0.1);
+    }
+    .service-icon {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto;
+      background: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      color: var(--gold-dark);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      transition: all 0.4s;
+      border: 1px solid rgba(212,175,55,0.2);
+    }
+    .service-card-premium:hover .service-icon {
+      background: var(--gold-gradient);
+      color: var(--prussian-blue);
+      transform: scale(1.05);
+      border-color: transparent;
+    }
+    .service-content {
+      padding: 30px 28px 40px;
+      text-align: center;
+    }
+    .service-title {
+      font-family: var(--ff-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--prussian-blue);
+      margin-bottom: 15px;
+    }
+    .service-description {
+      color: var(--cadet);
+      font-size: 14px;
+      line-height: 1.75;
+      margin-bottom: 25px;
+    }
+    .service-features {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 30px;
+    }
+    .service-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--cadet);
+      padding-block: 8px;
+      border-bottom: 1px dashed rgba(0,0,0,0.05);
+    }
+    .service-features li ion-icon { color: var(--gold); font-size: 16px; flex-shrink: 0; }
+    .service-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--gold-dark);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .service-link:hover { gap: 12px; color: var(--gold); }
+
+    /* Process Section */
+    .process-section {
+      background: var(--cultured-2);
+      padding-block: var(--section-padding);
+      position: relative;
+      overflow: hidden;
+    }
+    .process-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--gold-gradient-horizontal);
+    }
+    .process-steps {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      flex-wrap: wrap;
+      position: relative;
+    }
+    .process-step {
+      flex: 1;
+      min-width: 200px;
+      text-align: center;
+      position: relative;
+      background: var(--white);
+      padding: 40px 20px;
+      border-radius: 8px;
+      transition: all 0.4s;
+      box-shadow: var(--shadow-1);
+    }
+    .process-step:hover { transform: translateY(-8px); box-shadow: var(--shadow-gold-lg); }
+    .step-number {
+      width: 50px;
+      height: 50px;
+      background: var(--gold-gradient);
+      color: var(--prussian-blue);
+      font-family: var(--ff-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .step-title { font-family: var(--ff-display); font-size: 1.2rem; margin-bottom: 10px; color: var(--prussian-blue); }
+    .step-text { font-size: 13px; color: var(--cadet); line-height: 1.6; }
+
+    /* Why Choose Us - Premium */
+    .why-choose {
+      padding-block: var(--section-padding);
+      background: linear-gradient(135deg, var(--prussian-blue) 0%, #2a1202 100%);
+      color: white;
+      position: relative;
+    }
+    .why-choose .section-eyebrow span { color: var(--gold-light); }
+    .why-choose .section-title { color: white; }
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      margin-top: 40px;
+    }
+    .benefit-card {
+      text-align: center;
+      padding: 35px 20px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(212,175,55,0.12);
+      border-radius: 8px;
+      transition: all 0.4s;
+    }
+    .benefit-card:hover { transform: translateY(-8px); background: rgba(212,175,55,0.05); border-color: rgba(212,175,55,0.3); }
+    .benefit-icon { font-size: 44px; color: var(--gold); margin-bottom: 20px; }
+    .benefit-title { font-family: var(--ff-display); font-size: 1.2rem; margin-bottom: 12px; }
+    .benefit-text { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+
+    /* CTA Banner */
+    .cta-banner {
+      background: var(--gold-gradient);
+      padding: 70px 0;
+      text-align: center;
+    }
+    .cta-banner h2 { font-family: var(--ff-display); font-size: clamp(1.8rem, 3vw, 2.5rem); color: var(--prussian-blue); margin-bottom: 15px; }
+    .cta-banner p { color: rgba(55,24,1,0.8); margin-bottom: 30px; max-width: 600px; margin-inline: auto; }
+    .cta-button {
+      background: var(--prussian-blue);
+      color: var(--gold);
+      padding: 14px 38px;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .cta-button:hover { background: var(--white); color: var(--prussian-blue); transform: translateY(-3px); }
+
+    /* Footer */
+    .footer {
+      background: var(--prussian-blue);
+      color: var(--white);
+    }
+    .footer-top { padding-top: 80px; padding-bottom: 40px; border-bottom: 1px solid rgba(212,175,55,0.1); }
+    .footer-brand { margin-bottom: 60px; }
+    .section-text { font-size: 14px; line-height: 1.8; margin-bottom: 28px; opacity: 0.6; max-width: 42ch; }
+    .contact-list { display: grid; gap: 14px; margin-bottom: 28px; list-style: none; }
+    .contact-link { display: flex; align-items: flex-start; gap: 10px; text-decoration: none; }
+    .contact-link ion-icon { font-size: 16px; color: var(--gold); margin-top: 2px; }
+    .contact-link :is(address, span) { font-size: 14px; color: rgba(255,255,255,0.6); transition: var(--transition); }
+    .social-list { display: flex; align-items: center; gap: 12px; list-style: none; }
+    .social-link { width: 36px; height: 36px; border: 1px solid rgba(212,175,55,0.2); border-radius: 50%; display: grid; place-items: center; color: rgba(255,255,255,0.5); font-size: 16px; transition: all 0.3s; text-decoration: none; }
+    .social-link:hover { background: var(--gold); border-color: var(--gold); color: var(--prussian-blue); transform: translateY(-3px); }
+    .footer-list:not(:last-child) { margin-bottom: 50px; }
+    .footer-list-title { font-family: var(--ff-display); font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; position: relative; padding-bottom: 12px; }
+    .footer-list-title::after { content: ''; position: absolute; bottom: 0; left: 0; width: 30px; height: 2px; background: var(--gold-gradient-horizontal); }
+    .footer-link { font-size: 14px; padding-block: 8px; color: rgba(255,255,255,0.55); display: flex; align-items: center; gap: 8px; text-decoration: none; }
+    .footer-link::before { content: '›'; color: var(--gold); font-size: 1.2em; opacity: 0; transform: translateX(-6px); transition: all 0.3s; }
+    .footer-link:hover { color: var(--gold-light); padding-left: 4px; }
+    .footer-link:hover::before { opacity: 1; transform: translateX(0); }
+    .footer-bottom { background: rgba(0,0,0,0.3); padding-block: 22px; }
+    .copyright { font-size: 12px; text-align: center; color: rgba(255,255,255,0.4); }
+    .copyright a { display: inline-block; color: var(--gold); text-decoration: none; }
+    .footer-link-box { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+
+    /* Scroll to Top */
+    #scrollToTop {
+      position: fixed; bottom: 80px; right: 20px;
+      width: 46px; height: 46px;
+      background: var(--gold-gradient-horizontal);
+      color: var(--prussian-blue);
+      border: none; border-radius: 50%;
+      display: grid; place-items: center;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 999;
+      box-shadow: 0 6px 24px rgba(212,175,55,0.35);
+      opacity: 0; pointer-events: none;
+      transform: translateY(20px) scale(0.8);
+      transition: all 0.4s;
+    }
+    #scrollToTop.visible { opacity: 1; pointer-events: all; transform: translateY(0) scale(1); }
+    #scrollToTop:hover { transform: translateY(-4px) scale(1.08); }
+
+    /* Reveal Animations */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s, transform 0.8s; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left { transform: translateX(-40px); }
+    .reveal-left.visible { transform: translateX(0); }
+    .reveal-right { transform: translateX(40px); }
+    .reveal-right.visible { transform: translateX(0); }
+
+    @media (max-width: 992px) {
+      .service-grid { grid-template-columns: repeat(2, 1fr); }
+      .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+      .process-steps { flex-direction: column; }
+    }
+    @media (max-width: 768px) {
+      .service-grid { grid-template-columns: 1fr; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .container { padding-inline: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <a href="mailto:biverroyaltyhomes01@gmail.com" class="topbar-link"><ion-icon name="mail-outline"></ion-icon><span>biverroyaltyhomes01@gmail.com</span></a>
+        <div class="topbar-divider"></div>
+        <a href="#" class="topbar-link"><ion-icon name="location-outline"></ion-icon><address>No. 31 Wetheral Road, Angelina Plaza, Owerri</address></a>
+        <div class="topbar-divider"></div>
+        <a href="tel:+2349033137432" class="topbar-link"><ion-icon name="call-outline"></ion-icon><span>+234 903 313 7432</span></a>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-socials">
+          <a href="https://www.facebook.com/share/1B8mwpRi5L/" class="topbar-social-link" target="_blank"><ion-icon name="logo-facebook"></ion-icon></a>
+          <a href="https://www.instagram.com/biverroyaltyhomes.ng" class="topbar-social-link" target="_blank"><ion-icon name="logo-instagram"></ion-icon></a>
+          <a href="https://www.tiktok.com/@biverroyaltyhomesltd" class="topbar-social-link" target="_blank"><ion-icon name="logo-youtube"></ion-icon></a>
+        </div>
+        <a href="property.html" class="topbar-cta">List Property</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="overlay" data-overlay></div>
+    <div class="header-bottom">
+      <div class="container">
+        <a href="index.html" class="logo"><img src="./assets/images/biver-logo.png" alt="Biver Royalty Homes" height="50"></a>
+        <nav class="navbar" data-navbar>
+          <div class="navbar-top">
+            <a href="index.html" class="logo"><img src="./assets/images/biver-logo.png" alt="Logo" width="150"></a>
+            <button class="nav-close-btn" data-nav-close-btn><ion-icon name="close-outline"></ion-icon></button>
+          </div>
+          <div class="navbar-bottom">
+            <ul class="navbar-list">
+              <li><a href="index.html" class="navbar-link">Home</a></li>
+              <li><a href="about.html" class="navbar-link">About</a></li>
+              <li><a href="service.html" class="navbar-link">Services</a></li>
+              <li><a href="property.html" class="navbar-link">Properties</a></li>
+              <li><a href="https://blog.biverroyaltyhomesltd.com/" class="navbar-link" target="_blank">Blog</a></li>
+              <li><a href="team.html" class="navbar-link">Team</a></li>
+              <li><a href="contact.html" class="navbar-link">Contact</a></li>
+              <li><a href="login.html" class="navbar-link">Login</a></li>
+            </ul>
+          </div>
+        </nav>
+        <div class="header-bottom-actions">
+          <button class="header-bottom-actions-btn"><ion-icon name="search-outline"></ion-icon><span>Search</span></button>
+          <a href="userDashboard.html" class="header-bottom-actions-btn"><ion-icon name="person-outline"></ion-icon><span>Profile</span></a>
+          <a href="favorites.html" class="header-bottom-actions-btn"><ion-icon name="heart-outline"></ion-icon><span>Saved</span></a>
+          <a href="addCart.html" class="header-bottom-actions-btn" style="position:relative;"><ion-icon name="cart-outline"></ion-icon><span>Cart</span><div class="cart-count-badge" id="headerCartCount" style="display:none;">0</div></a>
+          <button class="header-bottom-actions-btn" data-nav-open-btn><ion-icon name="menu-outline"></ion-icon><span>Menu</span></button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="services-hero">
+      <div class="hero-shape"></div>
+      <div class="container">
+        <div class="hero-badge"><div class="line"></div><span>Premium Services</span></div>
+        <h1>Comprehensive <span class="gold-accent">Real Estate</span> Solutions</h1>
+        <p class="hero-description">From property acquisition to estate management, we deliver excellence at every step. Your dream property journey starts here.</p>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="number">500+</div><div class="label">Properties Sold</div></div>
+          <div class="hero-stat"><div class="number">1,200+</div><div class="label">Happy Clients</div></div>
+          <div class="hero-stat"><div class="number">98%</div><div class="label">Satisfaction Rate</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section class="services-showcase">
+      <div class="container">
+        <div class="section-eyebrow reveal"><div class="line"></div><span>What We Offer</span><div class="line"></div></div>
+        <h2 class="section-title reveal reveal-delay-1">Tailored Services for Every Need</h2>
+        <div class="service-grid">
+          <!-- Service 1 -->
+          <div class="service-card-premium reveal reveal-left">
+            <div class="service-icon-wrapper"><div class="service-icon"><ion-icon name="home-outline"></ion-icon></div></div>
+            <div class="service-content">
+              <h3 class="service-title">Property Sales</h3>
+              <p class="service-description">Find your perfect home or investment property with our expert guidance and extensive network.</p>
+              <ul class="service-features">
+                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Verified Listings</li>
+                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Market Valuation</li>
+                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Legal Documentation</li>
+              </ul>
+              <a href="property.html" class="service-link">Explore Properties <ion-icon name="arrow-forward-outline"></ion-icon></a>
+            </div>
+          </div>
+          <!-- Service 2 -->
+          <div class="service-card-premium reveal reveal-up">
+            <div class="service-icon-wrapper"><div class="service-icon"><ion-icon name="key-outline"></ion-icon></div></div>
+            <div class="service-content">
+              <h3 class="service-title">Property Rentals</h3>
+              <p class="service-description">Flexible rental solutions for residential and commercial spaces with transparent terms.</p>
+              <ul class="service-features">
+                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Wide Selection</li>
+                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Lease Negotiation</li>
+                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Property Inspection</li>
+              </ul>
+              <a href="property.html" class="service-link">Find Rentals <ion-icon name="arrow-forward-outline"></ion-icon></a>
+            </div>
+          </div>
+          <!-- Service 3 -->
+          <div class="service-card-premium reveal reveal-right">
+            <div class="service-icon-wrapper"><div class="service-icon"><ion-icon name="construct-outline"></ion-icon></div></div>
+            <div class="service-content">
+              <h3 class="service-title">Estate Management</h3>
+              <p class="service-description">Professional management services to maintain and enhance your property's value.</p>
+              <ul class="service-features">
+                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Tenant Management</li>
+                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Maintenance Services</li>
+                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Rent Collection</li>
+              </ul>
+              <a href="contact.html" class="service-link">Learn More <ion-icon name="arrow-forward-outline"></ion-icon></a>
+            </div>
+          </div>
+          <!-- Service 4 -->
+          <div class="service-card-premium reveal reveal-left reveal-delay-1">
+            <div class="service-icon-wrapper"><div class="service-icon"><ion-icon name="business-outline"></ion-icon></div></div>
+            <div class="service-content">
+              <h3 class="service-title">Property Development</h3>
+              <p class="service-description">End-to-end development services from land acquisition to project completion.</p>
+              <ul class="service-features">
+                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Land Acquisition</li>
+                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Project Management</li>
+                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Quality Construction</li>
+              </ul>
+              <a href="contact.html" class="service-link">Start a Project <ion-icon name="arrow-forward-outline"></ion-icon></a>
+            </div>
+          </div>
+          <!-- Service 5 -->
+          <div class="service-card-premium reveal reveal-up reveal-delay-1">
+            <div class="service-icon-wrapper"><div class="service-icon"><ion-icon name="document-text-outline"></ion-icon></div></div>
+            <div class="service-content">
+              <h3 class="service-title">Legal & Documentation</h3>
+              <p class="service-description">Complete legal support for all real estate transactions with certified professionals.</p>
+              <ul class="service-features">
+                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Title Verification</li>
+                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Contract Drafting</li>
+                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Due Diligence</li>
+              </ul>
+              <a href="contact.html" class="service-link">Get Consultation <ion-icon name="arrow-forward-outline"></ion-icon></a>
+            </div>
+          </div>
+          <!-- Service 6 -->
+          <div class="service-card-premium reveal reveal-right reveal-delay-1">
+            <div class="service-icon-wrapper"><div class="service-icon"><ion-icon name="map-outline"></ion-icon></div></div>
+            <div class="service-content">
+              <h3 class="service-title">Survey & Land Services</h3>
+              <p class="service-description">Professional survey plans and land documentation for secure property ownership.</p>
+              <ul class="service-features">
+                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Survey Plans</li>
+                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Land Verification</li>
+                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Site Planning</li>
+              </ul>
+              <a href="contact.html" class="service-link">Request Survey <ion-icon name="arrow-forward-outline"></ion-icon></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Process -->
+    <section class="process-section">
+      <div class="container">
+        <div class="section-eyebrow reveal"><div class="line"></div><span>Simple Process</span><div class="line"></div></div>
+        <h2 class="section-title reveal reveal-delay-1">How We Deliver Excellence</h2>
+        <div class="process-steps">
+          <div class="process-step reveal"><div class="step-number">01</div><h3 class="step-title">Consultation</h3><p class="step-text">Understanding your needs, goals, and budget to create a personalized strategy.</p></div>
+          <div class="process-step reveal reveal-delay-1"><div class="step-number">02</div><h3 class="step-title">Property Search</h3><p class="step-text">Curated selection of properties matching your exact requirements.</p></div>
+          <div class="process-step reveal reveal-delay-2"><div class="step-number">03</div><h3 class="step-title">Verification</h3><p class="step-text">Thorough due diligence, legal checks, and property inspection.</p></div>
+          <div class="process-step reveal reveal-delay-3"><div class="step-number">04</div><h3 class="step-title">Closing</h3><p class="step-text">Seamless transaction with full documentation and support.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="why-choose">
+      <div class="container">
+        <div class="section-eyebrow reveal"><div class="line"></div><span>Why Choose Us</span><div class="line"></div></div>
+        <h2 class="section-title reveal reveal-delay-1">The Biver Royalty Advantage</h2>
+        <div class="benefits-grid">
+          <div class="benefit-card reveal"><div class="benefit-icon"><ion-icon name="shield-checkmark-outline"></ion-icon></div><h3 class="benefit-title">100% Integrity</h3><p class="benefit-text">Built on a foundation of transparency and honest dealings.</p></div>
+          <div class="benefit-card reveal reveal-delay-1"><div class="benefit-icon"><ion-icon name="speedometer-outline"></ion-icon></div><h3 class="benefit-title">Fast & Efficient</h3><p class="benefit-text">Streamlined processes that save you time and stress.</p></div>
+          <div class="benefit-card reveal reveal-delay-2"><div class="benefit-icon"><ion-icon name="people-outline"></ion-icon></div><h3 class="benefit-title">Expert Team</h3><p class="benefit-text">Seasoned professionals with deep local market knowledge.</p></div>
+          <div class="benefit-card reveal reveal-delay-3"><div class="benefit-icon"><ion-icon name="headset-outline"></ion-icon></div><h3 class="benefit-title">24/7 Support</h3><p class="benefit-text">Always available to answer questions and provide guidance.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="cta-banner">
+      <div class="container">
+        <h2 class="reveal">Ready to Start Your Property Journey?</h2>
+        <p class="reveal reveal-delay-1">Let's turn your real estate dreams into reality. Contact our expert team today.</p>
+        <a href="contact.html" class="cta-button reveal reveal-delay-2"><ion-icon name="chatbubble-outline"></ion-icon>Schedule a Consultation</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-brand">
+          <a href="index.html" class="logo"><img src="./assets/images/biver-logo.png" alt="Biver Royalty Homes" width="150"></a>
+          <p class="section-text">We are a real estate company built on Integrity. We help our clients bring their dream homes to reality within their budget.</p>
+          <ul class="contact-list">
+            <li><a href="contact.html" class="contact-link"><ion-icon name="location-outline"></ion-icon><address>No. 31 Wetheral Road, Angelina Plaza, Owerri, Imo State</address></a></li>
+            <li><a href="tel:+2349033137432" class="contact-link"><ion-icon name="call-outline"></ion-icon><span>+234 903 313 7432</span></a></li>
+            <li><a href="mailto:biverroyaltyhomes01@gmail.com" class="contact-link"><ion-icon name="mail-outline"></ion-icon><span>biverroyaltyhomes01@gmail.com</span></a></li>
+          </ul>
+          <ul class="social-list">
+            <li><a href="https://www.facebook.com/share/1B8mwpRi5L/" class="social-link" target="_blank"><ion-icon name="logo-facebook"></ion-icon></a></li>
+            <li><a href="#" class="social-link"><ion-icon name="logo-twitter"></ion-icon></a></li>
+            <li><a href="https://www.instagram.com/biverroyaltyhomes.ng" class="social-link" target="_blank"><ion-icon name="logo-instagram"></ion-icon></a></li>
+            <li><a href="https://www.tiktok.com/@biverroyaltyhomesltd" class="social-link" target="_blank"><ion-icon name="logo-youtube"></ion-icon></a></li>
+          </ul>
+        </div>
+        <div class="footer-link-box">
+          <ul class="footer-list"><li><p class="footer-list-title">Company</p></li><li><a href="about.html" class="footer-link">About Us</a></li><li><a href="https://blog.biverroyaltyhomesltd.com/" class="footer-link" target="_blank">Blog</a></li><li><a href="property.html" class="footer-link">All Properties</a></li><li><a href="contact.html" class="footer-link">Contact Us</a></li></ul>
+          <ul class="footer-list"><li><p class="footer-list-title">Services</p></li><li><a href="service.html" class="footer-link">Property Sales</a></li><li><a href="service.html" class="footer-link">Property Rentals</a></li><li><a href="service.html" class="footer-link">Estate Management</a></li><li><a href="service.html" class="footer-link">Development</a></li></ul>
+          <ul class="footer-list"><li><p class="footer-list-title">Support</p></li><li><a href="login.html" class="footer-link">Login</a></li><li><a href="favorites.html" class="footer-link">Wish List</a></li><li><a href="addCart.html" class="footer-link">Cart</a></li><li><a href="#" class="footer-link">FAQ</a></li></ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom"><div class="container"><p class="copyright">&copy; 2025 <a href="#">Biver Royalty Homes</a>. All Rights Reserved | Designed by <a href="#">ERIBS Tech</a></p></div></div>
+  </footer>
+
+  <button id="scrollToTop" aria-label="Scroll to top"><ion-icon name="chevron-up-outline"></ion-icon></button>
+
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script>
+    // Header scroll
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => { if (window.scrollY > 80) header.classList.add('scrolled'); else header.classList.remove('scrolled'); });
+    // Scroll to top
+    const scrollBtn = document.getElementById('scrollToTop');
+    window.addEventListener('scroll', () => { if (window.scrollY > 600) scrollBtn.classList.add('visible'); else scrollBtn.classList.remove('visible'); });
+    scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    // Navbar toggle
+    const navbar = document.querySelector("[data-navbar]"), overlay = document.querySelector("[data-overlay]"), closeBtn = document.querySelector("[data-nav-close-btn]"), openBtn = document.querySelector("[data-nav-open-btn]");
+    const toggleNav = () => { navbar.classList.toggle("active"); overlay.classList.toggle("active"); };
+    if (openBtn && closeBtn && overlay) { openBtn.addEventListener("click", toggleNav); closeBtn.addEventListener("click", toggleNav); overlay.addEventListener("click", toggleNav); document.querySelectorAll("[data-nav-link]").forEach(l => l.addEventListener("click", toggleNav)); }
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }); }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    // Delay classes
+    const delays = { 'reveal-delay-1': 100, 'reveal-delay-2': 200, 'reveal-delay-3': 300 };
+    Object.keys(delays).forEach(cls => { document.querySelectorAll(`.${cls}`).forEach((el, i) => el.style.transitionDelay = `${delays[cls] + i * 50}ms`); });
+  </script>
+</body>
+</html>

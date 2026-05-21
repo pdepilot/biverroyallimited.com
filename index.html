@@ -1,0 +1,2991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Biver Royalty Homes - Your trusted real estate partner in Nigeria. Find your dream home with our extensive property listings in Owerri, Imo State.">
+  <meta name="keywords" content="real estate, Nigeria, Owerri, property, homes, rent, buy, Biver Royalty">
+  <meta name="author" content="Biver Royalty Homes Ltd">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Biver Royalty Homes - Find Your Dream House">
+  <meta property="og:description" content="Leading real estate marketplace in Nigeria. Buy, rent, or sell properties with integrity.">
+  <meta property="og:image" content="./assets/images/biver-logo.png">
+  <meta property="og:url" content="https://biverroyaltyhomesltd.com">
+  <meta property="og:type" content="website">
+  <title>Biver Royalty Homes - Find Your Dream House | Real Estate Nigeria</title>
+  <link rel="shortcut icon" href="./assets/images/BIVER ROYALTY HOMES LTD LOGO_052927 (1).png" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* =============================================
+       CUSTOM PROPERTIES
+    ============================================= */
+    :root {
+      --prussian-blue: #371801;
+      --gold: #D4AF37;
+      --gold-light: #FFD700;
+      --gold-dark: #B8860B;
+      --gold-gradient: linear-gradient(90deg, #D4AF37 0%, #FFD700 50%, #B8860B 100%);
+      --raisin-black-1: hsl(31, 94%, 12%);
+      --raisin-black-2: hsl(34, 82%, 25%);
+      --cultured-1: hsl(0, 0%, 93%);
+      --cultured-2: hsl(192, 24%, 96%);
+      --cadet: hsl(200, 15%, 43%);
+      --white: #ffffff;
+      --black: #000000;
+      --dark-jungle-green: hsl(188, 63%, 7%);
+      --misty-rose: hsl(7, 56%, 91%);
+      --seashell: hsl(8, 100%, 97%);
+      --opal: hsl(180, 20%, 62%);
+      --alice-blue: hsl(210, 100%, 97%);
+      --orange-soda: #D4AF37;
+
+      --ff-display: 'Cormorant Garamond', serif;
+      --ff-body: 'Outfit', sans-serif;
+
+      --fs-1: 1.875rem;
+      --fs-2: 1.5rem;
+      --fs-3: 1.375rem;
+      --fs-4: 1.125rem;
+      --fs-5: 0.875rem;
+      --fs-6: 0.813rem;
+      --fs-7: 0.75rem;
+      --fw-300: 300;
+      --fw-400: 400;
+      --fw-500: 500;
+      --fw-600: 600;
+      --fw-700: 700;
+
+      --transition: 0.3s ease;
+      --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      --section-padding: 100px;
+      --shadow-1: 0 5px 20px 0 hsla(219, 56%, 21%, 0.1);
+      --shadow-2: 0 16px 32px hsla(188, 63%, 7%, 0.1);
+      --shadow-gold: 0 8px 32px rgba(212, 175, 55, 0.25);
+    }
+
+    /* =============================================
+       RESET
+    ============================================= */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    li { list-style: none; }
+    a { text-decoration: none; }
+    a, img, span, button, ion-icon { display: block; }
+    button { border: none; background: none; font: inherit; text-align: left; cursor: pointer; }
+    address { font-style: normal; }
+    ion-icon { pointer-events: none; }
+    html { font-family: var(--ff-body); scroll-behavior: smooth; }
+    body { background: var(--white); overflow-x: hidden; }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--prussian-blue); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+    /* =============================================
+       SKIP LINK
+    ============================================= */
+    .skip-link {
+      position: absolute; top: -100px; left: 0;
+      background: var(--prussian-blue); color: white;
+      padding: 8px 16px; z-index: 10000;
+      transition: top 0.3s; font-weight: var(--fw-600);
+    }
+    .skip-link:focus { top: 0; }
+
+    /* =============================================
+       REUSED STYLES
+    ============================================= */
+    .container { padding-inline: 15px; }
+    button, a { transition: var(--transition); }
+
+    .h1, .h2, .h3 {
+      color: var(--dark-jungle-green);
+      font-family: var(--ff-display);
+      line-height: 1.2;
+    }
+    .h1 { font-size: var(--fs-1); }
+    .h2 { font-size: var(--fs-2); }
+    .h3 { font-size: var(--fs-4); font-weight: 600; }
+    .h3 > a { color: inherit; }
+
+    .btn {
+      position: relative;
+      background: var(--gold-gradient);
+      color: var(--prussian-blue);
+      font-family: var(--ff-body);
+      font-size: var(--fs-5);
+      font-weight: var(--fw-600);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: 1px solid transparent;
+      padding: 12px 28px;
+      z-index: 1;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn::before {
+      content: "";
+      position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: var(--prussian-blue);
+      transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: -1;
+    }
+    .btn:is(:hover, :focus)::before { left: 0; }
+    .btn:is(:hover, :focus) { color: var(--gold); }
+
+    .w-100 { width: 100%; }
+
+    .section-subtitle {
+      color: var(--gold-dark);
+      font-family: var(--ff-body);
+      font-size: var(--fs-6);
+      font-weight: var(--fw-600);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      width: max-content;
+      margin-inline: auto;
+    }
+    .section-subtitle::before,
+    .section-subtitle::after {
+      content: '';
+      width: 30px; height: 1px;
+      background: var(--gold-gradient);
+    }
+
+    .section-title {
+      text-align: var(--text-align, center);
+      margin-bottom: var(--margin-bottom, 50px);
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+    }
+
+    .card-badge {
+      background: var(--prussian-blue);
+      color: var(--white);
+      font-size: var(--fs-7);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: absolute;
+      top: 15px; right: 15px;
+      padding: 5px 12px;
+      z-index: 5;
+      border-radius: 2px;
+    }
+    .card-badge.green { background: #10b759; }
+    .card-badge.orange { background: var(--gold-dark); color: var(--prussian-blue); }
+    .card-badge.new-badge { background: #10b759; left: 15px; right: auto; }
+
+    .has-scrollbar {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      overflow-x: auto;
+      margin-inline: -15px;
+      padding-inline: 15px;
+      scroll-padding-left: 15px;
+      padding-bottom: 60px;
+      scroll-snap-type: inline mandatory;
+    }
+    .has-scrollbar > li { min-width: 100%; scroll-snap-align: start; }
+    .has-scrollbar::-webkit-scrollbar-track { background: var(--cultured-2); border-radius: 10px; }
+    .has-scrollbar::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+    .has-scrollbar::-webkit-scrollbar-button { width: 10%; }
+
+    /* =============================================
+       TOP BAR
+    ============================================= */
+    .topbar {
+      background: var(--prussian-blue);
+      padding-block: 10px;
+      position: relative;
+      z-index: 1001;
+      overflow: hidden;
+    }
+    .topbar::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 1px;
+      background: var(--gold-gradient);
+    }
+
+    .topbar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: 20px;
+    }
+
+    .topbar-left { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+
+    .topbar-link {
+      display: flex; align-items: center; gap: 6px;
+      color: rgba(255,255,255,0.75);
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.3px;
+      transition: color 0.3s;
+    }
+    .topbar-link ion-icon {
+      color: var(--gold);
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .topbar-link:hover { color: var(--gold-light); }
+
+    .topbar-divider {
+      width: 1px; height: 14px;
+      background: rgba(255,255,255,0.15);
+    }
+
+    .topbar-right { display: flex; align-items: center; gap: 16px; }
+
+    .topbar-socials { display: flex; align-items: center; gap: 6px; }
+
+    .topbar-social-link {
+      width: 28px; height: 28px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      color: rgba(255,255,255,0.6);
+      font-size: 13px;
+      transition: all 0.3s;
+    }
+    .topbar-social-link:hover {
+      background: var(--gold);
+      color: var(--prussian-blue);
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .topbar-cta {
+      background: var(--gold-gradient);
+      color: var(--prussian-blue);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .topbar-cta:hover {
+      background: var(--white);
+      color: var(--prussian-blue);
+      box-shadow: 0 4px 15px rgba(212,175,55,0.4);
+    }
+
+    /* =============================================
+       HEADER / NAVBAR
+    ============================================= */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-bottom {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding-block: 18px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    }
+
+    /* Scrolled state */
+    .header.scrolled .header-bottom {
+      background: var(--prussian-blue);
+      border-bottom-color: rgba(212, 175, 55, 0.3);
+      padding-block: 12px;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+    }
+    .header.scrolled .navbar-link { color: rgba(255,255,255,0.75); }
+    .header.scrolled .navbar-link:hover { color: var(--gold-light); }
+    .header.scrolled .header-bottom-actions-btn ion-icon { color: rgba(255,255,255,0.8); }
+    .header.scrolled .header-bottom-actions-btn:hover ion-icon { color: var(--gold-light); }
+    .header.scrolled .header-bottom-actions-btn span { color: rgba(255,255,255,0.6); }
+
+    .header-bottom .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: 20px;
+      gap: 20px;
+    }
+
+    .logo img { height: 50px; width: auto; transition: transform 0.3s; }
+    .logo:hover img { transform: scale(1.03); }
+
+    .navbar {
+      background: var(--white);
+      position: fixed;
+      top: 0; left: -320px;
+      max-width: 310px; width: 100%;
+      height: 100%;
+      box-shadow: 5px 0 30px rgba(0,0,0,0.15);
+      z-index: 1002;
+      padding: 60px 30px;
+      visibility: hidden;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .navbar.active {
+      visibility: visible;
+      transform: translateX(320px);
+    }
+    .navbar-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 35px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      margin-bottom: 30px;
+    }
+    .navbar-top .logo img { width: 160px; height: auto; }
+    .nav-close-btn ion-icon { font-size: 22px; color: var(--prussian-blue); }
+    .nav-close-btn:hover ion-icon { color: var(--gold-dark); }
+
+    .navbar-link {
+      color: var(--dark-jungle-green);
+      font-size: 14px;
+      font-weight: var(--fw-500);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding-block: 14px;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.3s;
+    }
+    .navbar-link:is(:hover, :focus) { color: var(--gold-dark); padding-left: 6px; }
+
+    .overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.65);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.4s;
+      z-index: 1001;
+      backdrop-filter: blur(3px);
+    }
+    .overlay.active { opacity: 1; pointer-events: all; }
+
+    .header-bottom-actions {
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    .header-bottom-actions-btn {
+      width: 42px; height: 42px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      position: relative;
+      transition: all 0.3s;
+    }
+    .header-bottom-actions-btn ion-icon {
+      font-size: 20px;
+      color: var(--prussian-blue);
+      transition: color 0.3s;
+    }
+    .header-bottom-actions-btn span {
+      color: var(--gold-dark);
+      font-size: 10px;
+      font-weight: 600;
+      display: none;
+    }
+    .header-bottom-actions-btn:hover {
+      background: rgba(212,175,55,0.1);
+    }
+    .header-bottom-actions-btn:hover ion-icon { color: var(--gold-dark); }
+
+    .cart-count-badge {
+      position: absolute; top: 2px; right: 2px;
+      background: var(--gold);
+      color: var(--prussian-blue);
+      font-size: 10px; font-weight: 700;
+      min-width: 16px; height: 16px;
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 4px;
+      border: 2px solid white;
+    }
+
+    /* Desktop navbar */
+    @media (min-width: 1200px) {
+      .navbar, .navbar.active { all: unset; }
+      .navbar-bottom { display: flex; align-items: center; }
+      .navbar-list { display: flex; align-items: center; gap: 8px; }
+      .navbar-top, .overlay, .header-bottom-actions-btn:last-child { display: none; }
+      .navbar-link {
+        color: var(--dark-jungle-green);
+        font-size: 12px; letter-spacing: 1.5px;
+        padding: 10px 14px;
+        border-bottom: none;
+        border-radius: 4px;
+        position: relative;
+      }
+      .navbar-link::after {
+        content: '';
+        position: absolute; bottom: 4px; left: 14px;
+        width: 0; height: 1.5px;
+        background: var(--gold-gradient);
+        transition: width 0.3s;
+      }
+      .navbar-link:hover::after { width: calc(100% - 28px); }
+      .navbar-link:hover { padding-left: 14px; }
+
+      .header.scrolled .navbar-link { color: rgba(255,255,255,0.8); }
+      .header.scrolled .navbar-link:hover { color: var(--gold-light); }
+    }
+
+    /* =============================================
+       MOBILE BOTTOM BAR
+    ============================================= */
+    @media (max-width: 767px) {
+      .header-bottom-actions {
+        background: var(--white);
+        position: fixed;
+        bottom: 0; left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        padding-block: 12px 10px;
+        box-shadow: 0 -2px 30px rgba(0,0,0,0.1);
+        z-index: 100;
+        border-top: 1px solid rgba(212,175,55,0.2);
+      }
+      .header-bottom-actions-btn { flex-direction: column; height: auto; width: auto; padding: 4px 10px; border-radius: 8px; }
+      .header-bottom-actions-btn span { display: block; }
+      .footer { margin-bottom: 70px; }
+    }
+
+    /* =============================================
+       HERO
+    ============================================= */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero-bg-slideshow {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%; z-index: 1;
+    }
+
+    .bg-slide {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .bg-slide.active { opacity: 1; z-index: 2; }
+
+    .bg-overlay {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(
+        135deg,
+        rgba(55, 24, 1, 0.82) 0%,
+        rgba(55, 24, 1, 0.6) 40%,
+        rgba(0, 0, 0, 0.35) 100%
+      );
+      z-index: 3;
+    }
+
+    /* Decorative gold line on overlay */
+    .bg-overlay::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: var(--gold-gradient);
+    }
+
+    .hero .container {
+      position: relative; z-index: 10;
+      width: 100%; max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 30px;
+    }
+
+    .hero-content {
+      max-width: 660px;
+      padding: 40px 0;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 12px;
+      color: var(--gold-light);
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 4px; text-transform: uppercase;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+    }
+    .hero-eyebrow .line { width: 40px; height: 1px; background: var(--gold-gradient); }
+
+    .hero-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+    }
+    .hero-title .accent { color: var(--gold-light); font-style: italic; }
+
+    .hero-tagline {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 36px;
+      max-width: 500px;
+      font-weight: 300;
+      opacity: 0;
+      transform: translateY(25px);
+      transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s;
+    }
+
+    .hero-actions {
+      display: flex; flex-wrap: wrap; gap: 14px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease 0.8s, transform 0.8s ease 0.8s;
+    }
+
+    .hero-btn-primary {
+      background: var(--gold-gradient);
+      color: var(--prussian-blue);
+      font-family: var(--ff-body);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 15px 38px;
+      border-radius: 2px;
+      position: relative; overflow: hidden;
+      box-shadow: 0 8px 30px rgba(212,175,55,0.35);
+      transition: all 0.4s;
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .hero-btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(212,175,55,0.5);
+      color: var(--prussian-blue);
+    }
+
+    .hero-btn-secondary {
+      color: white;
+      font-family: var(--ff-body);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 14px 34px;
+      border: 1.5px solid rgba(255,255,255,0.4);
+      border-radius: 2px;
+      backdrop-filter: blur(8px);
+      transition: all 0.3s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .hero-btn-secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold-light);
+      background: rgba(212,175,55,0.08);
+    }
+
+    .hero-content.slide-active .hero-eyebrow,
+    .hero-content.slide-active .hero-title,
+    .hero-content.slide-active .hero-tagline,
+    .hero-content.slide-active .hero-actions {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Hero stats bar */
+    .hero-stats {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      z-index: 10;
+      background: rgba(55, 24, 1, 0.92);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(212,175,55,0.2);
+      padding: 20px 0;
+    }
+    .hero-stats .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+    .stat-item {
+      display: flex; align-items: center; gap: 16px;
+      padding: 10px 40px;
+      border-right: 1px solid rgba(212,175,55,0.2);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-icon {
+      width: 42px; height: 42px;
+      background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 50%;
+      display: grid; place-items: center;
+      color: var(--gold);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .stat-info .num {
+      font-family: var(--ff-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      line-height: 1;
+    }
+    .stat-info .label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    /* Slide dots */
+    .slide-dots {
+      position: absolute;
+      right: 40px; top: 50%;
+      transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 10px;
+      z-index: 10;
+    }
+    .dot {
+      width: 6px; height: 6px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .dot.active {
+      height: 28px;
+      background: var(--gold);
+      box-shadow: 0 0 12px rgba(212,175,55,0.5);
+    }
+    .dot:hover { background: rgba(255,255,255,0.6); }
+
+    /* =============================================
+       SCROLL REVEAL
+    ============================================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.reveal-left { transform: translateX(-60px); }
+    .reveal.reveal-right { transform: translateX(60px); }
+    .reveal.reveal-scale { transform: scale(0.9); }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* =============================================
+       ABOUT
+    ============================================= */
+    .about { padding-block: var(--section-padding); }
+
+    .about-banner {
+      position: relative;
+      margin-bottom: 40px;
+    }
+    .about-banner > img { max-width: 100%; width: 100%; border-radius: 4px; }
+    .about-banner .abs-img {
+      position: absolute;
+      bottom: -30px; left: -20px;
+      width: 55%;
+      border-radius: 4px;
+      border: 6px solid var(--white);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+    .about-banner::after {
+      content: '';
+      position: absolute;
+      top: 20px; left: 20px; right: -20px; bottom: -20px;
+      border: 2px solid rgba(212,175,55,0.25);
+      border-radius: 4px;
+      z-index: -1;
+    }
+
+    .about .section-subtitle { margin-inline: 0; }
+    .about .section-title { --text-align: left; --margin-bottom: 15px; }
+    .about-text {
+      color: var(--cadet);
+      font-size: var(--fs-5);
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
+    .about-list { margin-bottom: 30px; }
+    .about-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .about-item-icon {
+      background: rgba(212,175,55,0.08);
+      border: 1px solid rgba(212,175,55,0.3);
+      height: 44px; min-width: 44px;
+      border-radius: 50%;
+      display: grid; place-items: center;
+      transition: all 0.3s;
+    }
+    .about-item:hover .about-item-icon {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    .about-item-icon ion-icon { color: var(--gold-dark); font-size: 18px; }
+    .about-item:hover .about-item-icon ion-icon { color: var(--prussian-blue); }
+    .about-item-text { color: var(--dark-jungle-green); font-size: var(--fs-5); font-weight: 500; }
+
+    .about .callout {
+      background: rgba(55, 24, 1, 0.04);
+      color: var(--cadet);
+      font-size: var(--fs-5);
+      font-weight: var(--fw-400);
+      font-style: italic;
+      line-height: 1.9;
+      padding: 22px 28px;
+      border-left: 3px solid var(--gold);
+      margin-bottom: 40px;
+      border-radius: 0 4px 4px 0;
+    }
+    .about .btn { max-width: max-content; }
+
+    /* =============================================
+       SERVICE
+    ============================================= */
+    .service {
+      background: var(--prussian-blue);
+      padding-block: var(--section-padding);
+      position: relative;
+      overflow: hidden;
+    }
+    .service::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: var(--gold-gradient);
+    }
+    .service .section-subtitle { color: var(--gold-light); }
+    .service .section-title { color: var(--white); }
+
+    .service-list {
+      display: flex; flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .service-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(212,175,55,0.15);
+      text-align: center;
+      padding: 45px 30px 40px;
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; bottom: 0; left: 0;
+      width: 0; height: 3px;
+      background: var(--gold-gradient);
+      transition: width 0.4s;
+    }
+    .service-card:hover {
+      background: rgba(212,175,55,0.07);
+      border-color: rgba(212,175,55,0.4);
+      transform: translateY(-6px);
+    }
+    .service-card:hover::before { width: 100%; }
+
+    .service-card .card-icon { width: max-content; margin-inline: auto; margin-bottom: 22px; }
+    .service-card .card-title { margin-bottom: 15px; color: var(--white); }
+    .service-card .card-title > a { color: inherit; }
+    .service-card .card-title > a:hover { color: var(--gold-light); }
+    .service-card .card-text {
+      color: rgba(255,255,255,0.55);
+      font-size: var(--fs-5);
+      line-height: 1.8;
+      margin-bottom: 25px;
+    }
+    .service-card .card-link {
+      color: var(--gold);
+      font-size: var(--fs-6);
+      font-weight: var(--fw-600);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      display: flex;
+      justify-content: center; align-items: center; gap: 6px;
+    }
+    .service-card:hover .card-link { color: var(--gold-light); }
+
+    /* =============================================
+       PROPERTY
+    ============================================= */
+    .property { padding-block: var(--section-padding); }
+
+    .property-card {
+      border: 1px solid rgba(0,0,0,0.07);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      background: var(--white);
+    }
+    .property-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 30px 60px rgba(55, 24, 1, 0.15);
+      border-color: rgba(212,175,55,0.3);
+    }
+    .property-card .card-banner { position: relative; aspect-ratio: 2/1.5; overflow: hidden; }
+    .property-card .card-banner a { height: 100%; }
+    .property-card .card-banner img { height: 100%; object-fit: cover; transition: 0.6s ease; }
+    .property-card:hover .card-banner img { transform: scale(1.08); }
+    .property-card .card-banner::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent 35%);
+      pointer-events: none; z-index: 1;
+    }
+    .property-card .banner-actions {
+      position: absolute; bottom: 15px; left: 15px; right: 15px;
+      display: flex; flex-wrap: wrap-reverse;
+      align-items: center; gap: 10px; z-index: 1;
+    }
+    .banner-actions-btn {
+      color: var(--white);
+      font-size: var(--fs-6);
+      display: flex; align-items: flex-end; gap: 4px;
+    }
+    .banner-actions-btn ion-icon { font-size: 15px; }
+    .banner-actions-btn:first-child { margin-right: auto; }
+    .banner-actions-btn:hover { color: var(--gold-light); }
+
+    .property-card .card-content {
+      padding: 24px 20px 16px;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+    }
+    .card-price {
+      color: var(--gold-dark);
+      font-family: var(--ff-display);
+      font-size: var(--fs-5);
+      margin-bottom: 6px;
+    }
+    .card-price strong { font-size: var(--fs-4); font-weight: 700; }
+    .property-card .card-title { margin-bottom: 12px; }
+    .property-card .card-title > a:hover { color: var(--gold-dark); }
+    .property-card .card-text {
+      color: var(--cadet); font-size: var(--fs-5);
+      line-height: 1.7; margin-bottom: 18px;
+    }
+    .property-card .card-list {
+      display: flex; flex-wrap: wrap;
+      align-items: center; row-gap: 10px;
+    }
+    .property-card .card-item {
+      padding-block: 4px; color: var(--cadet); font-size: var(--fs-6);
+    }
+    .property-card .card-item:not(:last-child) {
+      padding-right: 14px;
+      border-right: 1px solid rgba(0,0,0,0.1);
+      margin-right: 14px;
+    }
+    .property-card .card-item :is(strong, ion-icon) { display: inline-block; }
+    .property-card .card-item ion-icon { margin-left: 2px; margin-bottom: -2px; }
+    .property-card .card-item span { margin-top: 4px; }
+
+    .card-footer {
+      padding: 14px 20px 20px;
+      display: flex; flex-wrap: wrap-reverse;
+      justify-content: space-between;
+      align-items: center; gap: 12px;
+    }
+    .card-author { display: flex; align-items: center; gap: 10px; }
+    .author-avatar { width: 36px; height: 36px; overflow: hidden; border-radius: 50%; }
+    .author-name > a {
+      color: var(--dark-jungle-green);
+      font-family: var(--ff-body);
+      font-size: var(--fs-5);
+      font-weight: var(--fw-600);
+      margin-bottom: 2px;
+    }
+    .author-name > a:hover { color: var(--gold-dark); }
+    .author-title { color: var(--cadet); font-size: var(--fs-7); }
+
+    .card-footer-actions { display: flex; align-items: center; gap: 8px; }
+    .card-footer-actions-btn {
+      background: var(--cultured-2);
+      color: var(--cadet);
+      width: 34px; height: 34px;
+      display: grid; place-items: center;
+      font-size: 17px; border-radius: 50%;
+      transition: all 0.25s;
+    }
+    .card-footer-actions-btn:hover { background: var(--gold); color: var(--prussian-blue); }
+    .card-footer-actions-btn.favorited { color: #f95a5a; }
+    .card-footer-actions-btn.in-cart { color: #10b759; }
+
+    .video-badge {
+      position: absolute; top: 15px; right: 15px;
+      background: rgba(55, 24, 1, 0.85);
+      backdrop-filter: blur(4px);
+      color: var(--gold-light);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 11px; font-weight: 600;
+      display: flex; align-items: center; gap: 5px;
+      z-index: 5;
+      border: 1px solid rgba(212,175,55,0.3);
+    }
+
+    .verified-badge {
+      color: #10b759; font-size: 0.9rem;
+      display: inline-flex; align-items: center; gap: 2px;
+    }
+    .verified-text { font-size: 0.65rem; font-weight: 600; color: #10b759; }
+
+    /* States */
+    .properties-skeleton, .testimonials-skeleton, .blogs-skeleton { padding: 20px 0; }
+    .skeleton-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+    .skeleton-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+    .skeleton-image { width: 100%; height: 220px; background: linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+    .skeleton-content { padding: 20px; }
+    .skeleton-line { height: 12px; margin-bottom: 10px; background: linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 4px; }
+    .skeleton-line-short { width: 40%; }
+    .skeleton-line-long { width: 80%; }
+    .skeleton-testimonial, .skeleton-blog { height: 320px; background: linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 12px; }
+    @keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+
+    .properties-error, .testimonials-error { text-align: center; padding: 40px; color: #f95a5a; min-height: 300px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    .properties-error ion-icon, .testimonials-error ion-icon { font-size: 48px; margin-bottom: 15px; }
+    .properties-empty, .testimonials-empty { text-align: center; padding: 60px 20px; color: #6c757d; }
+    .properties-empty ion-icon, .testimonials-empty ion-icon { font-size: 60px; margin-bottom: 20px; opacity: 0.4; }
+    .properties-empty h3, .testimonials-empty h3 { font-size: 22px; margin-bottom: 10px; color: var(--prussian-blue); }
+    .properties-empty p, .testimonials-empty p { font-size: 15px; max-width: 500px; margin: 0 auto 20px; }
+
+    /* =============================================
+       FEATURES
+    ============================================= */
+    .features { background: var(--cultured-2); padding-block: var(--section-padding); }
+
+    .features-list {
+      display: flex; flex-wrap: wrap;
+      justify-content: center;
+      gap: 50px 20px;
+    }
+    .features-list > li { width: calc(50% - 10px); }
+
+    .features-card {
+      background: var(--white);
+      padding: 40px 20px;
+      border-radius: 10px;
+      display: flex; flex-direction: column;
+      height: 100%; justify-content: center; align-items: center;
+      gap: 12px;
+      box-shadow: var(--shadow-1);
+      position: relative;
+      overflow: hidden;
+      border-bottom: 3px solid transparent;
+      transition: all 0.35s;
+    }
+    .features-card:hover {
+      transform: translateY(-6px);
+      border-bottom-color: var(--gold);
+      box-shadow: 0 20px 50px rgba(55,24,1,0.1);
+    }
+
+    .features-card .card-icon {
+      background: rgba(212,175,55,0.08);
+      color: var(--gold-dark);
+      width: 62px; height: 62px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      font-size: 26px;
+      border: 1px solid rgba(212,175,55,0.25);
+      transition: all 0.35s;
+    }
+    .features-card:hover .card-icon { background: var(--gold); color: var(--prussian-blue); }
+    .features-card .card-icon ion-icon { --ionicon-stroke-width: 20px; }
+
+    .features-card .card-title {
+      color: var(--dark-jungle-green);
+      font-family: var(--ff-body);
+      font-size: var(--fs-6);
+      font-weight: var(--fw-600);
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .features-card .card-btn {
+      background: var(--cultured-2);
+      color: var(--cadet);
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translate(-50%, 50%);
+      width: 38px; height: 38px;
+      display: grid; place-items: center;
+      font-size: 18px; border-radius: 50%;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      transition: var(--transition);
+    }
+    .features-card:hover .card-btn { color: var(--gold-dark); background: white; }
+
+    /* =============================================
+       WHY CHOOSE US (new section)
+    ============================================= */
+    .why-us {
+      padding-block: var(--section-padding);
+      background: var(--white);
+      overflow: hidden;
+    }
+    .why-us-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .why-us-visual {
+      position: relative;
+    }
+    .why-us-img-main {
+      width: 100%;
+      border-radius: 4px;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+    }
+    .why-us-img-accent {
+      position: absolute;
+      bottom: -40px; right: -40px;
+      width: 58%;
+      border-radius: 4px;
+      border: 8px solid var(--white);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      aspect-ratio: 1;
+      object-fit: cover;
+    }
+    .why-us-badge {
+      position: absolute;
+      top: 40px; left: -30px;
+      background: var(--prussian-blue);
+      color: var(--white);
+      padding: 24px 22px;
+      border-radius: 4px;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      border-left: 3px solid var(--gold);
+    }
+    .why-us-badge .num {
+      font-family: var(--ff-display);
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      line-height: 1;
+    }
+    .why-us-badge .txt {
+      font-size: 11px;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .why-us .section-subtitle { margin-inline: 0; }
+    .why-us .section-title { --text-align: left; --margin-bottom: 20px; }
+
+    .why-us-text {
+      color: var(--cadet);
+      font-size: var(--fs-5);
+      line-height: 1.9;
+      margin-bottom: 35px;
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .why-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .why-item-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: rgba(212,175,55,0.07);
+      border: 1px solid rgba(212,175,55,0.25);
+      border-radius: 8px;
+      display: grid; place-items: center;
+      color: var(--gold-dark);
+      font-size: 20px;
+      transition: all 0.3s;
+    }
+    .why-item:hover .why-item-icon {
+      background: var(--gold);
+      color: var(--prussian-blue);
+      border-color: var(--gold);
+    }
+    .why-item-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--dark-jungle-green);
+      margin-bottom: 4px;
+    }
+    .why-item-text {
+      font-size: 12px;
+      color: var(--cadet);
+      line-height: 1.6;
+    }
+
+    /* =============================================
+       PROCESS (new section)
+    ============================================= */
+    .process {
+      padding-block: var(--section-padding);
+      background: var(--prussian-blue);
+      position: relative;
+      overflow: hidden;
+    }
+    .process::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: var(--gold-gradient);
+    }
+
+    .process .section-subtitle { color: var(--gold-light); }
+    .process .section-title { color: var(--white); }
+
+    .process-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+      counter-reset: process;
+      position: relative;
+    }
+    .process-list::before {
+      content: '';
+      position: absolute;
+      top: 40px; left: 10%; right: 10%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212,175,55,0.3), transparent);
+    }
+
+    .process-item {
+      flex: 1;
+      min-width: 200px;
+      max-width: 260px;
+      text-align: center;
+      padding: 40px 20px 30px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(212,175,55,0.1);
+      border-radius: 8px;
+      position: relative;
+      counter-increment: process;
+      transition: all 0.3s;
+    }
+    .process-item::before {
+      content: counter(process, decimal-leading-zero);
+      position: absolute;
+      top: -18px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold-gradient);
+      color: var(--prussian-blue);
+      font-family: var(--ff-display);
+      font-size: 1rem;
+      font-weight: 700;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .process-item:hover {
+      background: rgba(212,175,55,0.07);
+      border-color: rgba(212,175,55,0.3);
+      transform: translateY(-6px);
+    }
+    .process-icon {
+      width: 60px; height: 60px;
+      background: rgba(212,175,55,0.08);
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 50%;
+      display: grid; place-items: center;
+      color: var(--gold);
+      font-size: 24px;
+      margin: 0 auto 18px;
+    }
+    .process-title {
+      color: var(--white);
+      font-family: var(--ff-display);
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
+    .process-text {
+      color: rgba(255,255,255,0.5);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    /* =============================================
+       TESTIMONIALS
+    ============================================= */
+    .testimonial {
+      padding-block: var(--section-padding);
+      background: var(--cultured-2);
+      position: relative;
+      overflow: hidden;
+    }
+    .testimonial::before {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 300px; height: 300px;
+      background: rgba(212,175,55,0.05);
+      border-radius: 50%;
+    }
+    .testimonial::after {
+      content: '';
+      position: absolute; bottom: -80px; left: -80px;
+      width: 250px; height: 250px;
+      background: rgba(55, 24, 1, 0.04);
+      border-radius: 50%;
+    }
+    .testimonial .container { position: relative; z-index: 2; }
+
+    .testimonial-slider { position: relative; max-width: 1100px; margin: 0 auto; }
+    .testimonial-track { overflow: hidden; margin: 0 -12px; }
+    .testimonial-list { display: flex; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); list-style: none; }
+    .testimonial-item { flex: 0 0 100%; padding: 0 12px; box-sizing: border-box; }
+
+    .testimonial-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 40px 30px 30px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      border: 1px solid rgba(212,175,55,0.1);
+      height: 100%;
+      display: flex; flex-direction: column;
+      position: relative;
+      transition: all 0.3s;
+    }
+    .testimonial-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(55,24,1,0.12);
+      border-color: rgba(212,175,55,0.3);
+    }
+
+    .testimonial-quote-icon {
+      position: absolute; top: 20px; right: 24px;
+      color: rgba(212,175,55,0.12);
+      font-size: 56px; line-height: 1;
+    }
+
+    .testimonial-avatar {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      overflow: hidden;
+      border: 3px solid rgba(212,175,55,0.4);
+      box-shadow: 0 4px 15px rgba(212,175,55,0.2);
+    }
+    .testimonial-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .testimonial-avatar.no-image {
+      display: flex; align-items: center; justify-content: center;
+      background: var(--prussian-blue);
+      color: var(--gold-light);
+      font-family: var(--ff-display);
+      font-size: 28px; font-weight: 700;
+    }
+
+    .testimonial-stars {
+      display: flex; justify-content: center; gap: 4px;
+      margin-bottom: 16px;
+    }
+    .testimonial-stars ion-icon { color: var(--gold); font-size: 16px; }
+
+    .testimonial-content { flex: 1; text-align: center; margin-bottom: 20px; }
+    .testimonial-text {
+      font-size: 15px; line-height: 1.8;
+      color: var(--cadet); font-style: italic;
+    }
+
+    .testimonial-author {
+      text-align: center; padding-top: 20px;
+      border-top: 1px solid rgba(212,175,55,0.1);
+    }
+    .testimonial-author h4 { color: var(--prussian-blue); font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .testimonial-author p { color: var(--gold-dark); font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+
+    .slider-nav { display: flex; justify-content: center; gap: 12px; margin-top: 30px; }
+    .slider-prev, .slider-next {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 1.5px solid rgba(212,175,55,0.3);
+      color: var(--prussian-blue);
+      font-size: 22px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .slider-prev:hover, .slider-next:hover {
+      background: var(--prussian-blue); color: var(--gold);
+      border-color: var(--prussian-blue);
+    }
+    .slider-prev:disabled, .slider-next:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .slider-dots { display: flex; justify-content: center; gap: 8px; margin-top: 18px; }
+    .slider-dot {
+      width: 8px; height: 8px;
+      border-radius: 8px; background: rgba(55,24,1,0.2);
+      border: none; cursor: pointer;
+      transition: all 0.4s;
+    }
+    .slider-dot.active { background: var(--gold); width: 24px; }
+    .slider-dot:hover { background: var(--gold-dark); }
+
+    /* =============================================
+       BLOG
+    ============================================= */
+    .blog { padding-block: var(--section-padding); }
+
+    .blog-card {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.06);
+      transition: all 0.35s;
+    }
+    .blog-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(55,24,1,0.12); border-color: rgba(212,175,55,0.25); }
+
+    .blog-card .card-banner { overflow: hidden; aspect-ratio: 2/1.5; }
+    .blog-card .card-banner img { height: 100%; object-fit: cover; transition: 0.5s ease; }
+    .blog-card:hover .card-banner img { transform: scale(1.07); }
+
+    .blog-content { padding: 28px; }
+    .blog-card .card-meta-list { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+    .blog-card :is(.card-meta-link, .publish-date) {
+      color: var(--cadet); font-size: var(--fs-7); font-weight: var(--fw-500);
+      display: flex; align-items: center; gap: 5px; transition: var(--transition);
+    }
+    .blog-card :is(.card-meta-link, .publish-date) ion-icon { color: var(--gold-dark); }
+    .blog-card .card-meta-link:hover { color: var(--gold-dark); }
+
+    .blog-title { font-size: 1rem; font-weight: 600; color: var(--dark-jungle-green); line-height: 1.4; }
+    .blog-card .blog-title:hover { color: var(--gold-dark); }
+
+    .blog-content-bottom {
+      padding-top: 18px; border-top: 1px solid rgba(0,0,0,0.07);
+      margin-top: 18px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .blog-card .read-more-btn {
+      color: var(--gold-dark); font-size: var(--fs-7);
+      font-weight: var(--fw-600); letter-spacing: 1px;
+      text-transform: uppercase;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .blog-card .read-more-btn:hover { gap: 10px; }
+
+    /* =============================================
+       CTA
+    ============================================= */
+    .cta {
+      position: relative;
+      overflow: hidden;
+      padding-block: 0;
+    }
+    .cta-card {
+      background: var(--prussian-blue);
+      padding: 70px 50px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 4px;
+      background: var(--gold-gradient);
+    }
+    .cta-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .cta-inner {
+      position: relative; z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .cta-content .eyebrow {
+      font-size: 11px; letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .cta-content .card-title {
+      color: var(--white);
+      font-family: var(--ff-display);
+      font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+    .cta-content .card-text {
+      color: rgba(255,255,255,0.6);
+      font-size: 15px;
+    }
+    .cta-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+    .cta-btn-primary {
+      background: var(--gold-gradient);
+      color: var(--prussian-blue);
+      font-family: var(--ff-body);
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 15px 36px;
+      border-radius: 2px;
+      display: inline-flex; align-items: center; gap: 10px;
+      transition: all 0.3s;
+      box-shadow: 0 6px 24px rgba(212,175,55,0.3);
+    }
+    .cta-btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 36px rgba(212,175,55,0.4);
+      color: var(--prussian-blue);
+    }
+    .cta-btn-outline {
+      color: rgba(255,255,255,0.8);
+      font-family: var(--ff-body);
+      font-size: 13px; font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 14px 32px;
+      border: 1.5px solid rgba(255,255,255,0.25);
+      border-radius: 2px;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: all 0.3s;
+    }
+    .cta-btn-outline:hover { border-color: var(--gold); color: var(--gold-light); }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    .footer { background: var(--prussian-blue); color: var(--white); }
+
+    .footer-top {
+      padding-top: 80px; padding-bottom: 40px;
+      border-bottom: 1px solid rgba(212,175,55,0.1);
+    }
+    .footer-brand { margin-bottom: 60px; }
+    .footer-brand .logo { margin-bottom: 20px; }
+
+    .section-text { font-size: var(--fs-5); line-height: 1.8; margin-bottom: 28px; opacity: 0.6; max-width: 42ch; }
+
+    .contact-list { display: grid; gap: 14px; margin-bottom: 28px; }
+    .contact-link { display: flex; align-items: flex-start; gap: 10px; }
+    .contact-link ion-icon { font-size: 16px; color: var(--gold); margin-top: 2px; }
+    .contact-link :is(address, span) { font-size: var(--fs-5); color: rgba(255,255,255,0.6); transition: var(--transition); }
+    .contact-link:hover span { color: var(--gold-light); }
+
+    .social-list { display: flex; align-items: center; gap: 12px; }
+    .social-link {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 50%;
+      display: grid; place-items: center;
+      color: rgba(255,255,255,0.5);
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    .social-link:hover { background: var(--gold); border-color: var(--gold); color: var(--prussian-blue); transform: translateY(-3px); }
+
+    .footer-list:not(:last-child) { margin-bottom: 50px; }
+    .footer-list-title { font-family: var(--ff-display); font-size: 1.3rem; font-weight: 700; color: var(--white); margin-bottom: 20px; position: relative; padding-bottom: 12px; }
+    .footer-list-title::after { content: ''; position: absolute; bottom: 0; left: 0; width: 30px; height: 2px; background: var(--gold-gradient); }
+    .footer-link { font-size: var(--fs-5); padding-block: 8px; color: rgba(255,255,255,0.55); display: flex; align-items: center; gap: 8px; }
+    .footer-link::before { content: '›'; color: var(--gold); font-size: 1.2em; opacity: 0; transform: translateX(-6px); transition: all 0.3s; }
+    .footer-link:hover { color: var(--gold-light); padding-left: 4px; }
+    .footer-link:hover::before { opacity: 1; transform: translateX(0); }
+
+    .footer-bottom { background: rgba(0,0,0,0.3); padding-block: 22px; }
+    .copyright { font-size: var(--fs-6); text-align: center; color: rgba(255,255,255,0.4); }
+    .copyright a { display: inline-block; color: var(--gold); }
+    .copyright a:hover { color: var(--gold-light); }
+
+    /* =============================================
+       TOAST
+    ============================================= */
+    .toast-notification {
+      position: fixed; bottom: 80px; right: 20px;
+      background: var(--prussian-blue);
+      border: 1px solid rgba(212,175,55,0.3);
+      color: white;
+      padding: 14px 18px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 10px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      z-index: 9999;
+      animation: slideInToast 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      max-width: 320px;
+    }
+    .toast-notification.toast-error { border-color: rgba(249, 90, 90, 0.4); }
+    @keyframes slideInToast { from{transform:translateX(110%);opacity:0} to{transform:translateX(0);opacity:1} }
+    .toast-notification .toast-content { display: flex; align-items: center; gap: 8px; flex: 1; font-size: 14px; }
+    .toast-notification .toast-content ion-icon { color: var(--gold); font-size: 18px; }
+    .toast-error .toast-content ion-icon { color: #f95a5a; }
+    .toast-notification .toast-close {
+      background: none; border: none; color: rgba(255,255,255,0.5);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      width: 22px; height: 22px; border-radius: 50%;
+    }
+    .toast-notification .toast-close:hover { color: white; background: rgba(255,255,255,0.1); }
+
+    /* =============================================
+       SCROLL TO TOP
+    ============================================= */
+    #scrollToTop {
+      position: fixed; bottom: 80px; right: 20px;
+      width: 46px; height: 46px;
+      background: var(--gold-gradient);
+      color: var(--prussian-blue);
+      border: none; border-radius: 50%;
+      display: grid; place-items: center;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 999;
+      box-shadow: 0 6px 24px rgba(212,175,55,0.35);
+      opacity: 0; pointer-events: none;
+      transform: translateY(20px) scale(0.8);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #scrollToTop.visible { opacity: 1; pointer-events: all; transform: translateY(0) scale(1); }
+    #scrollToTop:hover { transform: translateY(-4px) scale(1.08); box-shadow: 0 12px 30px rgba(212,175,55,0.45); }
+    @media (min-width: 768px) { #scrollToTop { bottom: 30px; } }
+
+    /* =============================================
+       MEDIA QUERIES
+    ============================================= */
+    @media (min-width: 600px) {
+      :root { --fs-2: 1.875rem; }
+      .container { max-width: 580px; margin-inline: auto; }
+      .service-list > li { width: calc(50% - 15px); }
+      .property .container { max-width: unset; padding-inline: 25px; }
+      .footer-link-box { display: flex; justify-content: space-between; gap: 20px; }
+      .testimonial-item { flex: 0 0 50%; }
+      .skeleton-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 768px) {
+      :root { --fs-1: 2.5rem; --fs-5: 0.938rem; --fs-6: 0.875rem; }
+      .container { max-width: 740px; }
+      .header-bottom-actions { position: static; box-shadow: none; padding: 0; border: none; background: transparent; }
+      .header-bottom-actions-btn { flex-direction: row; }
+      .about { padding-block: var(--section-padding); }
+      .about-text { max-width: 55ch; }
+      .about-list { display: grid; grid-template-columns: 1fr 1fr; }
+      .features-list > li { width: calc(33.33% - 14px); }
+      .features-card { gap: 16px; }
+      .features-card .card-icon { width: 72px; height: 72px; font-size: 28px; }
+      .blog-card { --fs-7: 0.875rem; }
+      .blog-title { font-size: 1.1rem; }
+      .footer { margin-bottom: 0; }
+      .testimonial-item { flex: 0 0 50%; }
+    }
+
+    @media (min-width: 992px) {
+      :root { --fs-1: 3.125rem; --fs-4: 1.375rem; }
+      .container { max-width: 970px; }
+      .about .container { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 80px; }
+      .about-banner { margin-bottom: 0; }
+      .service-list > li { width: calc(33.33% - 20px); }
+      .features-list { column-gap: 30px; }
+      .features-list > li { width: calc(25% - 30px); }
+      .why-us-grid { gap: 60px; }
+      .skeleton-grid { grid-template-columns: repeat(3, 1fr); }
+      .testimonial-item { flex: 0 0 33.333%; }
+    }
+
+    @media (min-width: 1200px) {
+      :root { --fs-2: 2.75rem; --fs-4: 1.5rem; }
+      .container { max-width: 1200px; }
+      .header-bottom .container { padding-inline: 30px; }
+    }
+
+    @media (max-width: 991px) {
+      .why-us-grid { grid-template-columns: 1fr; }
+      .why-us-visual { display: none; }
+      .stat-item { padding-inline: 20px; }
+      .stat-item .label { display: none; }
+    }
+    @media (max-width: 768px) {
+      .hero-title { font-size: 2.6rem; }
+      .hero-stats { display: none; }
+      .slide-dots { right: 20px; }
+      .cta-card { padding: 50px 24px; }
+      .skeleton-grid { grid-template-columns: 1fr; }
+      .process-list { flex-direction: column; align-items: center; }
+      .process-list::before { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- =============================================
+       TOP BAR
+  ============================================= -->
+  <div class="topbar" role="banner">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <a href="mailto:biverroyaltyhomes01@gmail.com" class="topbar-link" aria-label="Email us">
+          <ion-icon name="mail-outline"></ion-icon>
+          <span>biverroyaltyhomes01@gmail.com</span>
+        </a>
+        <div class="topbar-divider" aria-hidden="true"></div>
+        <a href="#" class="topbar-link" aria-label="Our location">
+          <ion-icon name="location-outline"></ion-icon>
+          <address>No. 31 Wetheral Road, Angelina Plaza, Owerri, Imo State</address>
+        </a>
+        <div class="topbar-divider" aria-hidden="true"></div>
+        <a href="tel:+2349033137432" class="topbar-link" aria-label="Call us">
+          <ion-icon name="call-outline"></ion-icon>
+          <span>+234 903 313 7432</span>
+        </a>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-socials" aria-label="Social media links">
+          <a href="https://www.facebook.com/share/1B8mwpRi5L/" class="topbar-social-link" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <ion-icon name="logo-facebook"></ion-icon>
+          </a>
+          <a href="https://www.instagram.com/biverroyaltyhomes.ng" class="topbar-social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <ion-icon name="logo-instagram"></ion-icon>
+          </a>
+          <a href="https://www.tiktok.com/@biverroyaltyhomesltd" class="topbar-social-link" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+            <ion-icon name="logo-youtube"></ion-icon>
+          </a>
+        </div>
+        <a href="property.html" class="topbar-cta">List Property</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- =============================================
+       HEADER
+  ============================================= -->
+  <header class="header" id="header" data-header>
+    <div class="overlay" data-overlay></div>
+
+    <div class="header-bottom">
+      <div class="container">
+        <a href="index.html" class="logo" aria-label="Biver Royalty Homes Home">
+          <img src="./assets/images/biver-logo.png" alt="Biver Royalty Homes" width="auto" height="50">
+        </a>
+
+        <nav class="navbar" data-navbar aria-label="Main navigation">
+          <div class="navbar-top">
+            <a href="index.html" class="logo">
+              <img src="./assets/images/biver-logo.png" alt="Biver Royalty Homes" width="150">
+            </a>
+            <button class="nav-close-btn" data-nav-close-btn aria-label="Close Menu">
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+          </div>
+          <div class="navbar-bottom">
+            <ul class="navbar-list" role="menubar">
+              <li role="none"><a href="index.html" class="navbar-link" data-nav-link role="menuitem">Home</a></li>
+              <li role="none"><a href="about.html" class="navbar-link" data-nav-link role="menuitem">About</a></li>
+              <li role="none"><a href="services.html" class="navbar-link" data-nav-link role="menuitem">Services</a></li>
+              <li role="none"><a href="property.html" class="navbar-link" data-nav-link role="menuitem">Properties</a></li>
+              <li role="none"><a href="https://blog.biverroyaltyhomesltd.com/" class="navbar-link" data-nav-link role="menuitem" target="_blank" rel="noopener noreferrer">Blog</a></li>
+              <li role="none"><a href="team.html" class="navbar-link" data-nav-link role="menuitem">Team</a></li>
+              <li role="none"><a href="contact.html" class="navbar-link" data-nav-link role="menuitem">Contact</a></li>
+              <li role="none"><a href="login.html" class="navbar-link" role="menuitem">Login</a></li>
+            </ul>
+          </div>
+        </nav>
+
+        <div class="header-bottom-actions">
+          <button class="header-bottom-actions-btn" aria-label="Search properties">
+            <ion-icon name="search-outline"></ion-icon>
+            <span>Search</span>
+          </button>
+          <button class="header-bottom-actions-btn" data-nav-open-btn aria-label="Open Menu">
+            <ion-icon name="menu-outline"></ion-icon>
+            <span>Menu</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <article>
+
+      <!-- =============================================
+           HERO
+      ============================================= -->
+      <section class="hero" id="home" aria-label="Hero section">
+        <div class="hero-bg-slideshow" aria-hidden="true">
+          <div class="bg-slide active" style="background-image:url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1920&auto=format&fit=crop&q=80');"></div>
+          <div class="bg-slide" style="background-image:url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1920&auto=format&fit=crop&q=80');"></div>
+          <div class="bg-slide" style="background-image:url('https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1920&auto=format&fit=crop&q=80');"></div>
+          <div class="bg-slide" style="background-image:url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&auto=format&fit=crop&q=80');"></div>
+          <div class="bg-slide" style="background-image:url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&auto=format&fit=crop&q=80');"></div>
+          <div class="bg-overlay"></div>
+        </div>
+
+        <div class="container">
+          <div class="hero-content" id="heroContent">
+            <p class="hero-eyebrow" id="heroEyebrow">
+              <span class="line"></span>
+              <span id="heroEyebrowText">Premium Real Estate Agency</span>
+            </p>
+            <h1 class="hero-title" id="heroTitle">
+              <span id="heroTitleText">Biver <span class="accent">Royalty</span> Homes</span>
+            </h1>
+            <p class="hero-tagline" id="heroTagline">Where your dreams come true — find premium properties in Owerri, Imo State, built on a foundation of integrity and excellence.</p>
+            <div class="hero-actions" id="heroActions">
+              <a href="property.html" class="hero-btn-primary">
+                <ion-icon name="home-outline"></ion-icon> Explore Properties
+              </a>
+              <a href="contact.html" class="hero-btn-secondary">
+                <ion-icon name="call-outline"></ion-icon> Contact Us
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="hero-stats" aria-label="Company statistics">
+          <div class="container">
+            <div class="stat-item">
+              <div class="stat-icon"><ion-icon name="home-outline"></ion-icon></div>
+              <div class="stat-info">
+                <div class="num">500+</div>
+                <div class="label">Properties Listed</div>
+              </div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-icon"><ion-icon name="people-outline"></ion-icon></div>
+              <div class="stat-info">
+                <div class="num">1,200+</div>
+                <div class="label">Happy Clients</div>
+              </div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-icon"><ion-icon name="star-outline"></ion-icon></div>
+              <div class="stat-info">
+                <div class="num">5★</div>
+                <div class="label">Service Rating</div>
+              </div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-icon"><ion-icon name="ribbon-outline"></ion-icon></div>
+              <div class="stat-info">
+                <div class="num">10+</div>
+                <div class="label">Years Experience</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide dots (vertical, right side) -->
+        <div class="slide-dots" role="tablist" aria-label="Slideshow navigation">
+          <span class="dot active" data-slide="0" role="tab" aria-selected="true" aria-label="Slide 1" tabindex="0"></span>
+          <span class="dot" data-slide="1" role="tab" aria-selected="false" aria-label="Slide 2" tabindex="0"></span>
+          <span class="dot" data-slide="2" role="tab" aria-selected="false" aria-label="Slide 3" tabindex="0"></span>
+          <span class="dot" data-slide="3" role="tab" aria-selected="false" aria-label="Slide 4" tabindex="0"></span>
+          <span class="dot" data-slide="4" role="tab" aria-selected="false" aria-label="Slide 5" tabindex="0"></span>
+        </div>
+      </section>
+
+      <!-- =============================================
+           ABOUT
+      ============================================= -->
+      <section class="about" id="about" aria-label="About us">
+        <div class="container">
+          <figure class="about-banner reveal reveal-left">
+            <img src="./assets/images/image1.webp" alt="Modern house interior" loading="lazy">
+            <img src="./assets/images/image2.webp" alt="Luxury house interior" class="abs-img" loading="lazy">
+          </figure>
+          <div class="about-content">
+            <p class="section-subtitle reveal">About Us</p>
+            <h2 class="h2 section-title reveal reveal-delay-1">The Leading Real Estate Rental Marketplace.</h2>
+            <p class="about-text reveal reveal-delay-2">
+              We are a real estate company that is built on Integrity. We ensure that our clients are able to bring their dream homes to reality all on the budget mapped. We ensure our services are high class and meet our 5 star standard.
+            </p>
+            <ul class="about-list reveal reveal-delay-2">
+              <li class="about-item">
+                <div class="about-item-icon"><ion-icon name="home-outline"></ion-icon></div>
+                <p class="about-item-text">Lease and Rent of Properties</p>
+              </li>
+              <li class="about-item">
+                <div class="about-item-icon"><ion-icon name="leaf-outline"></ion-icon></div>
+                <p class="about-item-text">Estate Management & Property Development</p>
+              </li>
+              <li class="about-item">
+                <div class="about-item-icon"><ion-icon name="wine-outline"></ion-icon></div>
+                <p class="about-item-text">Survey Plan</p>
+              </li>
+              <li class="about-item">
+                <div class="about-item-icon"><ion-icon name="shield-checkmark-outline"></ion-icon></div>
+                <p class="about-item-text">Civil Construction</p>
+              </li>
+            </ul>
+            <p class="callout reveal reveal-delay-3">
+              A Place Where Your Dreams Come True. We are a real estate company built on integrity. Our mission is to help you bring your dream home to life — within your vision, within your budget.
+            </p>
+            <a href="team.html" class="btn reveal reveal-delay-4">Meet Our Team</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================
+           SERVICE
+      ============================================= -->
+      <section class="service" id="service" aria-label="Our services">
+        <div class="container">
+          <p class="section-subtitle reveal">Our Services</p>
+          <h2 class="h2 section-title reveal reveal-delay-1">Our Main Focus</h2>
+          <ul class="service-list">
+            <li class="reveal reveal-delay-1">
+              <div class="service-card">
+                <div class="card-icon"><img src="./assets/images/service-1.png" alt="" aria-hidden="true" loading="lazy"></div>
+                <h3 class="h3 card-title"><a href="property.html">Buy a Home</a></h3>
+                <p class="card-text">Over 1 million+ homes for sale available on the website, we can match you with a house you will want to call home.</p>
+                <a href="property.html" class="card-link">
+                  <span>Find A Home</span>
+                  <ion-icon name="arrow-forward-outline"></ion-icon>
+                </a>
+              </div>
+            </li>
+            <li class="reveal reveal-delay-2">
+              <div class="service-card">
+                <div class="card-icon"><img src="./assets/images/service-2.png" alt="" aria-hidden="true" loading="lazy"></div>
+                <h3 class="h3 card-title"><a href="property.html">Rent a Home</a></h3>
+                <p class="card-text">Over 1 million+ homes for rent available on the website, we can match you with a house you will want to call home.</p>
+                <a href="property.html" class="card-link">
+                  <span>Find A Home</span>
+                  <ion-icon name="arrow-forward-outline"></ion-icon>
+                </a>
+              </div>
+            </li>
+            <li class="reveal reveal-delay-3">
+              <div class="service-card">
+                <div class="card-icon"><img src="./assets/images/service-3.png" alt="" aria-hidden="true" loading="lazy"></div>
+                <h3 class="h3 card-title"><a href="contact.html">Sell a Home</a></h3>
+                <p class="card-text">List your property with us and reach thousands of verified buyers. We ensure a smooth, profitable transaction.</p>
+                <a href="contact.html" class="card-link">
+                  <span>List Property</span>
+                  <ion-icon name="arrow-forward-outline"></ion-icon>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =============================================
+           FEATURED PROPERTIES
+      ============================================= -->
+      <section class="property" id="property" aria-label="Featured properties">
+        <div class="container">
+          <p class="section-subtitle reveal">Properties</p>
+          <h2 class="h2 section-title reveal reveal-delay-1">Featured Listings</h2>
+
+          <div id="propertiesSkeleton" class="properties-skeleton">
+            <div class="skeleton-grid">
+              <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-content"><div class="skeleton-line skeleton-line-short"></div><div class="skeleton-line"></div><div class="skeleton-line skeleton-line-long"></div></div></div>
+              <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-content"><div class="skeleton-line skeleton-line-short"></div><div class="skeleton-line"></div><div class="skeleton-line skeleton-line-long"></div></div></div>
+              <div class="skeleton-card"><div class="skeleton-image"></div><div class="skeleton-content"><div class="skeleton-line skeleton-line-short"></div><div class="skeleton-line"></div><div class="skeleton-line skeleton-line-long"></div></div></div>
+            </div>
+          </div>
+
+          <div id="propertiesError" class="properties-error" style="display:none;" role="alert">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <h3>Failed to load properties</h3>
+            <p>Unable to fetch featured properties. Please check your connection and try again.</p>
+            <button onclick="loadFeaturedProperties()" class="btn" style="margin-top:20px;">Try Again</button>
+          </div>
+          <div id="propertiesEmpty" class="properties-empty" style="display:none;"></div>
+          <ul id="propertiesList" class="property-list has-scrollbar" style="display:none;"></ul>
+        </div>
+      </section>
+
+      <!-- =============================================
+           WHY CHOOSE US (new section)
+      ============================================= -->
+      <section class="why-us" aria-label="Why choose us">
+        <div class="container">
+          <div class="why-us-grid">
+            <div class="why-us-visual reveal reveal-left">
+              <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80" alt="Luxury home interior" class="why-us-img-main" loading="lazy">
+              <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=500&auto=format&fit=crop&q=80" alt="Modern kitchen" class="why-us-img-accent" loading="lazy">
+              <div class="why-us-badge">
+                <div class="num">10+</div>
+                <div class="txt">Years of Excellence</div>
+              </div>
+            </div>
+            <div class="why-us-content">
+              <p class="section-subtitle reveal" style="--text-align:left; margin-inline:0;">Why Choose Us</p>
+              <h2 class="h2 section-title reveal reveal-delay-1" style="text-align:left; margin-bottom:16px;">We Make Buying a Home<br><em>Simple &amp; Secure</em></h2>
+              <p class="why-us-text reveal reveal-delay-2">With over a decade of experience in the Nigerian real estate market, Biver Royalty Homes stands apart through unwavering integrity, personalized service, and deep market knowledge that helps you make confident property decisions.</p>
+              <div class="why-grid reveal reveal-delay-3">
+                <div class="why-item">
+                  <div class="why-item-icon"><ion-icon name="shield-checkmark-outline"></ion-icon></div>
+                  <div>
+                    <p class="why-item-title">Verified Listings</p>
+                    <p class="why-item-text">Every property is thoroughly verified before listing.</p>
+                  </div>
+                </div>
+                <div class="why-item">
+                  <div class="why-item-icon"><ion-icon name="ribbon-outline"></ion-icon></div>
+                  <div>
+                    <p class="why-item-title">Award-Winning</p>
+                    <p class="why-item-text">Recognized excellence in Nigerian real estate.</p>
+                  </div>
+                </div>
+                <div class="why-item">
+                  <div class="why-item-icon"><ion-icon name="people-outline"></ion-icon></div>
+                  <div>
+                    <p class="why-item-title">Expert Agents</p>
+                    <p class="why-item-text">Seasoned professionals ready to guide you.</p>
+                  </div>
+                </div>
+                <div class="why-item">
+                  <div class="why-item-icon"><ion-icon name="headset-outline"></ion-icon></div>
+                  <div>
+                    <p class="why-item-title">24/7 Support</p>
+                    <p class="why-item-text">Always available when you need us most.</p>
+                  </div>
+                </div>
+              </div>
+              <a href="about.html" class="btn reveal reveal-delay-4">Learn More About Us</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================
+           PROCESS (new section)
+      ============================================= -->
+      <section class="process" aria-label="How it works">
+        <div class="container">
+          <p class="section-subtitle reveal">How It Works</p>
+          <h2 class="h2 section-title reveal reveal-delay-1">Find Your Dream Home in 4 Simple Steps</h2>
+          <div class="process-list">
+            <div class="process-item reveal reveal-delay-1">
+              <div class="process-icon"><ion-icon name="search-outline"></ion-icon></div>
+              <h3 class="process-title">Search Property</h3>
+              <p class="process-text">Browse our extensive listings of verified properties across Owerri and Imo State.</p>
+            </div>
+            <div class="process-item reveal reveal-delay-2">
+              <div class="process-icon"><ion-icon name="calendar-outline"></ion-icon></div>
+              <h3 class="process-title">Book a Visit</h3>
+              <p class="process-text">Schedule a site inspection at your convenience with our professional agents.</p>
+            </div>
+            <div class="process-item reveal reveal-delay-3">
+              <div class="process-icon"><ion-icon name="document-text-outline"></ion-icon></div>
+              <h3 class="process-title">Legal Process</h3>
+              <p class="process-text">We handle all documentation and legal verifications to ensure a smooth transaction.</p>
+            </div>
+            <div class="process-item reveal reveal-delay-4">
+              <div class="process-icon"><ion-icon name="key-outline"></ion-icon></div>
+              <h3 class="process-title">Get the Keys</h3>
+              <p class="process-text">Complete the transaction and move into your dream home with full peace of mind.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================
+           FEATURES / AMENITIES
+      ============================================= -->
+      <section class="features" aria-label="Building amenities">
+        <div class="container">
+          <p class="section-subtitle reveal">Our Amenities</p>
+          <h2 class="h2 section-title reveal reveal-delay-1">Building Amenities</h2>
+          <ul class="features-list">
+            <li class="reveal reveal-delay-1">
+              <a href="#" class="features-card">
+                <div class="card-icon"><ion-icon name="car-sport-outline"></ion-icon></div>
+                <h3 class="card-title">Parking Space</h3>
+                <div class="card-btn"><ion-icon name="arrow-forward-outline"></ion-icon></div>
+              </a>
+            </li>
+            <li class="reveal reveal-delay-2">
+              <a href="#" class="features-card">
+                <div class="card-icon"><ion-icon name="water-outline"></ion-icon></div>
+                <h3 class="card-title">Swimming Pool</h3>
+                <div class="card-btn"><ion-icon name="arrow-forward-outline"></ion-icon></div>
+              </a>
+            </li>
+            <li class="reveal reveal-delay-3">
+              <a href="#" class="features-card">
+                <div class="card-icon"><ion-icon name="shield-checkmark-outline"></ion-icon></div>
+                <h3 class="card-title">Private Security</h3>
+                <div class="card-btn"><ion-icon name="arrow-forward-outline"></ion-icon></div>
+              </a>
+            </li>
+            <li class="reveal reveal-delay-4">
+              <a href="#" class="features-card">
+                <div class="card-icon"><ion-icon name="fitness-outline"></ion-icon></div>
+                <h3 class="card-title">Medical Center</h3>
+                <div class="card-btn"><ion-icon name="arrow-forward-outline"></ion-icon></div>
+              </a>
+            </li>
+            <li class="reveal reveal-delay-1">
+              <a href="#" class="features-card">
+                <div class="card-icon"><ion-icon name="library-outline"></ion-icon></div>
+                <h3 class="card-title">Library Area</h3>
+                <div class="card-btn"><ion-icon name="arrow-forward-outline"></ion-icon></div>
+              </a>
+            </li>
+            <li class="reveal reveal-delay-2">
+              <a href="#" class="features-card">
+                <div class="card-icon"><ion-icon name="bed-outline"></ion-icon></div>
+                <h3 class="card-title">King Size Beds</h3>
+                <div class="card-btn"><ion-icon name="arrow-forward-outline"></ion-icon></div>
+              </a>
+            </li>
+            <li class="reveal reveal-delay-3">
+              <a href="#" class="features-card">
+                <div class="card-icon"><ion-icon name="home-outline"></ion-icon></div>
+                <h3 class="card-title">Smart Homes</h3>
+                <div class="card-btn"><ion-icon name="arrow-forward-outline"></ion-icon></div>
+              </a>
+            </li>
+            <li class="reveal reveal-delay-4">
+              <a href="#" class="features-card">
+                <div class="card-icon"><ion-icon name="football-outline"></ion-icon></div>
+                <h3 class="card-title">Kid's Playland</h3>
+                <div class="card-btn"><ion-icon name="arrow-forward-outline"></ion-icon></div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =============================================
+           TESTIMONIALS
+      ============================================= -->
+      <section class="testimonial" id="testimonial" aria-label="Client testimonials">
+        <div class="container">
+          <p class="section-subtitle reveal">Testimonials</p>
+          <h2 class="h2 section-title reveal reveal-delay-1">What Our Clients Say</h2>
+
+          <div id="testimonialsSkeleton" class="testimonials-skeleton">
+            <div class="skeleton-grid">
+              <div class="skeleton-testimonial"></div>
+              <div class="skeleton-testimonial"></div>
+              <div class="skeleton-testimonial"></div>
+            </div>
+          </div>
+          <div id="testimonialsError" class="testimonials-error" style="display:none;" role="alert">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <h3>Failed to load testimonials</h3>
+            <p>Unable to fetch client testimonials. Please try again.</p>
+            <button onclick="loadTestimonials()" class="btn" style="margin-top:20px;">Try Again</button>
+          </div>
+          <div id="testimonialsEmpty" class="testimonials-empty" style="display:none;">
+            <ion-icon name="chatbubbles-outline"></ion-icon>
+            <h3>No Testimonials Yet</h3>
+            <p>Check back soon for client experiences!</p>
+          </div>
+
+          <div id="testimonialsSlider" class="testimonial-slider" style="display:none;">
+            <div class="testimonial-track">
+              <ul id="testimonialsList" class="testimonial-list"></ul>
+            </div>
+            <div class="slider-nav">
+              <button class="slider-prev" id="testimonialPrev" disabled aria-label="Previous">
+                <ion-icon name="chevron-back-outline"></ion-icon>
+              </button>
+              <button class="slider-next" id="testimonialNext" aria-label="Next">
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+              </button>
+            </div>
+            <div class="slider-dots" id="testimonialDots" role="tablist"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================
+           BLOG
+      ============================================= -->
+      <section class="blog" id="blog" aria-label="Latest blog posts">
+        <div class="container">
+          <p class="section-subtitle reveal">News &amp; Blogs</p>
+          <h2 class="h2 section-title reveal reveal-delay-1">Latest News Feeds</h2>
+
+          <div id="blogsSkeleton" class="blogs-skeleton">
+            <div class="skeleton-grid">
+              <div class="skeleton-blog"></div>
+              <div class="skeleton-blog"></div>
+              <div class="skeleton-blog"></div>
+            </div>
+          </div>
+          <div id="blogsError" class="testimonials-error" style="display:none;" role="alert">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <h3>Failed to load blog posts</h3>
+            <button onclick="loadBlogs()" class="btn" style="margin-top:20px;">Try Again</button>
+          </div>
+          <div id="blogsEmpty" class="testimonials-empty" style="display:none;">
+            <ion-icon name="newspaper-outline"></ion-icon>
+            <h3>No Blog Posts Yet</h3>
+          </div>
+          <ul id="blogsList" class="blog-list has-scrollbar" style="display:none;"></ul>
+        </div>
+      </section>
+
+      <!-- =============================================
+           CTA
+      ============================================= -->
+      <section class="cta" aria-label="Call to action">
+        <div class="cta-card">
+          <div class="cta-inner">
+            <div class="cta-content reveal reveal-left">
+              <p class="eyebrow">Ready to Start?</p>
+              <h2 class="card-title">Looking for Your Dream Home?</h2>
+              <p class="card-text">We can help you realize your dream of a new home. Our expert team is ready to guide you every step of the way.</p>
+            </div>
+            <div class="cta-actions reveal reveal-right">
+              <a href="property.html" class="cta-btn-primary">
+                <ion-icon name="home-outline"></ion-icon> Explore Properties
+              </a>
+              <a href="contact.html" class="cta-btn-outline">
+                <ion-icon name="call-outline"></ion-icon> Talk to an Agent
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+  <!-- =============================================
+       FOOTER
+  ============================================= -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <img src="./assets/images/biver-logo.png" alt="Biver Royalty Homes" width="150" height="auto" loading="lazy">
+          </a>
+          <p class="section-text">
+            We are a real estate company built on Integrity. We help our clients bring their dream homes to reality within their budget.
+          </p>
+          <ul class="contact-list">
+            <li>
+              <a href="contact.html" class="contact-link">
+                <ion-icon name="location-outline"></ion-icon>
+                <address>No. 31 Wetheral Road, Angelina Plaza Opposite Reem Fuel Station Owerri, Imo State.</address>
+              </a>
+            </li>
+            <li>
+              <a href="tel:+2349033137432" class="contact-link">
+                <ion-icon name="call-outline"></ion-icon>
+                <span>+234 903 313 7432</span>
+              </a>
+            </li>
+            <li>
+              <a href="mailto:biverroyaltyhomes01@gmail.com" class="contact-link">
+                <ion-icon name="mail-outline"></ion-icon>
+                <span>biverroyaltyhomes01@gmail.com</span>
+              </a>
+            </li>
+          </ul>
+          <ul class="social-list">
+            <li><a href="https://www.facebook.com/share/1B8mwpRi5L/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><ion-icon name="logo-facebook"></ion-icon></a></li>
+            <li><a href="#" class="social-link" aria-label="Twitter"><ion-icon name="logo-twitter"></ion-icon></a></li>
+            <li><a href="https://www.instagram.com/biverroyaltyhomes.ng" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><ion-icon name="logo-instagram"></ion-icon></a></li>
+            <li><a href="https://www.tiktok.com/@biverroyaltyhomesltd" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><ion-icon name="logo-youtube"></ion-icon></a></li>
+          </ul>
+        </div>
+        <div class="footer-link-box">
+          <ul class="footer-list">
+            <li><p class="footer-list-title">Company</p></li>
+            <li><a href="about.html" class="footer-link">About Us</a></li>
+            <li><a href="https://blog.biverroyaltyhomesltd.com/" class="footer-link" target="_blank" rel="noopener noreferrer">Blog</a></li>
+            <li><a href="property.html" class="footer-link">All Properties</a></li>
+            <li><a href="#" class="footer-link">Locations Map</a></li>
+            <li><a href="#" class="footer-link">FAQ</a></li>
+            <li><a href="contact.html" class="footer-link">Contact Us</a></li>
+          </ul>
+          <ul class="footer-list">
+            <li><p class="footer-list-title">Services</p></li>
+            <li><a href="addCart.html" class="footer-link">Order Tracking</a></li>
+            <li><a href="favorites.html" class="footer-link">Wish List</a></li>
+            <li><a href="login.html" class="footer-link">Login</a></li>
+            <li><a href="userDashboard.html" class="footer-link">My Account</a></li>
+            <li><a href="#" class="footer-link">Terms & Conditions</a></li>
+            <li><a href="property.html" class="footer-link">Promotions</a></li>
+          </ul>
+          <ul class="footer-list">
+            <li><p class="footer-list-title">Customer Care</p></li>
+            <li><a href="login.html" class="footer-link">Login</a></li>
+            <li><a href="userDashboard.html" class="footer-link">My Account</a></li>
+            <li><a href="favorites.html" class="footer-link">Wish List</a></li>
+            <li><a href="addCart.html" class="footer-link">Order Tracking</a></li>
+            <li><a href="#" class="footer-link">FAQ</a></li>
+            <li><a href="contact.html" class="footer-link">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p class="copyright">
+          &copy; 2025 <a href="#">Biver Royalty Homes</a>. All Rights Reserved | Designed by <a href="#">ERIBS Tech</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top -->
+  <button id="scrollToTop" aria-label="Scroll to top">
+    <ion-icon name="chevron-up-outline"></ion-icon>
+  </button>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "RealEstateAgent",
+    "name": "Biver Royalty Homes Ltd",
+    "description": "Leading real estate marketplace in Nigeria specializing in property sales, rentals, and estate management.",
+    "url": "https://biverroyaltyhomesltd.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "No. 31 Wetheral Road, Angelina Plaza",
+      "addressLocality": "Owerri",
+      "addressRegion": "Imo State",
+      "addressCountry": "NG"
+    },
+    "telephone": "+2349033137432",
+    "email": "biverroyaltyhomes01@gmail.com"
+  }
+  </script>
+
+  <!-- Ionicons -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <script>
+    'use strict';
+
+    // =============================================
+    // API CONFIG
+    // =============================================
+    const API_BASE_URL = "https://api.biverroyaltyhomesltd.com/api";
+
+    const api = {
+      getHeaders() {
+        const headers = { "Content-Type": "application/json" };
+        const token = localStorage.getItem('token');
+        if (token) headers["Authorization"] = `Bearer ${token}`;
+        return headers;
+      },
+      async get(endpoint) {
+        const response = await fetch(`${API_BASE_URL}${endpoint}`, { headers: this.getHeaders() });
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        return await response.json();
+      },
+      async post(endpoint, data = {}) {
+        const response = await fetch(`${API_BASE_URL}${endpoint}`, { method: 'POST', headers: this.getHeaders(), body: JSON.stringify(data) });
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        return await response.json();
+      },
+      async delete(endpoint) {
+        const response = await fetch(`${API_BASE_URL}${endpoint}`, { method: 'DELETE', headers: this.getHeaders() });
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        return await response.json();
+      },
+      async getCurrentUser() { return await this.get('/users/me'); },
+      async getProperties(params = {}) {
+        const queryString = new URLSearchParams(params).toString();
+        return await this.get(`/properties${queryString ? '?' + queryString : ''}`);
+      },
+      async getFavorites() { return await this.get('/favorites'); },
+      async addToFavorites(propertyId) { return await this.post(`/favorites/${propertyId}`); },
+      async removeFromFavorites(propertyId) { return await this.delete(`/favorites/${propertyId}`); },
+      async getCart() { return await this.get('/cart'); },
+      async addToCart(propertyId) { return await this.post(`/cart/${propertyId}`); },
+      async removeFromCart(propertyId) { return await this.delete(`/cart/${propertyId}`); },
+      async getTestimonials() { return await this.get('/testimonials'); },
+      async getBlogs() { return await this.get('/blogs'); }
+    };
+
+    const utils = {
+      formatNumber(num) {
+        if (!num) return '0';
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      },
+      showToast(message, type = 'success') {
+        const existing = document.querySelector('.toast-notification');
+        if (existing) existing.remove();
+        const toast = document.createElement('div');
+        toast.className = `toast-notification ${type === 'error' ? 'toast-error' : ''}`;
+        toast.setAttribute('role', 'alert');
+        toast.innerHTML = `
+          <div class="toast-content">
+            <ion-icon name="${type === 'success' ? 'checkmark-circle' : 'alert-circle'}-outline"></ion-icon>
+            <span>${message}</span>
+          </div>
+          <button class="toast-close" onclick="this.parentElement.remove()" aria-label="Close">
+            <ion-icon name="close-outline"></ion-icon>
+          </button>`;
+        document.body.appendChild(toast);
+        setTimeout(() => { if (toast.parentElement) toast.remove(); }, 3500);
+      },
+      isAuthenticated() { return !!localStorage.getItem('token'); },
+      redirectToLogin() { window.location.href = 'login.html'; },
+      truncate(text, length = 90) {
+        if (!text) return '';
+        return text.length > length ? text.substring(0, length) + '...' : text;
+      },
+      formatDate(dateString) {
+        if (!dateString) return 'Recently';
+        return new Date(dateString).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      },
+      getInitials(name) {
+        return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+      }
+    };
+
+    // =============================================
+    // HERO SLIDESHOW WITH CONTENT TRANSITIONS
+    // =============================================
+    const heroSlides = [
+      {
+        eyebrow: "Premium Real Estate Agency",
+        title: "Biver <span class='accent'>Royalty</span> Homes",
+        tagline: "Where your dreams come true — find premium properties in Owerri, Imo State, built on a foundation of integrity and excellence."
+      },
+      {
+        eyebrow: "Luxury Properties",
+        title: "Find Your <span class='accent'>Dream</span> Home",
+        tagline: "Explore our curated selection of luxurious homes, from elegant apartments to expansive estates tailored to your lifestyle."
+      },
+      {
+        eyebrow: "Trusted Since 2015",
+        title: "Built on <span class='accent'>Integrity</span>",
+        tagline: "Over 1,200 happy families have trusted us to guide them home. Experience real estate the way it should be — transparent, efficient, and personal."
+      },
+      {
+        eyebrow: "Buy, Rent or Sell",
+        title: "Your Property <span class='accent'>Journey</span> Starts Here",
+        tagline: "Whether you're buying your first home, renting a space, or selling your property, our expert team walks every step with you."
+      },
+      {
+        eyebrow: "Expert Market Knowledge",
+        title: "Owerri's <span class='accent'>Finest</span> Real Estate",
+        tagline: "With deep roots in Imo State, we know the best neighborhoods, the fairest prices, and the right time to make your move."
+      }
+    ];
+
+    let currentSlide = 0;
+    let slideTimer;
+
+    function animateHeroContent() {
+      const content = document.getElementById('heroContent');
+      if (!content) return;
+      content.classList.remove('slide-active');
+      void content.offsetWidth;
+      content.classList.add('slide-active');
+    }
+
+    function updateHeroText(index) {
+      const slide = heroSlides[index];
+      const titleEl = document.getElementById('heroTitleText');
+      const taglineEl = document.getElementById('heroTagline');
+      const eyebrowEl = document.getElementById('heroEyebrowText');
+
+      if (titleEl) titleEl.innerHTML = slide.title;
+      if (taglineEl) taglineEl.textContent = slide.tagline;
+      if (eyebrowEl) eyebrowEl.textContent = slide.eyebrow;
+      animateHeroContent();
+    }
+
+    function showSlide(index) {
+      const bgSlides = document.querySelectorAll('.bg-slide');
+      const dots = document.querySelectorAll('.slide-dots .dot');
+
+      bgSlides.forEach(s => s.classList.remove('active'));
+      dots.forEach(d => { d.classList.remove('active'); d.setAttribute('aria-selected', 'false'); });
+
+      if (bgSlides[index]) bgSlides[index].classList.add('active');
+      if (dots[index]) { dots[index].classList.add('active'); dots[index].setAttribute('aria-selected', 'true'); }
+
+      updateHeroText(index);
+      currentSlide = index;
+    }
+
+    function nextSlide() {
+      const bgSlides = document.querySelectorAll('.bg-slide');
+      showSlide((currentSlide + 1) % bgSlides.length);
+    }
+
+    function startSlideshow() {
+      clearInterval(slideTimer);
+      slideTimer = setInterval(nextSlide, 5500);
+    }
+
+    // =============================================
+    // SCROLL REVEAL
+    // =============================================
+    function initScrollReveal() {
+      const revealEls = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      revealEls.forEach(el => observer.observe(el));
+    }
+
+    // =============================================
+    // HEADER SCROLL BEHAVIOR
+    // =============================================
+    function initHeaderScroll() {
+      const header = document.getElementById('header');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 80) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      }, { passive: true });
+    }
+
+    // =============================================
+    // SCROLL TO TOP
+    // =============================================
+    function initScrollToTop() {
+      const btn = document.getElementById('scrollToTop');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 600) {
+          btn.classList.add('visible');
+        } else {
+          btn.classList.remove('visible');
+        }
+      }, { passive: true });
+      btn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    // =============================================
+    // NAVBAR MOBILE TOGGLE
+    // =============================================
+    function initNavbar() {
+      const navbar = document.querySelector("[data-navbar]");
+      const overlay = document.querySelector("[data-overlay]");
+      const navCloseBtn = document.querySelector("[data-nav-close-btn]");
+      const navOpenBtn = document.querySelector("[data-nav-open-btn]");
+      const navbarLinks = document.querySelectorAll("[data-nav-link]");
+
+      const toggle = () => {
+        navbar.classList.toggle("active");
+        overlay.classList.toggle("active");
+      };
+
+      [navOpenBtn, navCloseBtn, overlay].forEach(el => {
+        if (el) el.addEventListener("click", toggle);
+      });
+      navbarLinks.forEach(link => link.addEventListener("click", () => {
+        navbar.classList.remove("active");
+        overlay.classList.remove("active");
+      }));
+    }
+
+    // =============================================
+    // PROPERTIES MODULE
+    // =============================================
+    let featuredProperties = [];
+    let userFavorites = [];
+    let userCart = [];
+    let currentUser = null;
+
+    const propertiesSkeleton = document.getElementById('propertiesSkeleton');
+    const propertiesList = document.getElementById('propertiesList');
+    const propertiesError = document.getElementById('propertiesError');
+    const propertiesEmpty = document.getElementById('propertiesEmpty');
+    const headerCartCount = document.getElementById('headerCartCount');
+
+    async function checkUserAuthentication() {
+      if (!utils.isAuthenticated()) return;
+      try {
+        const data = await api.getCurrentUser();
+        currentUser = data.user || data;
+        await Promise.all([loadUserFavorites(), loadUserCart()]);
+      } catch (error) {
+        localStorage.removeItem('token');
+      }
+    }
+
+    async function loadUserFavorites() {
+      if (!currentUser) return;
+      try {
+        const data = await api.getFavorites();
+        userFavorites = data.favorites || data || [];
+      } catch (e) {}
+    }
+
+    async function loadUserCart() {
+      if (!currentUser) return;
+      try {
+        const data = await api.getCart();
+        userCart = data.cart || data || [];
+        updateCartCount();
+      } catch (e) {}
+    }
+
+    function updateCartCount() {
+      if (!headerCartCount) return;
+      if (userCart.length > 0) {
+        headerCartCount.textContent = userCart.length;
+        headerCartCount.style.display = 'flex';
+      } else {
+        headerCartCount.style.display = 'none';
+      }
+    }
+
+    function isPropertyFavorite(id) {
+      return userFavorites.some(f => f._id === id || f.property === id || f.property?._id === id || f.propertyId === id);
+    }
+
+    function isPropertyInCart(id) {
+      return userCart.some(i => i._id === id || i.property === id || i.property?._id === id || i.propertyId === id);
+    }
+
+    async function loadFeaturedProperties() {
+      try {
+        propertiesSkeleton.style.display = 'block';
+        propertiesList.style.display = 'none';
+        propertiesError.style.display = 'none';
+        propertiesEmpty.style.display = 'none';
+
+        const data = await api.getProperties({ limit: 20 });
+        if (data.properties && data.properties.length > 0) {
+          const approved = data.properties.filter(p => p.approvalStatus === "approved");
+          if (approved.length > 0) {
+            featuredProperties = approved.slice(0, 8);
+            displayProperties(featuredProperties);
+          } else {
+            showPropertiesEmpty('No Approved Properties', "We're reviewing properties. Check back soon!", true);
+          }
+        } else {
+          showPropertiesEmpty('No Properties Available', 'There are currently no properties. Check back later.', false);
+        }
+      } catch (error) {
+        propertiesSkeleton.style.display = 'none';
+        propertiesError.style.display = 'flex';
+      }
+    }
+
+    function displayProperties(properties) {
+      propertiesSkeleton.style.display = 'none';
+      propertiesError.style.display = 'none';
+      propertiesEmpty.style.display = 'none';
+      propertiesList.innerHTML = '';
+      properties.forEach(p => propertiesList.appendChild(createPropertyCard(p)));
+      propertiesList.style.display = 'flex';
+    }
+
+    function createPropertyCard(property) {
+      const li = document.createElement('li');
+      const priceDisplay = property.type === 'rent'
+        ? `₦${utils.formatNumber(property.price)}/Month`
+        : `₦${utils.formatNumber(property.price)}`;
+      const imageUrl = property.images && property.images.length > 0
+        ? property.images[0]
+        : 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop';
+      const hasVideo = property.videos && property.videos.length > 0;
+      const videoUrl = hasVideo ? property.videos[0] : null;
+      const badgeClass = property.type === 'rent' ? 'green' : 'orange';
+      const badgeText = property.type === 'rent' ? 'For Rent' : 'For Sale';
+      const isNew = property.createdAt && (new Date() - new Date(property.createdAt)) < 7 * 24 * 60 * 60 * 1000;
+      const isFavorite = isPropertyFavorite(property._id);
+      const isInCart = isPropertyInCart(property._id);
+      const agentName = property.agent?.name || 'Biver Royalty Homes';
+      const showVerification = property.approvalStatus === 'approved';
+
+      let mediaHtml = hasVideo
+        ? `<video src="${API_BASE_URL.replace('/api', '')}${videoUrl}" poster="${API_BASE_URL.replace('/api', '')}${imageUrl}" controls preload="metadata" playsinline aria-label="Video tour of ${property.title}"></video>
+           <div class="video-badge"><ion-icon name="videocam"></ion-icon><span>Video Tour</span></div>`
+        : `<img src="${API_BASE_URL.replace('/api', '')}${imageUrl}" alt="${property.title}" class="w-100" loading="lazy">`;
+
+      li.innerHTML = `
+        <div class="property-card">
+          <figure class="card-banner">
+            <a href="property-detail.html?id=${property._id}">${mediaHtml}</a>
+            ${isNew ? '<div class="card-badge new-badge">New</div>' : ''}
+            <div class="card-badge ${badgeClass}">${badgeText}</div>
+            <div class="banner-actions">
+              <button class="banner-actions-btn" aria-label="Location">
+                <ion-icon name="location"></ion-icon>
+                <span>${property.location || 'Location not specified'}</span>
+              </button>
+              ${property.images?.length ? `<button class="banner-actions-btn" aria-label="Photos"><ion-icon name="camera"></ion-icon><span>${property.images.length}</span></button>` : ''}
+            </div>
+          </figure>
+          <div class="card-content">
+            <div class="card-price"><strong>${priceDisplay}</strong></div>
+            <h3 class="h3 card-title"><a href="property-detail.html?id=${property._id}">${property.title}</a></h3>
+            <p class="card-text">${utils.truncate(property.description)}</p>
+            <ul class="card-list">
+              <li class="card-item"><ion-icon name="bed-outline"></ion-icon> <strong>${property.bedrooms || 1}</strong><span>Beds</span></li>
+              <li class="card-item"><ion-icon name="man-outline"></ion-icon> <strong>${property.bathrooms || 1}</strong><span>Baths</span></li>
+              ${property.area ? `<li class="card-item"><ion-icon name="square-outline"></ion-icon> <strong>${utils.formatNumber(property.area)}</strong><span>ft²</span></li>` : ''}
+            </ul>
+          </div>
+          <div class="card-footer">
+            <div class="card-author">
+              <figure class="author-avatar"><img src="./assets/images/author.jpg" alt="Agent" class="w-100" loading="lazy"></figure>
+              <div>
+                <p class="author-name">
+                  ${showVerification
+                    ? `<a href="#">${agentName} <span class="verified-badge" title="Verified"><ion-icon name="checkmark-circle"></ion-icon><span class="verified-text">Verified</span></span></a>`
+                    : `<a href="#">${agentName}</a>`}
+                </p>
+                <p class="author-title">Estate Agent</p>
+              </div>
+            </div>
+            <div class="card-footer-actions">
+              <button class="card-footer-actions-btn ${isFavorite ? 'favorited' : ''}"
+                      onclick="toggleFavorite('${property._id}', this)"
+                      aria-label="${isFavorite ? 'Remove from favorites' : 'Add to favorites'}">
+                <ion-icon name="${isFavorite ? 'heart' : 'heart-outline'}"></ion-icon>
+              </button>
+              <button class="card-footer-actions-btn ${isInCart ? 'in-cart' : ''}"
+                      onclick="addToCart('${property._id}', this)"
+                      aria-label="${isInCart ? 'Remove from cart' : 'Add to cart'}">
+                <ion-icon name="${isInCart ? 'checkmark-circle' : 'add-circle-outline'}"></ion-icon>
+              </button>
+            </div>
+          </div>
+        </div>`;
+      return li;
+    }
+
+    async function toggleFavorite(propertyId, button) {
+      if (!utils.isAuthenticated()) {
+        utils.showToast('Please login to save favorites', 'error');
+        setTimeout(() => utils.redirectToLogin(), 1500);
+        return;
+      }
+      try {
+        const isFav = isPropertyFavorite(propertyId);
+        if (isFav) {
+          await api.removeFromFavorites(propertyId);
+          button.querySelector('ion-icon').name = 'heart-outline';
+          button.classList.remove('favorited');
+          userFavorites = userFavorites.filter(f => f._id !== propertyId && f.property !== propertyId && f.propertyId !== propertyId);
+          utils.showToast('Removed from favorites');
+        } else {
+          await api.addToFavorites(propertyId);
+          button.querySelector('ion-icon').name = 'heart';
+          button.classList.add('favorited');
+          userFavorites.push({ propertyId });
+          utils.showToast('Added to favorites');
+        }
+      } catch (e) { utils.showToast('Error updating favorites', 'error'); }
+    }
+
+    async function addToCart(propertyId, button) {
+      if (!utils.isAuthenticated()) {
+        utils.showToast('Please login to add to cart', 'error');
+        setTimeout(() => utils.redirectToLogin(), 1500);
+        return;
+      }
+      try {
+        const inCart = isPropertyInCart(propertyId);
+        if (inCart) {
+          await api.removeFromCart(propertyId);
+          button.querySelector('ion-icon').name = 'add-circle-outline';
+          button.classList.remove('in-cart');
+          userCart = userCart.filter(i => i._id !== propertyId && i.property !== propertyId && i.propertyId !== propertyId);
+          updateCartCount();
+          utils.showToast('Removed from cart');
+        } else {
+          await api.addToCart(propertyId);
+          button.querySelector('ion-icon').name = 'checkmark-circle';
+          button.classList.add('in-cart');
+          userCart.push({ propertyId });
+          updateCartCount();
+          utils.showToast('Added to cart!');
+        }
+      } catch (e) { utils.showToast('Error updating cart', 'error'); }
+    }
+
+    function showPropertiesEmpty(title, message, isApproved = false) {
+      propertiesSkeleton.style.display = 'none';
+      propertiesError.style.display = 'none';
+      propertiesEmpty.style.display = 'flex';
+      propertiesList.style.display = 'none';
+      propertiesEmpty.innerHTML = `
+        <ion-icon name="${isApproved ? 'time-outline' : 'home-outline'}"></ion-icon>
+        <h3>${title}</h3><p>${message}</p>
+        <a href="${isApproved ? 'property.html' : 'contact.html'}" class="btn" style="margin-top:20px;">
+          ${isApproved ? 'Browse All Properties' : 'Contact Us'}
+        </a>`;
+    }
+
+    // =============================================
+    // TESTIMONIALS MODULE
+    // =============================================
+    let testimonials = [];
+    let currentTestimonialSlide = 0;
+    let testimonialsPerSlide = 3;
+
+    async function loadTestimonials() {
+      const skeleton = document.getElementById('testimonialsSkeleton');
+      const error = document.getElementById('testimonialsError');
+      const empty = document.getElementById('testimonialsEmpty');
+      const slider = document.getElementById('testimonialsSlider');
+      try {
+        skeleton.style.display = 'block';
+        const data = await api.getTestimonials();
+        if (data.data && data.data.length > 0) {
+          testimonials = data.data;
+          displayTestimonials(testimonials);
+        } else {
+          skeleton.style.display = 'none';
+          empty.style.display = 'flex';
+        }
+      } catch (e) {
+        skeleton.style.display = 'none';
+        error.style.display = 'flex';
+      }
+    }
+
+    function displayTestimonials(testimonials) {
+      const skeleton = document.getElementById('testimonialsSkeleton');
+      const slider = document.getElementById('testimonialsSlider');
+      const listEl = document.getElementById('testimonialsList');
+      skeleton.style.display = 'none';
+      listEl.innerHTML = '';
+      testimonials.forEach(t => listEl.appendChild(createTestimonialCard(t)));
+      slider.style.display = 'block';
+      generateTestimonialDots();
+      updateTestimonialSlider();
+
+      const prev = document.getElementById('testimonialPrev');
+      const next = document.getElementById('testimonialNext');
+      prev.onclick = () => { if (currentTestimonialSlide > 0) { currentTestimonialSlide--; updateTestimonialSlider(); } };
+      next.onclick = () => {
+        const max = Math.ceil(testimonials.length / testimonialsPerSlide) - 1;
+        if (currentTestimonialSlide < max) { currentTestimonialSlide++; updateTestimonialSlider(); }
+      };
+    }
+
+    function createTestimonialCard(testimonial) {
+      const li = document.createElement('li');
+      li.className = 'testimonial-item';
+      const initials = utils.getInitials(testimonial.name);
+      li.innerHTML = `
+        <div class="testimonial-card">
+          <div class="testimonial-quote-icon"><ion-icon name="chatbubble-ellipses-outline"></ion-icon></div>
+          <div class="testimonial-avatar ${!testimonial.image ? 'no-image' : ''}">
+            ${testimonial.image
+              ? `<img src="${API_BASE_URL.replace('/api', '')}${testimonial.image}" alt="${testimonial.name}" loading="lazy">`
+              : `<span>${initials}</span>`}
+          </div>
+          <div class="testimonial-stars">
+            ${Array(5).fill('<ion-icon name="star"></ion-icon>').join('')}
+          </div>
+          <div class="testimonial-content">
+            <p class="testimonial-text">${testimonial.message}</p>
+          </div>
+          <div class="testimonial-author">
+            <h4>${testimonial.name}</h4>
+            <p>Happy Client</p>
+          </div>
+        </div>`;
+      return li;
+    }
+
+    function generateTestimonialDots() {
+      const dotsEl = document.getElementById('testimonialDots');
+      const total = Math.ceil(testimonials.length / testimonialsPerSlide);
+      dotsEl.innerHTML = '';
+      for (let i = 0; i < total; i++) {
+        const dot = document.createElement('button');
+        dot.className = `slider-dot ${i === 0 ? 'active' : ''}`;
+        dot.setAttribute('aria-label', `Slide ${i + 1}`);
+        dot.onclick = () => { currentTestimonialSlide = i; updateTestimonialSlider(); };
+        dotsEl.appendChild(dot);
+      }
+    }
+
+    function updateTestimonialSlider() {
+      const listEl = document.getElementById('testimonialsList');
+      const prev = document.getElementById('testimonialPrev');
+      const next = document.getElementById('testimonialNext');
+      const total = Math.ceil(testimonials.length / testimonialsPerSlide);
+      listEl.style.transform = `translateX(-${currentTestimonialSlide * 100}%)`;
+      prev.disabled = currentTestimonialSlide === 0;
+      next.disabled = currentTestimonialSlide === total - 1;
+      document.querySelectorAll('.slider-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === currentTestimonialSlide);
+      });
+    }
+
+    function updateTestimonialsPerSlide() {
+      testimonialsPerSlide = window.innerWidth >= 992 ? 3 : window.innerWidth >= 768 ? 2 : 1;
+      currentTestimonialSlide = 0;
+      if (testimonials.length > 0) { generateTestimonialDots(); updateTestimonialSlider(); }
+    }
+
+    // =============================================
+    // BLOGS MODULE
+    // =============================================
+    async function loadBlogs() {
+      const skeleton = document.getElementById('blogsSkeleton');
+      const error = document.getElementById('blogsError');
+      const empty = document.getElementById('blogsEmpty');
+      const list = document.getElementById('blogsList');
+      try {
+        skeleton.style.display = 'block';
+        const data = await api.getBlogs();
+        const posts = data.posts || data.data || [];
+        if (posts.length === 0) { skeleton.style.display = 'none'; empty.style.display = 'flex'; return; }
+        skeleton.style.display = 'none';
+        list.innerHTML = '';
+        posts.slice(0, 6).forEach(p => list.appendChild(createBlogCard(p)));
+        list.style.display = 'flex';
+      } catch (e) {
+        document.getElementById('blogsSkeleton').style.display = 'none';
+        error.style.display = 'flex';
+      }
+    }
+
+    function createBlogCard(post) {
+      const li = document.createElement('li');
+      const coverImage = post.coverImage || './assets/images/blog-1.png';
+      const authorName = post.createdBy?.name || 'Admin';
+      const primaryTag = Array.isArray(post.tags) && post.tags.length > 0 ? post.tags[0] : 'real-estate';
+      const dateLabel = utils.formatDate(post.publishedAt || post.createdAt);
+      const postUrl = `blog-detail.html?slug=${encodeURIComponent(post.slug || '')}`;
+      li.innerHTML = `
+        <div class="blog-card">
+          <figure class="card-banner"><img src="${coverImage}" alt="${post.title || 'Blog'}" class="w-100" loading="lazy"></figure>
+          <div class="blog-content">
+            <ul class="card-meta-list">
+              <li><a href="${postUrl}" class="card-meta-link"><ion-icon name="person"></ion-icon><span>by: ${authorName}</span></a></li>
+              <li><a href="${postUrl}" class="card-meta-link"><ion-icon name="pricetags"></ion-icon><span>${primaryTag}</span></a></li>
+            </ul>
+            <h3 class="h3 blog-title"><a href="${postUrl}">${post.title || 'Blog Post'}</a></h3>
+            <div class="blog-content-bottom">
+              <div class="publish-date"><ion-icon name="calendar"></ion-icon><time>${dateLabel}</time></div>
+              <a href="${postUrl}" class="read-more-btn">Read More <ion-icon name="arrow-forward-outline"></ion-icon></a>
+            </div>
+          </div>
+        </div>`;
+      return li;
+    }
+
+    // =============================================
+    // COUNTER ANIMATION
+    // =============================================
+    function animateCounter(el, target, duration = 2000) {
+      const start = Date.now();
+      const startVal = 0;
+      const update = () => {
+        const elapsed = Date.now() - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.floor(startVal + (target - startVal) * eased);
+        el.textContent = current.toLocaleString() + (el.dataset.suffix || '');
+        if (progress < 1) requestAnimationFrame(update);
+      };
+      requestAnimationFrame(update);
+    }
+
+    // =============================================
+    // INIT
+    // =============================================
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Hero slideshow
+      const dots = document.querySelectorAll('.slide-dots .dot');
+      dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => { showSlide(i); startSlideshow(); });
+        dot.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { showSlide(i); startSlideshow(); } });
+      });
+      showSlide(0);
+      startSlideshow();
+
+      // Core inits
+      initNavbar();
+      initHeaderScroll();
+      initScrollToTop();
+      initScrollReveal();
+
+      // Responsive testimonials
+      updateTestimonialsPerSlide();
+      window.addEventListener('resize', updateTestimonialsPerSlide);
+
+      // Data
+      await checkUserAuthentication();
+      await Promise.all([
+        loadFeaturedProperties(),
+        loadTestimonials(),
+        loadBlogs()
+      ]);
+    });
+  </script>
+</body>
+</html>

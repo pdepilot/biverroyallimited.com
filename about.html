@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Biver Royalty Homes - The untold story of integrity, vision, and architectural excellence in Nigerian real estate.">
+  <meta name="keywords" content="about Biver Royalty, real estate story, Nigerian real estate, Owerri property, luxury homes">
+  <meta name="author" content="Biver Royalty Homes Ltd">
+  <title>About Us | The Biver Royalty Story</title>
+  <link rel="shortcut icon" href="./assets/images/BIVER ROYALTY HOMES LTD LOGO_052927 (1).png" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* =============================================
+       RESET & VARIABLES (consistent with main site)
+    ============================================= */
+    :root {
+      --prussian-blue: #371801;
+      --gold: #D4AF37;
+      --gold-light: #FFD700;
+      --gold-dark: #B8860B;
+      --gold-gradient: linear-gradient(90deg, #D4AF37 0%, #FFD700 50%, #B8860B 100%);
+      --raisin-black-1: hsl(31, 94%, 12%);
+      --raisin-black-2: hsl(34, 82%, 25%);
+      --cultured-1: hsl(0, 0%, 93%);
+      --cultured-2: hsl(192, 24%, 96%);
+      --cadet: hsl(200, 15%, 43%);
+      --white: #ffffff;
+      --black: #000000;
+      --dark-jungle-green: hsl(188, 63%, 7%);
+      --misty-rose: hsl(7, 56%, 91%);
+      --seashell: hsl(8, 100%, 97%);
+      --opal: hsl(180, 20%, 62%);
+      --alice-blue: hsl(210, 100%, 97%);
+      --orange-soda: #D4AF37;
+      --shadow-1: 0 5px 20px 0 hsla(219, 56%, 21%, 0.1);
+      --shadow-2: 0 16px 32px hsla(188, 63%, 7%, 0.1);
+      --ff-display: 'Cormorant Garamond', serif;
+      --ff-body: 'Outfit', sans-serif;
+      --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      --section-padding: 100px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--ff-body);
+      background: var(--white);
+      overflow-x: hidden;
+      color: var(--dark-jungle-green);
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--prussian-blue); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+    /* =============================================
+       TOP BAR (from index)
+    ============================================= */
+    .topbar {
+      background: var(--prussian-blue);
+      padding-block: 10px;
+      position: relative;
+      z-index: 1001;
+      overflow: hidden;
+    }
+    .topbar::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 1px;
+      background: var(--gold-gradient);
+    }
+    .topbar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: 20px;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .topbar-link {
+      display: flex; align-items: center; gap: 6px;
+      color: rgba(255,255,255,0.75);
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.3px;
+      transition: color 0.3s;
+      text-decoration: none;
+    }
+    .topbar-link ion-icon {
+      color: var(--gold);
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .topbar-link:hover { color: var(--gold-light); }
+    .topbar-divider {
+      width: 1px; height: 14px;
+      background: rgba(255,255,255,0.15);
+    }
+    .topbar-right { display: flex; align-items: center; gap: 16px; }
+    .topbar-socials { display: flex; align-items: center; gap: 6px; }
+    .topbar-social-link {
+      width: 28px; height: 28px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      color: rgba(255,255,255,0.6);
+      font-size: 13px;
+      transition: all 0.3s;
+    }
+    .topbar-social-link:hover {
+      background: var(--gold);
+      color: var(--prussian-blue);
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+    .topbar-cta {
+      background: var(--gold-gradient);
+      color: var(--prussian-blue);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 2px;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+    .topbar-cta:hover {
+      background: var(--white);
+      color: var(--prussian-blue);
+      box-shadow: 0 4px 15px rgba(212,175,55,0.4);
+    }
+
+    /* =============================================
+       HEADER / NAVBAR (from index)
+    ============================================= */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .header-bottom {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding-block: 18px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    }
+    .header.scrolled .header-bottom {
+      background: var(--prussian-blue);
+      border-bottom-color: rgba(212, 175, 55, 0.3);
+      padding-block: 12px;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+    }
+    .header.scrolled .navbar-link { color: rgba(255,255,255,0.75); }
+    .header.scrolled .navbar-link:hover { color: var(--gold-light); }
+    .header.scrolled .header-bottom-actions-btn ion-icon { color: rgba(255,255,255,0.8); }
+    .header.scrolled .header-bottom-actions-btn:hover ion-icon { color: var(--gold-light); }
+    .header.scrolled .header-bottom-actions-btn span { color: rgba(255,255,255,0.6); }
+
+    .header-bottom .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: 20px;
+      gap: 20px;
+    }
+
+    .logo img { height: 50px; width: auto; transition: transform 0.3s; }
+    .logo:hover img { transform: scale(1.03); }
+
+    .navbar {
+      background: var(--white);
+      position: fixed;
+      top: 0; left: -320px;
+      max-width: 310px; width: 100%;
+      height: 100%;
+      box-shadow: 5px 0 30px rgba(0,0,0,0.15);
+      z-index: 1002;
+      padding: 60px 30px;
+      visibility: hidden;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .navbar.active {
+      visibility: visible;
+      transform: translateX(320px);
+    }
+    .navbar-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 35px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      margin-bottom: 30px;
+    }
+    .nav-close-btn { background: none; border: none; cursor: pointer; }
+    .nav-close-btn ion-icon { font-size: 22px; color: var(--prussian-blue); }
+    .nav-close-btn:hover ion-icon { color: var(--gold-dark); }
+
+    .navbar-link {
+      color: var(--dark-jungle-green);
+      font-size: 14px;
+      font-weight: var(--fw-500);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding-block: 14px;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+    .navbar-link:is(:hover, :focus) { color: var(--gold-dark); padding-left: 6px; }
+
+    .overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.65);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.4s;
+      z-index: 1001;
+      backdrop-filter: blur(3px);
+    }
+    .overlay.active { opacity: 1; pointer-events: all; }
+
+    .header-bottom-actions {
+      display: flex; align-items: center; gap: 6px;
+    }
+    .header-bottom-actions-btn {
+      width: 42px; height: 42px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      position: relative;
+      transition: all 0.3s;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .header-bottom-actions-btn ion-icon {
+      font-size: 20px;
+      color: var(--prussian-blue);
+      transition: color 0.3s;
+    }
+    .header-bottom-actions-btn span {
+      color: var(--gold-dark);
+      font-size: 10px;
+      font-weight: 600;
+      display: none;
+    }
+    .header-bottom-actions-btn:hover {
+      background: rgba(212,175,55,0.1);
+    }
+    .header-bottom-actions-btn:hover ion-icon { color: var(--gold-dark); }
+
+    .cart-count-badge {
+      position: absolute; top: 2px; right: 2px;
+      background: var(--gold);
+      color: var(--prussian-blue);
+      font-size: 10px; font-weight: 700;
+      min-width: 16px; height: 16px;
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 4px;
+      border: 2px solid white;
+    }
+
+    @media (min-width: 1200px) {
+      .navbar, .navbar.active { all: unset; }
+      .navbar-bottom { display: flex; align-items: center; }
+      .navbar-list { display: flex; align-items: center; gap: 8px; margin: 0; padding: 0; }
+      .navbar-top, .overlay, .header-bottom-actions-btn:last-child { display: none; }
+      .navbar-link {
+        color: var(--dark-jungle-green);
+        font-size: 12px; letter-spacing: 1.5px;
+        padding: 10px 14px;
+        border-bottom: none;
+        border-radius: 4px;
+        position: relative;
+      }
+      .navbar-link::after {
+        content: '';
+        position: absolute; bottom: 4px; left: 14px;
+        width: 0; height: 1.5px;
+        background: var(--gold-gradient);
+        transition: width 0.3s;
+      }
+      .navbar-link:hover::after { width: calc(100% - 28px); }
+      .navbar-link:hover { padding-left: 14px; }
+      .header.scrolled .navbar-link { color: rgba(255,255,255,0.8); }
+      .header.scrolled .navbar-link:hover { color: var(--gold-light); }
+    }
+
+    @media (max-width: 767px) {
+      .header-bottom-actions {
+        background: var(--white);
+        position: fixed;
+        bottom: 0; left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        padding-block: 12px 10px;
+        box-shadow: 0 -2px 30px rgba(0,0,0,0.1);
+        z-index: 100;
+        border-top: 1px solid rgba(212,175,55,0.2);
+      }
+      .header-bottom-actions-btn { flex-direction: column; height: auto; width: auto; padding: 4px 10px; border-radius: 8px; }
+      .header-bottom-actions-btn span { display: block; }
+      .footer { margin-bottom: 70px; }
+    }
+
+    /* =============================================
+       CUSTOM ABOUT PAGE STYLES (preserved)
+    ============================================= */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: 30px;
+    }
+
+    /* Hero Section - Cinematic */
+    .about-hero {
+      position: relative;
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--prussian-blue) 0%, #1a0a00 100%);
+    }
+
+    .hero-bg-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.4;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 30%;
+      right: -20%;
+      width: 80%;
+      height: 80%;
+      background: radial-gradient(circle, rgba(212,175,55,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .about-hero .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-subtitle {
+      font-size: 12px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      font-weight: 500;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s ease forwards;
+    }
+
+    .hero-title {
+      font-family: var(--ff-display);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      color: white;
+      margin-bottom: 24px;
+      max-width: 800px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s ease 0.2s forwards;
+    }
+
+    .hero-title .gold-accent {
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-style: italic;
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.7);
+      max-width: 600px;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s ease 0.4s forwards;
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Stats Floating Cards */
+    .stats-grid {
+      display: flex;
+      gap: 30px;
+      margin-top: 60px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.6s forwards;
+    }
+
+    .stat-card {
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(212,175,55,0.15);
+      padding: 24px 32px;
+      border-radius: 2px;
+      min-width: 160px;
+      transition: all 0.4s;
+    }
+
+    .stat-card:hover {
+      border-color: rgba(212,175,55,0.4);
+      background: rgba(255,255,255,0.06);
+      transform: translateY(-5px);
+    }
+
+    .stat-number {
+      font-family: var(--ff-display);
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 8px;
+    }
+
+    /* Narrative Section - The Story */
+    .narrative {
+      padding-block: var(--section-padding);
+      background: var(--white);
+      position: relative;
+    }
+
+    .narrative-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .narrative-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .narrative-badge .line {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .narrative-badge span {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      font-weight: 600;
+    }
+
+    .narrative-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 3vw, 3rem);
+      line-height: 1.2;
+      margin-bottom: 30px;
+      color: var(--prussian-blue);
+    }
+
+    .narrative-text {
+      color: var(--cadet);
+      font-size: 1rem;
+      line-height: 1.9;
+      margin-bottom: 25px;
+    }
+
+    .narrative-quote {
+      background: var(--cultured-2);
+      padding: 32px 40px;
+      margin: 30px 0;
+      border-left: 3px solid var(--gold);
+      font-style: italic;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--prussian-blue);
+      font-family: var(--ff-display);
+      position: relative;
+    }
+
+    .narrative-quote::before {
+      content: '"';
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      font-size: 5rem;
+      color: rgba(212,175,55,0.1);
+      font-family: serif;
+    }
+
+    .signature {
+      font-family: var(--ff-display);
+      font-size: 1.5rem;
+      color: var(--gold-dark);
+      margin-top: 20px;
+    }
+
+    /* Visual Story - Parallax Images */
+    .visual-story {
+      position: relative;
+    }
+
+    .main-image {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      filter: grayscale(0%);
+      transition: all 0.6s;
+    }
+
+    .floating-image {
+      position: absolute;
+      bottom: -40px;
+      left: -40px;
+      width: 55%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border: 8px solid var(--white);
+      box-shadow: 20px 20px 50px rgba(0,0,0,0.15);
+    }
+
+    .image-caption {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(55,24,1,0.9);
+      backdrop-filter: blur(8px);
+      padding: 8px 16px;
+      font-size: 11px;
+      color: var(--gold);
+      letter-spacing: 1px;
+    }
+
+    /* Philosophy Section */
+    .philosophy {
+      background: var(--prussian-blue);
+      padding-block: var(--section-padding);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .philosophy::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--gold-gradient);
+    }
+
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .pillar-card {
+      text-align: center;
+      padding: 40px 30px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(212,175,55,0.12);
+      transition: all 0.4s;
+    }
+
+    .pillar-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(212,175,55,0.3);
+      background: rgba(212,175,55,0.05);
+    }
+
+    .pillar-icon {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 25px;
+      background: rgba(212,175,55,0.08);
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: var(--gold);
+      transition: all 0.4s;
+    }
+
+    .pillar-card:hover .pillar-icon {
+      background: var(--gold);
+      color: var(--prussian-blue);
+      border-color: var(--gold);
+    }
+
+    .pillar-title {
+      color: white;
+      font-family: var(--ff-display);
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+
+    .pillar-text {
+      color: rgba(255,255,255,0.55);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* Journey Timeline */
+    .journey {
+      padding-block: var(--section-padding);
+      background: var(--cultured-2);
+    }
+
+    .section-eyebrow {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .section-eyebrow .line {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .section-eyebrow span {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      font-weight: 600;
+    }
+
+    .section-title {
+      text-align: center;
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      margin-bottom: 60px;
+      color: var(--prussian-blue);
+    }
+
+    .timeline {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--gold), var(--gold), transparent);
+    }
+
+    .timeline-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 60px;
+      position: relative;
+    }
+
+    .timeline-item:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .timeline-year {
+      width: 120px;
+      font-family: var(--ff-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--gold-dark);
+      text-align: center;
+    }
+
+    .timeline-content {
+      width: calc(50% - 40px);
+      background: white;
+      padding: 20px 28px;
+      border-radius: 2px;
+      box-shadow: var(--shadow-1);
+      position: relative;
+    }
+
+    .timeline-content::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      width: 20px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content::before {
+      right: -20px;
+    }
+
+    .timeline-item:nth-child(even) .timeline-content::before {
+      left: -20px;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 20px;
+      width: 12px;
+      height: 12px;
+      background: var(--gold);
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(212,175,55,0.2);
+    }
+
+    .timeline-title {
+      font-family: var(--ff-display);
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--prussian-blue);
+    }
+
+    .timeline-text {
+      font-size: 13px;
+      color: var(--cadet);
+      line-height: 1.6;
+    }
+
+    /* Team Preview */
+    .team-preview {
+      padding-block: var(--section-padding);
+      background: white;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .team-card {
+      text-align: center;
+      transition: all 0.4s;
+    }
+
+    .team-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .team-image {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      filter: grayscale(20%);
+      transition: all 0.4s;
+    }
+
+    .team-card:hover .team-image {
+      filter: grayscale(0%);
+    }
+
+    .team-name {
+      font-family: var(--ff-display);
+      font-size: 1.2rem;
+      margin-top: 18px;
+      margin-bottom: 4px;
+      color: var(--prussian-blue);
+    }
+
+    .team-role {
+      font-size: 11px;
+      color: var(--gold-dark);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* Values Section */
+    .values {
+      background: var(--prussian-blue);
+      padding-block: var(--section-padding);
+      position: relative;
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 50px;
+      align-items: center;
+    }
+
+    .values-list {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .value-item {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .value-icon {
+      width: 50px;
+      height: 50px;
+      flex-shrink: 0;
+      background: rgba(212,175,55,0.08);
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 20px;
+    }
+
+    .value-text h4 {
+      color: white;
+      font-family: var(--ff-display);
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+
+    .value-text p {
+      color: rgba(255,255,255,0.5);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .values-image {
+      position: relative;
+    }
+
+    .values-main-img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+    }
+
+    /* CTA Section */
+    .about-cta {
+      padding-block: 80px;
+      background: linear-gradient(135deg, var(--prussian-blue) 0%, #1a0a00 100%);
+      text-align: center;
+    }
+
+    .about-cta h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    .about-cta p {
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 30px;
+    }
+
+    .cta-btn {
+      background: var(--gold-gradient);
+      color: var(--prussian-blue);
+      padding: 14px 38px;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(212,175,55,0.3);
+    }
+
+    /* Footer (from index) */
+    .footer {
+      background: var(--prussian-blue);
+      color: var(--white);
+    }
+    .footer-top {
+      padding-top: 80px; padding-bottom: 40px;
+      border-bottom: 1px solid rgba(212,175,55,0.1);
+    }
+    .footer-brand { margin-bottom: 60px; }
+    .footer-brand .logo { margin-bottom: 20px; }
+    .section-text { font-size: 14px; line-height: 1.8; margin-bottom: 28px; opacity: 0.6; max-width: 42ch; }
+    .contact-list { display: grid; gap: 14px; margin-bottom: 28px; list-style: none; }
+    .contact-link { display: flex; align-items: flex-start; gap: 10px; text-decoration: none; }
+    .contact-link ion-icon { font-size: 16px; color: var(--gold); margin-top: 2px; }
+    .contact-link :is(address, span) { font-size: 14px; color: rgba(255,255,255,0.6); transition: var(--transition); }
+    .contact-link:hover span { color: var(--gold-light); }
+    .social-list { display: flex; align-items: center; gap: 12px; list-style: none; }
+    .social-link {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 50%;
+      display: grid; place-items: center;
+      color: rgba(255,255,255,0.5);
+      font-size: 16px;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+    .social-link:hover { background: var(--gold); border-color: var(--gold); color: var(--prussian-blue); transform: translateY(-3px); }
+    .footer-list:not(:last-child) { margin-bottom: 50px; }
+    .footer-list-title { font-family: var(--ff-display); font-size: 1.3rem; font-weight: 700; color: var(--white); margin-bottom: 20px; position: relative; padding-bottom: 12px; list-style: none; }
+    .footer-list-title::after { content: ''; position: absolute; bottom: 0; left: 0; width: 30px; height: 2px; background: var(--gold-gradient); }
+    .footer-link { font-size: 14px; padding-block: 8px; color: rgba(255,255,255,0.55); display: flex; align-items: center; gap: 8px; text-decoration: none; }
+    .footer-link::before { content: '›'; color: var(--gold); font-size: 1.2em; opacity: 0; transform: translateX(-6px); transition: all 0.3s; }
+    .footer-link:hover { color: var(--gold-light); padding-left: 4px; }
+    .footer-link:hover::before { opacity: 1; transform: translateX(0); }
+    .footer-bottom { background: rgba(0,0,0,0.3); padding-block: 22px; }
+    .copyright { font-size: 12px; text-align: center; color: rgba(255,255,255,0.4); }
+    .copyright a { display: inline-block; color: var(--gold); text-decoration: none; }
+    .copyright a:hover { color: var(--gold-light); }
+    .footer-link-box { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+
+    /* Scroll to Top */
+    #scrollToTop {
+      position: fixed; bottom: 80px; right: 20px;
+      width: 46px; height: 46px;
+      background: var(--gold-gradient);
+      color: var(--prussian-blue);
+      border: none; border-radius: 50%;
+      display: grid; place-items: center;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 999;
+      box-shadow: 0 6px 24px rgba(212,175,55,0.35);
+      opacity: 0; pointer-events: none;
+      transform: translateY(20px) scale(0.8);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #scrollToTop.visible { opacity: 1; pointer-events: all; transform: translateY(0) scale(1); }
+    #scrollToTop:hover { transform: translateY(-4px) scale(1.08); box-shadow: 0 12px 30px rgba(212,175,55,0.45); }
+    @media (min-width: 768px) { #scrollToTop { bottom: 30px; } }
+
+    /* Scroll Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      transform: translateX(-50px);
+    }
+    .reveal-left.visible {
+      transform: translateX(0);
+    }
+    .reveal-right {
+      transform: translateX(50px);
+    }
+    .reveal-right.visible {
+      transform: translateX(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .narrative-grid { grid-template-columns: 1fr; gap: 50px; }
+      .philosophy-grid { grid-template-columns: 1fr; gap: 25px; }
+      .team-grid { grid-template-columns: repeat(2, 1fr); }
+      .values-grid { grid-template-columns: 1fr; }
+      .timeline::before { left: 30px; }
+      .timeline-item, .timeline-item:nth-child(even) { flex-direction: column; padding-left: 60px; }
+      .timeline-year { text-align: left; margin-bottom: 10px; }
+      .timeline-content { width: 100%; }
+      .timeline-dot { left: 24px; }
+      .timeline-item:nth-child(odd) .timeline-content::before,
+      .timeline-item:nth-child(even) .timeline-content::before { display: none; }
+    }
+    @media (max-width: 768px) {
+      .container { padding-inline: 20px; }
+      .stats-grid { gap: 15px; }
+      .stat-card { padding: 16px 20px; min-width: 130px; }
+      .team-grid { grid-template-columns: 1fr; max-width: 300px; margin: 0 auto; }
+      .floating-image { left: -20px; bottom: -20px; width: 50%; }
+      .footer-link-box { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =============================================
+       TOP BAR (from index)
+  ============================================= -->
+  <div class="topbar" role="banner">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <a href="mailto:biverroyaltyhomes01@gmail.com" class="topbar-link" aria-label="Email us">
+          <ion-icon name="mail-outline"></ion-icon>
+          <span>biverroyaltyhomes01@gmail.com</span>
+        </a>
+        <div class="topbar-divider" aria-hidden="true"></div>
+        <a href="#" class="topbar-link" aria-label="Our location">
+          <ion-icon name="location-outline"></ion-icon>
+          <address>No. 31 Wetheral Road, Angelina Plaza, Owerri, Imo State</address>
+        </a>
+        <div class="topbar-divider" aria-hidden="true"></div>
+        <a href="tel:+2349033137432" class="topbar-link" aria-label="Call us">
+          <ion-icon name="call-outline"></ion-icon>
+          <span>+234 903 313 7432</span>
+        </a>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-socials" aria-label="Social media links">
+          <a href="https://www.facebook.com/share/1B8mwpRi5L/" class="topbar-social-link" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><ion-icon name="logo-facebook"></ion-icon></a>
+          <a href="https://www.instagram.com/biverroyaltyhomes.ng" class="topbar-social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><ion-icon name="logo-instagram"></ion-icon></a>
+          <a href="https://www.tiktok.com/@biverroyaltyhomesltd" class="topbar-social-link" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><ion-icon name="logo-youtube"></ion-icon></a>
+        </div>
+        <a href="property.html" class="topbar-cta">List Property</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- =============================================
+       HEADER (from index)
+  ============================================= -->
+  <header class="header" id="header" data-header>
+    <div class="overlay" data-overlay></div>
+    <div class="header-bottom">
+      <div class="container">
+        <a href="index.html" class="logo" aria-label="Biver Royalty Homes Home">
+          <img src="./assets/images/biver-logo.png" alt="Biver Royalty Homes" width="auto" height="50">
+        </a>
+        <nav class="navbar" data-navbar aria-label="Main navigation">
+          <div class="navbar-top">
+            <a href="index.html" class="logo"><img src="./assets/images/biver-logo.png" alt="Biver Royalty Homes" width="150"></a>
+            <button class="nav-close-btn" data-nav-close-btn aria-label="Close Menu"><ion-icon name="close-outline"></ion-icon></button>
+          </div>
+          <div class="navbar-bottom">
+            <ul class="navbar-list" role="menubar">
+              <li role="none"><a href="index.html" class="navbar-link" data-nav-link role="menuitem">Home</a></li>
+              <li role="none"><a href="about.html" class="navbar-link" data-nav-link role="menuitem">About</a></li>
+              <li role="none"><a href="services.html" class="navbar-link" data-nav-link role="menuitem">Services</a></li>
+              <li role="none"><a href="property.html" class="navbar-link" data-nav-link role="menuitem">Properties</a></li>
+              <li role="none"><a href="https://blog.biverroyaltyhomesltd.com/" class="navbar-link" data-nav-link role="menuitem" target="_blank" rel="noopener noreferrer">Blog</a></li>
+              <li role="none"><a href="team.html" class="navbar-link" data-nav-link role="menuitem">Team</a></li>
+              <li role="none"><a href="contact.html" class="navbar-link" data-nav-link role="menuitem">Contact</a></li>
+              <li role="none"><a href="login.html" class="navbar-link" role="menuitem">Login</a></li>
+            </ul>
+          </div>
+        </nav>
+        <div class="header-bottom-actions">
+          <button class="header-bottom-actions-btn" aria-label="Search properties"><ion-icon name="search-outline"></ion-icon><span>Search</span></button>
+          <button class="header-bottom-actions-btn" data-nav-open-btn aria-label="Open Menu"><ion-icon name="menu-outline"></ion-icon><span>Menu</span></button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- =============================================
+         HERO SECTION - Cinematic Intro (preserved)
+    ============================================= -->
+    <section class="about-hero">
+      <div class="hero-bg-pattern"></div>
+      <div class="hero-glow"></div>
+      <div class="container">
+        <div class="hero-subtitle">EST. 2015</div>
+        <h1 class="hero-title">Architects of <span class="gold-accent">Dreams</span>,<br>Builders of Trust</h1>
+        <p class="hero-description">Biver Royalty Homes wasn't built on transactions — it was built on relationships. In a world of empty promises, we chose integrity as our foundation.</p>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-number">1,200+</div><div class="stat-label">Families Served</div></div>
+          <div class="stat-card"><div class="stat-number">500+</div><div class="stat-label">Properties Sold</div></div>
+          <div class="stat-card"><div class="stat-number">100%</div><div class="stat-label">Client Trust</div></div>
+          <div class="stat-card"><div class="stat-number">10+</div><div class="stat-label">Years of Excellence</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         NARRATIVE - The Untold Story
+    ============================================= -->
+    <section class="narrative">
+      <div class="container">
+        <div class="narrative-grid">
+          <div class="narrative-content reveal reveal-left">
+            <div class="narrative-badge"><div class="line"></div><span>The Untold Story</span></div>
+            <h2 class="narrative-title">From a Bold Vision to Nigeria's Most Trusted Real Estate Name</h2>
+            <p class="narrative-text">In 2015, Chibueze Nwosu saw a gap in Nigeria's real estate market — not a gap in properties, but a gap in integrity. While others prioritized commissions over clients, he envisioned something radical: a real estate company where transparency wasn't a buzzword, but a sacred promise.</p>
+            <p class="narrative-text">What started as a one-man mission in Owerri has blossomed into a movement. Today, Biver Royalty Homes stands as a testament to what happens when you put people before profit, relationships before revenue, and dreams before documents.</p>
+            <div class="narrative-quote">We don't sell houses. We hand over the keys to futures. Every client who walks through our doors becomes family — and family deserves nothing less than excellence.</div>
+            <div class="signature">— Chibueze Nwosu, Founder</div>
+          </div>
+          <div class="visual-story reveal reveal-right">
+            <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&auto=format&fit=crop&q=80" alt="Founder at work" class="main-image" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=500&auto=format&fit=crop&q=80" alt="Early days" class="floating-image" loading="lazy">
+            <div class="image-caption">The Journey Begins • Owerri, 2015</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         PHILOSOPHY - Three Pillars
+    ============================================= -->
+    <section class="philosophy">
+      <div class="container">
+        <div class="philosophy-grid">
+          <div class="pillar-card reveal"><div class="pillar-icon"><ion-icon name="shield-checkmark-outline"></ion-icon></div><h3 class="pillar-title">Radical Integrity</h3><p class="pillar-text">We speak truth even when it costs us a sale. No hidden fees, no misleading listings, no fine print surprises. Just honest guidance.</p></div>
+          <div class="pillar-card reveal reveal-delay-1"><div class="pillar-icon"><ion-icon name="heart-outline"></ion-icon></div><h3 class="pillar-title">Obsessive Care</h3><p class="pillar-text">Your dream becomes our mission. We lose sleep so you can rest easy, handling every detail with white-glove precision.</p></div>
+          <div class="pillar-card reveal reveal-delay-2"><div class="pillar-icon"><ion-icon name="star-outline"></ion-icon></div><h3 class="pillar-title">Unwavering Excellence</h3><p class="pillar-text">From property sourcing to legal documentation, we obsess over quality. Mediocrity has no place in our vocabulary.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         JOURNEY - Timeline
+    ============================================= -->
+    <section class="journey">
+      <div class="container">
+        <div class="section-eyebrow reveal"><div class="line"></div><span>Our Journey</span><div class="line"></div></div>
+        <h2 class="section-title reveal reveal-delay-1">The Road to Redefining Real Estate</h2>
+        <div class="timeline">
+          <div class="timeline-item reveal reveal-left"><div class="timeline-year">2015</div><div class="timeline-content"><div class="timeline-dot"></div><h4 class="timeline-title">The Seed is Planted</h4><p class="timeline-text">Biver Royalty Homes opens its doors in a small office on Wetheral Road, Owerri. First property sold within 3 months.</p></div></div>
+          <div class="timeline-item reveal reveal-right"><div class="timeline-year">2017</div><div class="timeline-content"><div class="timeline-dot"></div><h4 class="timeline-title">Expansion & Recognition</h4><p class="timeline-text">Named "Most Trusted Real Estate Agency" in Imo State. Team grows to 12 dedicated agents.</p></div></div>
+          <div class="timeline-item reveal reveal-left"><div class="timeline-year">2019</div><div class="timeline-content"><div class="timeline-dot"></div><h4 class="timeline-title">Digital Transformation</h4><p class="timeline-text">Launch of comprehensive online platform, making property search accessible to thousands across Nigeria.</p></div></div>
+          <div class="timeline-item reveal reveal-right"><div class="timeline-year">2022</div><div class="timeline-content"><div class="timeline-dot"></div><h4 class="timeline-title">1,000+ Families</h4><p class="timeline-text">Milestone achievement: 1,000 happy families find their dream homes through Biver Royalty.</p></div></div>
+          <div class="timeline-item reveal reveal-left"><div class="timeline-year">2024</div><div class="timeline-content"><div class="timeline-dot"></div><h4 class="timeline-title">Industry Leadership</h4><p class="timeline-text">Recognized as a leading force in Nigerian real estate, setting new standards for integrity and client care.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         VALUES - Core Values Deep Dive
+    ============================================= -->
+    <section class="values">
+      <div class="container">
+        <div class="values-grid">
+          <div class="values-list">
+            <div class="value-item reveal reveal-left"><div class="value-icon"><ion-icon name="people-outline"></ion-icon></div><div class="value-text"><h4>People First, Always</h4><p>Behind every transaction is a family, a dream, a future. We never forget that.</p></div></div>
+            <div class="value-item reveal reveal-left reveal-delay-1"><div class="value-icon"><ion-icon name="eye-outline"></ion-icon></div><div class="value-text"><h4>Radical Transparency</h4><p>Every document shared, every fee explained, every process visible. No secrets. Ever.</p></div></div>
+            <div class="value-item reveal reveal-left reveal-delay-2"><div class="value-icon"><ion-icon name="infinite-outline"></ion-icon></div><div class="value-text"><h4>Lifelong Relationships</h4><p>We don't close doors — we open them. Many clients return for their second, third, and fourth homes.</p></div></div>
+            <div class="value-item reveal reveal-left reveal-delay-3"><div class="value-icon"><ion-icon name="cube-outline"></ion-icon></div><div class="value-text"><h4>Community Builders</h4><p>We're not just selling properties; we're shaping neighborhoods, strengthening communities.</p></div></div>
+          </div>
+          <div class="values-image reveal reveal-right"><img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&auto=format&fit=crop&q=80" alt="Building community" class="values-main-img" loading="lazy"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         TEAM PREVIEW
+    ============================================= -->
+    <section class="team-preview">
+      <div class="container">
+        <div class="section-eyebrow reveal"><div class="line"></div><span>The Heart Behind the Brand</span><div class="line"></div></div>
+        <h2 class="section-title reveal reveal-delay-1">Meet the Dream Weavers</h2>
+        <div class="team-grid">
+          <div class="team-card reveal"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&auto=format&fit=crop&q=80" alt="Founder" class="team-image" loading="lazy"><h3 class="team-name">Chibueze Nwosu</h3><p class="team-role">Founder & CEO</p></div>
+          <div class="team-card reveal reveal-delay-1"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=80" alt="Operations Director" class="team-image" loading="lazy"><h3 class="team-name">Amara Okafor</h3><p class="team-role">Operations Director</p></div>
+          <div class="team-card reveal reveal-delay-2"><img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&auto=format&fit=crop&q=80" alt="Head of Sales" class="team-image" loading="lazy"><h3 class="team-name">Emeka Obi</h3><p class="team-role">Head of Sales</p></div>
+          <div class="team-card reveal reveal-delay-3"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&auto=format&fit=crop&q=80" alt="Client Relations" class="team-image" loading="lazy"><h3 class="team-name">Chioma Eze</h3><p class="team-role">Client Relations</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         CTA SECTION
+    ============================================= -->
+    <section class="about-cta">
+      <div class="container">
+        <h2 class="reveal">Ready to Write Your Story With Us?</h2>
+        <p class="reveal reveal-delay-1">Every great home begins with a conversation. Let's start yours.</p>
+        <a href="contact.html" class="cta-btn reveal reveal-delay-2"><ion-icon name="chatbubble-outline"></ion-icon>Start Your Journey</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- =============================================
+       FOOTER (from index)
+  ============================================= -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-brand">
+          <a href="index.html" class="logo"><img src="./assets/images/biver-logo.png" alt="Biver Royalty Homes" width="150" height="auto" loading="lazy"></a>
+          <p class="section-text">We are a real estate company built on Integrity. We help our clients bring their dream homes to reality within their budget.</p>
+          <ul class="contact-list">
+            <li><a href="contact.html" class="contact-link"><ion-icon name="location-outline"></ion-icon><address>No. 31 Wetheral Road, Angelina Plaza Opposite Reem Fuel Station Owerri, Imo State.</address></a></li>
+            <li><a href="tel:+2349033137432" class="contact-link"><ion-icon name="call-outline"></ion-icon><span>+234 903 313 7432</span></a></li>
+            <li><a href="mailto:biverroyaltyhomes01@gmail.com" class="contact-link"><ion-icon name="mail-outline"></ion-icon><span>biverroyaltyhomes01@gmail.com</span></a></li>
+          </ul>
+          <ul class="social-list">
+            <li><a href="https://www.facebook.com/share/1B8mwpRi5L/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><ion-icon name="logo-facebook"></ion-icon></a></li>
+            <li><a href="#" class="social-link" aria-label="Twitter"><ion-icon name="logo-twitter"></ion-icon></a></li>
+            <li><a href="https://www.instagram.com/biverroyaltyhomes.ng" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><ion-icon name="logo-instagram"></ion-icon></a></li>
+            <li><a href="https://www.tiktok.com/@biverroyaltyhomesltd" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><ion-icon name="logo-youtube"></ion-icon></a></li>
+          </ul>
+        </div>
+        <div class="footer-link-box">
+          <ul class="footer-list"><li><p class="footer-list-title">Company</p></li><li><a href="about.html" class="footer-link">About Us</a></li><li><a href="https://blog.biverroyaltyhomesltd.com/" class="footer-link" target="_blank" rel="noopener noreferrer">Blog</a></li><li><a href="property.html" class="footer-link">All Properties</a></li><li><a href="#" class="footer-link">Locations Map</a></li><li><a href="#" class="footer-link">FAQ</a></li><li><a href="contact.html" class="footer-link">Contact Us</a></li></ul>
+          <ul class="footer-list"><li><p class="footer-list-title">Services</p></li><li><a href="addCart.html" class="footer-link">Order Tracking</a></li><li><a href="favorites.html" class="footer-link">Wish List</a></li><li><a href="login.html" class="footer-link">Login</a></li><li><a href="userDashboard.html" class="footer-link">My Account</a></li><li><a href="#" class="footer-link">Terms & Conditions</a></li><li><a href="property.html" class="footer-link">Promotions</a></li></ul>
+          <ul class="footer-list"><li><p class="footer-list-title">Customer Care</p></li><li><a href="login.html" class="footer-link">Login</a></li><li><a href="userDashboard.html" class="footer-link">My Account</a></li><li><a href="favorites.html" class="footer-link">Wish List</a></li><li><a href="addCart.html" class="footer-link">Order Tracking</a></li><li><a href="#" class="footer-link">FAQ</a></li><li><a href="contact.html" class="footer-link">Contact Us</a></li></ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom"><div class="container"><p class="copyright">&copy; 2025 <a href="#">Biver Royalty Homes</a>. All Rights Reserved | Designed by <a href="#">ERIBS Tech</a></p></div></div>
+  </footer>
+
+  <!-- Scroll to Top -->
+  <button id="scrollToTop" aria-label="Scroll to top"><ion-icon name="chevron-up-outline"></ion-icon></button>
+
+  <!-- Scripts -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <script>
+    'use strict';
+
+    // Header scroll behavior
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 80) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
+    }, { passive: true });
+
+    // Scroll to Top
+    const scrollBtn = document.getElementById('scrollToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 600) scrollBtn.classList.add('visible');
+      else scrollBtn.classList.remove('visible');
+    });
+    scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Navbar mobile toggle
+    const navbar = document.querySelector("[data-navbar]");
+    const overlay = document.querySelector("[data-overlay]");
+    const navCloseBtn = document.querySelector("[data-nav-close-btn]");
+    const navOpenBtn = document.querySelector("[data-nav-open-btn]");
+    const navbarLinks = document.querySelectorAll("[data-nav-link]");
+    const toggleNav = () => { navbar.classList.toggle("active"); overlay.classList.toggle("active"); };
+    if (navOpenBtn && navCloseBtn && overlay) {
+      navOpenBtn.addEventListener("click", toggleNav);
+      navCloseBtn.addEventListener("click", toggleNav);
+      overlay.addEventListener("click", toggleNav);
+      navbarLinks.forEach(link => link.addEventListener("click", toggleNav));
+    }
+
+    // Scroll Reveal Observer
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Stagger delays
+    const delays = { 'reveal-delay-1': 100, 'reveal-delay-2': 200, 'reveal-delay-3': 300, 'reveal-delay-4': 400 };
+    Object.keys(delays).forEach(cls => {
+      document.querySelectorAll(`.${cls}`).forEach((el, i) => el.style.transitionDelay = `${delays[cls] + i * 50}ms`);
+    });
+
+    // Counter animation for stats
+    function animateStats() {
+      document.querySelectorAll('.stat-number').forEach(el => {
+        const target = parseInt(el.innerText.replace(/[^0-9]/g, ''));
+        if (!target) return;
+        let current = 0;
+        const increment = target / (2000 / 16);
+        const update = () => {
+          current += increment;
+          if (current < target) { el.innerText = Math.floor(current).toLocaleString() + (el.innerText.includes('+') ? '+' : ''); requestAnimationFrame(update); }
+          else el.innerText = el.innerText;
+        };
+        const obs = new IntersectionObserver((entries) => { if (entries[0].isIntersecting) { update(); obs.disconnect(); } }, { threshold: 0.5 });
+        obs.observe(el);
+      });
+    }
+    animateStats();
+
+    // Parallax effect on hero
+    window.addEventListener('scroll', () => {
+      const hero = document.querySelector('.about-hero');
+      if (hero) { hero.style.transform = `translateY(${window.scrollY * 0.3}px)`; hero.style.opacity = 1 - window.scrollY / 800; }
+    });
+  </script>
+</body>
+</html>
