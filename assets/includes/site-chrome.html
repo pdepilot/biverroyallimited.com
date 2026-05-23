@@ -1,0 +1,122 @@
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <div class="topbar" role="banner">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <a href="mailto:biverroyaltyhomes01@gmail.com" class="topbar-link" aria-label="Email us">
+          <ion-icon name="mail-outline"></ion-icon>
+          <span>biverroyaltyhomes01@gmail.com</span>
+        </a>
+        <div class="topbar-divider" aria-hidden="true"></div>
+        <a href="#" class="topbar-link" aria-label="Our location">
+          <ion-icon name="location-outline"></ion-icon>
+          <address>No. 31 Wetheral Road, Angelina Plaza, Owerri, Imo State</address>
+        </a>
+        <div class="topbar-divider" aria-hidden="true"></div>
+        <a href="tel:+2349033137432" class="topbar-link" aria-label="Call us">
+          <ion-icon name="call-outline"></ion-icon>
+          <span>+234 903 313 7432</span>
+        </a>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-socials" aria-label="Social media links">
+          <a href="https://www.facebook.com/share/1B8mwpRi5L/" class="topbar-social-link" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <ion-icon name="logo-facebook"></ion-icon>
+          </a>
+          <a href="https://www.instagram.com/biverroyaltyhomes.ng" class="topbar-social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <ion-icon name="logo-instagram"></ion-icon>
+          </a>
+          <a href="https://www.tiktok.com/@biverroyaltyhomesltd" class="topbar-social-link" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+            <ion-icon name="logo-youtube"></ion-icon>
+          </a>
+        </div>
+        <a href="property.html" class="topbar-cta">List Property</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="searchModal" role="dialog" aria-modal="true" aria-label="Search properties">
+    <button class="search-modal-close" id="searchModalClose" aria-label="Close search">
+      <ion-icon name="close-outline"></ion-icon>
+    </button>
+    <p class="search-modal-eyebrow">Property Search</p>
+    <h2 class="search-modal-heading">Find Your <em style="color:var(--gold-light);font-style:italic;">Dream</em> Home</h2>
+    <div class="search-input-wrap">
+      <input type="search" id="searchInput"
+        placeholder="Search by location, type, or price..."
+        autocomplete="off" spellcheck="false"
+        aria-label="Search properties">
+      <ion-icon name="search-outline" class="search-input-icon" aria-hidden="true"></ion-icon>
+    </div>
+    <div class="search-filters" role="group" aria-label="Filter by type">
+      <button class="search-filter-chip active" data-filter="all">All</button>
+      <button class="search-filter-chip" data-filter="sale">For Sale</button>
+      <button class="search-filter-chip" data-filter="rent">For Rent</button>
+      <button class="search-filter-chip" data-filter="1">1 Bed</button>
+      <button class="search-filter-chip" data-filter="2">2 Beds</button>
+      <button class="search-filter-chip" data-filter="3">3+ Beds</button>
+    </div>
+    <div class="search-results-wrap" id="searchResults" aria-live="polite" aria-label="Search results"></div>
+  </div>
+
+  <header class="header" id="header" data-header>
+    <div class="header-bottom">
+      <div class="container">
+        <a href="index.html" class="logo" aria-label="Biver Royalty Homes Home">
+          <img src="./assets/images/biver-logo.png" alt="Biver Royalty Homes" width="auto" height="50">
+        </a>
+
+        <nav class="navbar" data-navbar aria-label="Main navigation">
+          <div class="navbar-inner-wrap">
+            <div class="navbar-top">
+              <a href="index.html" class="logo">
+                <img src="./assets/images/biver-logo.png" alt="Biver Royalty Homes" width="140">
+              </a>
+              <button class="nav-close-btn" data-nav-close-btn aria-label="Close Menu">
+                <ion-icon name="close-outline"></ion-icon>
+              </button>
+            </div>
+
+            <div class="navbar-bottom">
+              <ul class="navbar-list" role="menubar">
+                <li role="none"><a href="index.html" class="navbar-link" data-nav-link role="menuitem">Home</a></li>
+                <li role="none"><a href="about.html" class="navbar-link" data-nav-link role="menuitem">About</a></li>
+                <li role="none"><a href="services.html" class="navbar-link" data-nav-link role="menuitem">Services</a></li>
+                <li role="none"><a href="property.html" class="navbar-link" data-nav-link role="menuitem">Properties</a></li>
+                <li role="none"><a href="https://blog.biverroyaltyhomesltd.com/" class="navbar-link" data-nav-link role="menuitem" target="_blank" rel="noopener noreferrer">Blog</a></li>
+                <li role="none"><a href="team.html" class="navbar-link" data-nav-link role="menuitem">Team</a></li>
+                <li role="none"><a href="contact.html" class="navbar-link" data-nav-link role="menuitem">Contact</a></li>
+                <li role="none"><a href="login.html" class="navbar-link" role="menuitem">Login</a></li>
+              </ul>
+            </div>
+
+            <div class="navbar-footer">
+              <p class="navbar-footer-title">Get in Touch</p>
+              <a href="tel:+2349033137432" class="navbar-footer-link">
+                <ion-icon name="call-outline"></ion-icon>
+                <span>+234 903 313 7432</span>
+              </a>
+              <a href="mailto:biverroyaltyhomes01@gmail.com" class="navbar-footer-link">
+                <ion-icon name="mail-outline"></ion-icon>
+                <span>biverroyaltyhomes01@gmail.com</span>
+              </a>
+              <a href="property.html" class="navbar-cta">List Your Property</a>
+            </div>
+          </div>
+        </nav>
+
+        <div class="header-bottom-actions">
+          <button class="header-bottom-actions-btn" data-search-open aria-label="Search properties" aria-expanded="false" aria-controls="searchModal">
+            <ion-icon name="search-outline"></ion-icon>
+            <span>Search</span>
+          </button>
+          <button class="header-bottom-actions-btn" data-nav-open-btn aria-label="Open Menu" aria-expanded="false">
+            <ion-icon name="menu-outline"></ion-icon>
+            <span>Menu</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="overlay" data-overlay aria-hidden="true"></div>

@@ -1,0 +1,868 @@
+/* Shared header + topbar — synced from index.html */
+    .skip-link {
+      position: absolute; top: -100px; left: 0;
+      background: var(--prussian-blue); color: white;
+      padding: 8px 16px; z-index: 10000;
+      transition: top 0.3s; font-weight: var(--fw-600);
+    }
+    .skip-link:focus { top: 0; }
+
+    /* =============================================
+       TOP BAR
+    ============================================= */
+    .topbar {
+      background: var(--prussian-blue);
+      padding-block: 10px;
+      position: relative;
+      /* FIX: Ensure topbar is below the mobile navbar (z-index 1001) but above page content */
+      z-index: 900;
+      overflow: hidden;
+    }
+    .topbar::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 1px;
+      background: var(--gold-gradient);
+    }
+
+    .topbar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: 20px;
+    }
+
+    .topbar-left { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+
+    .topbar-link {
+      display: flex; align-items: center; gap: 6px;
+      color: rgba(255,255,255,0.75);
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.3px;
+      transition: color 0.3s;
+    }
+    .topbar-link ion-icon {
+      color: var(--gold);
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .topbar-link:hover { color: var(--gold-light); }
+
+    .topbar-divider {
+      width: 1px; height: 14px;
+      background: rgba(255,255,255,0.15);
+    }
+
+    .topbar-right { display: flex; align-items: center; gap: 16px; }
+
+    .topbar-socials { display: flex; align-items: center; gap: 6px; }
+
+    .topbar-social-link {
+      width: 28px; height: 28px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      color: rgba(255,255,255,0.6);
+      font-size: 13px;
+      transition: all 0.3s;
+    }
+    .topbar-social-link:hover {
+      background: var(--gold);
+      color: var(--prussian-blue);
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .topbar-cta {
+      background: var(--gold-gradient);
+      color: var(--prussian-blue);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .topbar-cta:hover {
+      background: var(--white);
+      color: var(--prussian-blue);
+      box-shadow: 0 4px 15px rgba(212,175,55,0.4);
+    }
+
+    /* =============================================
+       HEADER / NAVBAR
+       FIX: Complete z-index hierarchy rework for mobile
+    ============================================= */
+    .header {
+      position: sticky;
+      top: 0;
+      /* Above mobile drawer (1050) and overlay (1040) so logo stays visible */
+      z-index: 1060;
+    }
+
+    .header-bottom {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding-block: 18px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+      position: relative;
+      isolation: isolate;
+    }
+
+    /* Scrolled state */
+    .header.scrolled .header-bottom {
+      background: var(--prussian-blue);
+      border-bottom-color: rgba(212, 175, 55, 0.3);
+      padding-block: 12px;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+    }
+    .header.scrolled .navbar-link { color: rgba(255,255,255,0.75); }
+    .header.scrolled .navbar-link:hover { color: var(--gold-light); }
+    .header.scrolled .header-bottom-actions-btn ion-icon { color: rgba(255,255,255,0.8); }
+    .header.scrolled .header-bottom-actions-btn:hover ion-icon { color: var(--gold-light); }
+    .header.scrolled .header-bottom-actions-btn span { color: rgba(255,255,255,0.6); }
+
+    .header-bottom .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-inline: 20px;
+      gap: 20px;
+    }
+
+    .header-bottom .logo {
+      flex-shrink: 0;
+    }
+
+    .logo img { height: 50px; width: auto; transition: transform 0.3s; }
+    .logo:hover img { transform: scale(1.03); }
+
+    /* Mobile drawer starts below sticky header — never overlaps the main logo */
+    @media (max-width: 1199px) {
+      .header-bottom .logo {
+        position: relative;
+        z-index: 1061;
+      }
+      .navbar {
+        top: var(--mobile-header-height, 86px);
+        height: calc(100dvh - var(--mobile-header-height, 86px));
+      }
+      body.nav-open .header-bottom {
+        background: #ffffff;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+      body.nav-open .header.scrolled .header-bottom {
+        background: var(--prussian-blue);
+      }
+    }
+
+    /*
+     * FIX: Mobile Navbar - Root cause was a combination of:
+     * 1. z-index conflicts between .navbar (1002), .overlay (1001), and .header (1000)
+     * 2. The header's backdrop-filter: blur() creating a new stacking context that
+     *    trapped child elements, making the navbar appear behind the blurred overlay
+     * 3. The overlay's backdrop-filter: blur() was bleeding into the navbar panel
+     *
+     * Solution: 
+     * - Move navbar and overlay OUTSIDE the header stacking context (they are siblings in HTML)
+     * - Header z-index above drawer; drawer starts below header (not over the logo)
+     * - Remove backdrop-filter from overlay on mobile (causes stacking context issues)
+     * - Ensure navbar panel has solid opaque background with explicit z-index
+     * - Use isolation: isolate on header to contain its blur without affecting siblings
+     */
+    .navbar {
+      background: #ffffff; /* FIX: solid white, not transparent — prevents bleed-through */
+      position: fixed;
+      top: 0; left: 0;
+      max-width: 320px; width: 85vw; /* FIX: responsive width */
+      height: 100%;
+      height: 100dvh; /* FIX: use dynamic viewport height for mobile browsers */
+      z-index: 1050;
+      padding: 0; /* FIX: remove padding from root, handle inside */
+      visibility: hidden;
+      overflow-y: auto;
+      overflow-x: hidden;
+      /* FIX: Use translateX instead of left animation for GPU-accelerated smooth slide */
+      transform: translateX(-100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  visibility 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      /* FIX: Explicit box-shadow on the right edge for premium depth */
+      box-shadow: 8px 0 40px rgba(0,0,0,0);
+      /* FIX: Prevent any clipping of content */
+      will-change: transform;
+    }
+
+    .navbar.active {
+      visibility: visible;
+      transform: translateX(0);
+      box-shadow: 8px 0 40px rgba(0,0,0,0.25);
+    }
+
+    /* FIX: Inner padding container — keeps content readable */
+    .navbar-inner-wrap {
+      padding: 0 28px 40px;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .navbar-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 0 25px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      margin-bottom: 10px;
+      /* FIX: Ensure top bar is always opaque and visible */
+      background: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+    .navbar-top .logo img { width: 140px; height: auto; }
+
+    /* FIX: Nav close button — larger tap target, clear styling */
+    .nav-close-btn {
+      width: 40px; height: 40px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      background: rgba(55, 24, 1, 0.05);
+      border: 1px solid rgba(55, 24, 1, 0.1);
+      cursor: pointer;
+      transition: all 0.25s;
+      flex-shrink: 0;
+    }
+    .nav-close-btn ion-icon {
+      font-size: 20px;
+      color: var(--prussian-blue);
+      display: block; /* FIX: ensure ion-icon renders as block */
+    }
+    .nav-close-btn:hover {
+      background: var(--prussian-blue);
+      border-color: var(--prussian-blue);
+    }
+    .nav-close-btn:hover ion-icon { color: var(--gold); }
+
+    /* FIX: navbar-bottom takes remaining height */
+    .navbar-bottom {
+      flex: 1;
+      padding-top: 10px;
+    }
+
+    /*
+     * FIX: Navbar links — explicit solid color so they are NEVER invisible.
+     * The original code relied on color inheritance which broke when parent
+     * stacking contexts changed during scroll events.
+     */
+    .navbar-link {
+      color: #0d1f2d; /* FIX: explicit dark color, not inherited */
+      font-size: 13px;
+      font-weight: var(--fw-600);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.25s;
+      /* FIX: explicit opacity ensures links are always visible */
+      opacity: 1;
+      /* FIX: ensure links are clickable above any pseudo-elements */
+      position: relative;
+      z-index: 1;
+    }
+    .navbar-link::after {
+      content: '›';
+      color: var(--gold-dark);
+      font-size: 1.3em;
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: all 0.25s;
+      font-weight: 300;
+    }
+    .navbar-link:is(:hover, :focus) {
+      color: var(--gold-dark);
+      padding-left: 8px;
+    }
+    .navbar-link:is(:hover, :focus)::after {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Mobile nav footer — contact info in drawer */
+    .navbar-footer {
+      margin-top: 30px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(212,175,55,0.15);
+    }
+    .navbar-footer-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-bottom: 14px;
+    }
+    .navbar-footer-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(55,24,1,0.65);
+      font-size: 13px;
+      margin-bottom: 10px;
+      transition: color 0.25s;
+    }
+    .navbar-footer-link ion-icon {
+      color: var(--gold);
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .navbar-footer-link:hover { color: var(--prussian-blue); }
+
+    .navbar-cta {
+      display: block;
+      margin-top: 20px;
+      background: var(--gold-gradient);
+      color: var(--prussian-blue);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 14px 20px;
+      text-align: center;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .navbar-cta:hover {
+      background: var(--prussian-blue);
+      color: var(--gold);
+    }
+
+    /*
+     * FIX: Overlay — the key issue was backdrop-filter: blur(3px) on the overlay
+     * was creating a new stacking context that swallowed the navbar panel.
+     * Removing backdrop-filter from the overlay fixes the main visibility bug.
+     * The blur effect is replaced with a simple semi-transparent dark layer.
+     */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      /* FIX: NO backdrop-filter — prevents stacking context issues */
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      z-index: 1040;
+    }
+    .overlay.active { opacity: 1; pointer-events: all; }
+
+    .header-bottom-actions {
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    .header-bottom-actions-btn {
+      width: 42px; height: 42px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      position: relative;
+      transition: all 0.3s;
+    }
+    .header-bottom-actions-btn ion-icon {
+      font-size: 20px;
+      color: var(--prussian-blue);
+      transition: color 0.3s;
+    }
+    .header-bottom-actions-btn span {
+      color: var(--gold-dark);
+      font-size: 10px;
+      font-weight: 600;
+      display: none;
+    }
+    .header-bottom-actions-btn:hover {
+      background: rgba(212,175,55,0.1);
+    }
+    .header-bottom-actions-btn:hover ion-icon { color: var(--gold-dark); }
+
+    .cart-count-badge {
+      position: absolute; top: 2px; right: 2px;
+      background: var(--gold);
+      color: var(--prussian-blue);
+      font-size: 10px; font-weight: 700;
+      min-width: 16px; height: 16px;
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 4px;
+      border: 2px solid white;
+    }
+
+    /* Desktop navbar — reset mobile overrides */
+    @media (min-width: 1200px) {
+      .header-bottom .container {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .navbar {
+        all: unset;
+        display: block;
+        flex: 1;
+        min-width: 0;
+        position: static;
+        visibility: visible;
+        transform: none;
+        height: auto;
+        max-width: none;
+        width: auto;
+        overflow: visible;
+        box-shadow: none;
+        background: transparent;
+        padding: 0;
+      }
+
+      .navbar-inner-wrap {
+        all: unset;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+
+      .navbar-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding-top: 0;
+      }
+
+      .navbar-list {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 2px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .navbar-top,
+      .navbar-footer,
+      .navbar-cta,
+      .overlay,
+      .header-bottom-actions-btn:last-child { display: none; }
+
+      .header-bottom-actions {
+        flex-shrink: 0;
+        margin-left: auto;
+        gap: 4px;
+      }
+
+      .header-bottom-actions-btn span { display: none; }
+
+      .logo img { height: 46px; }
+
+      .navbar-link {
+        color: var(--dark-jungle-green);
+        font-size: 11px;
+        letter-spacing: 1.2px;
+        padding: 8px 10px;
+        border-bottom: none;
+        border-radius: 4px;
+        position: relative;
+        opacity: 1;
+        font-weight: var(--fw-500);
+        white-space: nowrap;
+      }
+      /* Remove mobile arrow indicator */
+      .navbar-link::after { display: none; }
+      .navbar-link::before {
+        content: '';
+        position: absolute; bottom: 4px; left: 14px;
+        width: 0; height: 1.5px;
+        background: var(--gold-gradient);
+        transition: width 0.3s;
+      }
+      .navbar-link:hover::before { width: calc(100% - 28px); }
+      .navbar-link:hover { padding-left: 14px; color: var(--dark-jungle-green); }
+
+      .header.scrolled .navbar-link { color: rgba(255,255,255,0.8); }
+      .header.scrolled .navbar-link:hover { color: var(--gold-light); }
+    }
+
+    /* =============================================
+       MOBILE BOTTOM BAR
+       FIX: Ensure mobile bottom bar z-index is lower than navbar
+    ============================================= */
+    @media (max-width: 767px) {
+      .header-bottom-actions {
+        background: var(--white);
+        position: fixed;
+        bottom: 0; left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        padding-block: 12px 10px;
+        box-shadow: 0 -2px 30px rgba(0,0,0,0.1);
+        /* FIX: z-index must be below overlay (1050) and navbar (1100) */
+        z-index: 940;
+        border-top: 1px solid rgba(212,175,55,0.2);
+        /* FIX: Solid background — no transparency or blur that could cause issues */
+        backdrop-filter: none;
+      }
+      .header-bottom-actions-btn {
+        flex-direction: column;
+        height: auto; width: auto;
+        padding: 4px 10px;
+        border-radius: 8px;
+        /* FIX: Ensure btn icons are always on their own layer */
+        position: relative;
+        z-index: 1;
+      }
+      .header-bottom-actions-btn ion-icon {
+        /* FIX: Explicit color on mobile so scroll state doesn't affect it */
+        color: var(--prussian-blue) !important;
+      }
+      .header-bottom-actions-btn span {
+        display: block;
+        color: var(--cadet) !important;
+      }
+      .footer { margin-bottom: 70px; }
+
+      /* FIX: On mobile, scrolled state should NOT change bottom bar icon colors */
+      .header.scrolled ~ * .header-bottom-actions-btn ion-icon { color: var(--prussian-blue); }
+    }
+
+    /* =============================================
+       SCROLL TO TOP
+       FIX: z-index adjusted to stay above content but below navbar
+    ============================================= */
+    #scrollToTop {
+      position: fixed; bottom: 80px; right: 20px;
+      width: 46px; height: 46px;
+      background: var(--gold-gradient);
+      color: var(--prussian-blue);
+      border: none; border-radius: 50%;
+      display: grid; place-items: center;
+      font-size: 20px;
+      cursor: pointer;
+      /* FIX: below navbar (1100) and overlay (1050) but above content */
+      z-index: 800;
+      box-shadow: 0 6px 24px rgba(212,175,55,0.35);
+      opacity: 0; pointer-events: none;
+      transform: translateY(20px) scale(0.8);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #scrollToTop.visible { opacity: 1; pointer-events: all; transform: translateY(0) scale(1); }
+    #scrollToTop:hover { transform: translateY(-4px) scale(1.08); box-shadow: 0 12px 30px rgba(212,175,55,0.45); }
+    @media (min-width: 768px) { #scrollToTop { bottom: 30px; } }
+
+    /* =============================================
+       ACTIVE NAV LINK — Feature #1
+       Current page gets a gold underline + color on
+       desktop and a left-border accent on mobile.
+    ============================================= */
+    /* Mobile active state — gold left accent */
+    .navbar-link.active-page {
+      color: var(--gold-dark);
+      padding-left: 8px;
+      border-left: 3px solid var(--gold);
+      background: rgba(212,175,55,0.04);
+    }
+    .navbar-link.active-page::after {
+      opacity: 1;
+      transform: translateX(0);
+      color: var(--gold);
+    }
+    /* Desktop active state — persistent underline */
+    @media (min-width: 1200px) {
+      .navbar-link.active-page {
+        color: var(--gold-dark);
+        border-left: none;
+        background: transparent;
+        padding-left: 14px;
+      }
+      .navbar-link.active-page::before {
+        width: calc(100% - 28px);
+      }
+      /* On scrolled/dark header, active link stays gold */
+      .header.scrolled .navbar-link.active-page { color: var(--gold-light); }
+    }
+
+    /* =============================================
+       SEARCH MODAL — Feature #2
+       Fullscreen overlay with instant filter UI.
+       z-index: 10000 — above navbar (1100) and preloader (99999 during load only).
+    ============================================= */
+    #searchModal {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: clamp(60px, 12vh, 120px);
+      padding-inline: 20px;
+      /* Background: dark with subtle texture */
+      background: rgba(26, 12, 2, 0.97);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                  visibility 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #searchModal.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: all;
+    }
+
+    /* Decorative top gold bar */
+    #searchModal::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: var(--gold-gradient);
+    }
+
+    .search-modal-close {
+      position: absolute;
+      top: 20px; right: 20px;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.25);
+      color: rgba(255,255,255,0.7);
+      display: grid; place-items: center;
+      font-size: 22px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .search-modal-close:hover {
+      background: var(--gold);
+      color: var(--prussian-blue);
+      border-color: var(--gold);
+    }
+
+    .search-modal-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-bottom: 14px;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s;
+    }
+    #searchModal.open .search-modal-eyebrow {
+      opacity: 1; transform: translateY(0);
+    }
+
+    .search-modal-heading {
+      font-family: var(--ff-display);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 36px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(-12px);
+      transition: opacity 0.45s ease 0.15s, transform 0.45s ease 0.15s;
+    }
+    #searchModal.open .search-modal-heading { opacity: 1; transform: translateY(0); }
+
+    /* Input row */
+    .search-input-wrap {
+      width: 100%;
+      max-width: 720px;
+      position: relative;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.45s ease 0.2s, transform 0.45s ease 0.2s;
+    }
+    #searchModal.open .search-input-wrap { opacity: 1; transform: translateY(0); }
+
+    #searchInput {
+      width: 100%;
+      background: rgba(255,255,255,0.06);
+      border: 1.5px solid rgba(212,175,55,0.3);
+      color: #ffffff;
+      font-family: var(--ff-body);
+      font-size: 1.05rem;
+      padding: 18px 60px 18px 22px;
+      border-radius: 4px;
+      outline: none;
+      transition: border-color 0.25s, background 0.25s;
+    }
+    #searchInput::placeholder { color: rgba(255,255,255,0.3); }
+    #searchInput:focus {
+      border-color: var(--gold);
+      background: rgba(255,255,255,0.09);
+    }
+
+    .search-input-icon {
+      position: absolute;
+      right: 18px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--gold);
+      font-size: 22px;
+      pointer-events: none;
+    }
+
+    /* Filter chips */
+    .search-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+      width: 100%;
+      max-width: 720px;
+      opacity: 0;
+      transition: opacity 0.4s ease 0.28s;
+    }
+    #searchModal.open .search-filters { opacity: 1; }
+
+    .search-filter-chip {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(212,175,55,0.2);
+      color: rgba(255,255,255,0.6);
+      font-family: var(--ff-body);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 7px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .search-filter-chip:hover,
+    .search-filter-chip.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--prussian-blue);
+    }
+
+    /* Results area */
+    .search-results-wrap {
+      width: 100%;
+      max-width: 720px;
+      margin-top: 28px;
+      max-height: 45vh;
+      overflow-y: auto;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .search-results-wrap.has-results { opacity: 1; }
+    .search-results-wrap::-webkit-scrollbar { width: 4px; }
+    .search-results-wrap::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+    .search-results-wrap::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 4px; }
+
+    .search-result-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 16px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(212,175,55,0.08);
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .search-result-item:hover {
+      background: rgba(212,175,55,0.1);
+      border-color: rgba(212,175,55,0.3);
+      transform: translateX(4px);
+    }
+    .search-result-thumb {
+      width: 60px; height: 48px;
+      border-radius: 4px;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.1);
+    }
+    .search-result-info { flex: 1; min-width: 0; }
+    .search-result-title {
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 4px;
+    }
+    .search-result-meta {
+      color: var(--gold-dark);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .search-result-badge {
+      flex-shrink: 0;
+      background: rgba(212,175,55,0.15);
+      color: var(--gold);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(212,175,55,0.2);
+    }
+    .search-result-badge.rent { background: rgba(16,183,89,0.15); color: #10b759; border-color: rgba(16,183,89,0.2); }
+
+    .search-no-results {
+      text-align: center;
+      padding: 40px 20px;
+      color: rgba(255,255,255,0.35);
+    }
+    .search-no-results ion-icon { font-size: 40px; margin-bottom: 12px; display: block; margin-inline: auto; }
+    .search-no-results p { font-size: 14px; }
+
+    .search-loading {
+      text-align: center;
+      padding: 30px;
+      color: var(--gold-dark);
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+@media (min-width: 768px) {
+  .header-bottom-actions { position: static; box-shadow: none; padding: 0; border: none; background: transparent; }
+  .header-bottom-actions-btn { flex-direction: row; }
+  .footer { margin-bottom: 0; }
+}
+@media (min-width: 1200px) {
+  .header-bottom .container { padding-inline: 30px; }
+}
+
+/* Base reset for topbar/header (matches index global rules) */
+.topbar, .header { font-family: var(--ff-body); }
+.topbar ul, .header .navbar-list { list-style: none; margin: 0; padding: 0; }
+.topbar address { font-style: normal; }
+.topbar a, .header a { text-decoration: none; }
+.topbar ion-icon, .header ion-icon, .topbar img, .header img { display: block; }
+.topbar-link, .topbar-social-link, .topbar-cta { display: flex; }
+.topbar-link span, .topbar-link address { display: block; }
+.header-bottom-actions-btn, .nav-close-btn { display: grid; border: none; background: none; font: inherit; cursor: pointer; }
+.nav-close-btn { background: rgba(55, 24, 1, 0.05); border: 1px solid rgba(55, 24, 1, 0.1); }

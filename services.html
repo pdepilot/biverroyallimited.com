@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -12,106 +12,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    /* =============================================
-       RESET & VARIABLES
-    ============================================= */
-    :root {
-      --prussian-blue: #371801;
-      --gold: #D4AF37;
-      --gold-light: #FFD700;
-      --gold-dark: #B8860B;
-      --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #FFD700 50%, #B8860B 100%);
-      --gold-gradient-horizontal: linear-gradient(90deg, #D4AF37 0%, #FFD700 50%, #B8860B 100%);
-      --raisin-black-1: hsl(31, 94%, 12%);
-      --cultured-1: hsl(0, 0%, 93%);
-      --cultured-2: hsl(192, 24%, 96%);
-      --cadet: hsl(200, 15%, 43%);
-      --white: #ffffff;
-      --black: #000000;
-      --dark-jungle-green: hsl(188, 63%, 7%);
-      --shadow-1: 0 5px 20px 0 hsla(219, 56%, 21%, 0.1);
-      --shadow-2: 0 16px 32px hsla(188, 63%, 7%, 0.1);
-      --shadow-gold: 0 8px 32px rgba(212, 175, 55, 0.25);
-      --shadow-gold-lg: 0 20px 40px rgba(212, 175, 55, 0.15);
-      --ff-display: 'Cormorant Garamond', serif;
-      --ff-body: 'Outfit', sans-serif;
-      --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      --section-padding: 100px;
-    }
-
+  <link rel="stylesheet" href="./assets/css/site-variables.css">
+<style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: var(--ff-body); background: var(--white); overflow-x: hidden; color: var(--dark-jungle-green); }
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: var(--prussian-blue); }
     ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
-
-    /* =============================================
-       TOP BAR & HEADER (from index)
-    ============================================= */
-    .topbar {
-      background: var(--prussian-blue);
-      padding-block: 10px;
-      position: relative;
-      z-index: 1001;
-      overflow: hidden;
-    }
-    .topbar::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px; background: var(--gold-gradient-horizontal); }
-    .topbar-inner { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; padding-inline: 20px; }
-    .topbar-left { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-    .topbar-link { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.75); font-size: 12px; font-weight: 500; text-decoration: none; transition: color 0.3s; }
-    .topbar-link ion-icon { color: var(--gold); font-size: 14px; }
-    .topbar-link:hover { color: var(--gold-light); }
-    .topbar-divider { width: 1px; height: 14px; background: rgba(255,255,255,0.15); }
-    .topbar-right { display: flex; align-items: center; gap: 16px; }
-    .topbar-socials { display: flex; align-items: center; gap: 6px; }
-    .topbar-social-link { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; border: 1px solid rgba(212,175,55,0.3); color: rgba(255,255,255,0.6); font-size: 13px; transition: all 0.3s; text-decoration: none; }
-    .topbar-social-link:hover { background: var(--gold); color: var(--prussian-blue); border-color: var(--gold); transform: translateY(-2px); }
-    .topbar-cta { background: var(--gold-gradient-horizontal); color: var(--prussian-blue); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 16px; border-radius: 2px; text-decoration: none; transition: all 0.3s; }
-    .topbar-cta:hover { background: var(--white); color: var(--prussian-blue); box-shadow: 0 4px 15px rgba(212,175,55,0.4); }
-
-    .header { position: sticky; top: 0; z-index: 1000; }
-    .header-bottom { background: rgba(255,255,255,0.98); backdrop-filter: blur(20px); padding-block: 18px; border-bottom: 1px solid rgba(212,175,55,0.15); transition: all 0.4s; box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
-    .header.scrolled .header-bottom { background: var(--prussian-blue); border-bottom-color: rgba(212,175,55,0.3); padding-block: 12px; box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
-    .header.scrolled .navbar-link { color: rgba(255,255,255,0.75); }
-    .header.scrolled .navbar-link:hover { color: var(--gold-light); }
-    .header.scrolled .header-bottom-actions-btn ion-icon { color: rgba(255,255,255,0.8); }
-    .header-bottom .container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding-inline: 20px; gap: 20px; }
-    .logo img { height: 50px; width: auto; transition: transform 0.3s; }
-    .logo:hover img { transform: scale(1.03); }
-
-    .navbar { background: var(--white); position: fixed; top: 0; left: -320px; max-width: 310px; width: 100%; height: 100%; box-shadow: 5px 0 30px rgba(0,0,0,0.15); z-index: 1002; padding: 60px 30px; visibility: hidden; transition: transform 0.4s; }
-    .navbar.active { visibility: visible; transform: translateX(320px); }
-    .navbar-top { display: flex; justify-content: space-between; align-items: center; padding-bottom: 35px; border-bottom: 1px solid rgba(212,175,55,0.2); margin-bottom: 30px; }
-    .nav-close-btn { background: none; border: none; cursor: pointer; }
-    .nav-close-btn ion-icon { font-size: 22px; color: var(--prussian-blue); }
-    .navbar-link { color: var(--dark-jungle-green); font-size: 14px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; padding-block: 14px; border-bottom: 1px solid rgba(0,0,0,0.04); display: flex; align-items: center; justify-content: space-between; text-decoration: none; transition: all 0.3s; }
-    .navbar-link:hover { color: var(--gold-dark); padding-left: 6px; }
-    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.65); opacity: 0; pointer-events: none; transition: opacity 0.4s; z-index: 1001; backdrop-filter: blur(3px); }
-    .overlay.active { opacity: 1; pointer-events: all; }
-    .header-bottom-actions { display: flex; align-items: center; gap: 6px; }
-    .header-bottom-actions-btn { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; background: none; border: none; cursor: pointer; text-decoration: none; transition: all 0.3s; }
-    .header-bottom-actions-btn ion-icon { font-size: 20px; color: var(--prussian-blue); }
-    .header-bottom-actions-btn span { color: var(--gold-dark); font-size: 10px; font-weight: 600; display: none; }
-    .cart-count-badge { position: absolute; top: 2px; right: 2px; background: var(--gold); color: var(--prussian-blue); font-size: 10px; font-weight: 700; min-width: 16px; height: 16px; border-radius: 16px; display: flex; align-items: center; justify-content: center; padding: 0 4px; border: 2px solid white; }
-
-    @media (min-width: 1200px) {
-      .navbar, .navbar.active { all: unset; }
-      .navbar-bottom { display: flex; align-items: center; }
-      .navbar-list { display: flex; align-items: center; gap: 8px; margin: 0; padding: 0; }
-      .navbar-top, .overlay, .header-bottom-actions-btn:last-child { display: none; }
-      .navbar-link { color: var(--dark-jungle-green); font-size: 12px; letter-spacing: 1.5px; padding: 10px 14px; border-bottom: none; border-radius: 4px; position: relative; }
-      .navbar-link::after { content: ''; position: absolute; bottom: 4px; left: 14px; width: 0; height: 1.5px; background: var(--gold-gradient-horizontal); transition: width 0.3s; }
-      .navbar-link:hover::after { width: calc(100% - 28px); }
-      .header.scrolled .navbar-link { color: rgba(255,255,255,0.8); }
-    }
-    @media (max-width: 767px) {
-      .header-bottom-actions { background: var(--white); position: fixed; bottom: 0; left: 0; width: 100%; display: flex; justify-content: space-evenly; padding-block: 12px 10px; z-index: 100; border-top: 1px solid rgba(212,175,55,0.2); }
-      .header-bottom-actions-btn { flex-direction: column; height: auto; width: auto; padding: 4px 10px; border-radius: 8px; }
-      .header-bottom-actions-btn span { display: block; }
-      .footer { margin-bottom: 70px; }
-    }
 
     /* =============================================
        SERVICES PAGE STYLES - STUNNING DESIGN
@@ -464,32 +371,13 @@
     .footer-list-title { font-family: var(--ff-display); font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; position: relative; padding-bottom: 12px; }
     .footer-list-title::after { content: ''; position: absolute; bottom: 0; left: 0; width: 30px; height: 2px; background: var(--gold-gradient-horizontal); }
     .footer-link { font-size: 14px; padding-block: 8px; color: rgba(255,255,255,0.55); display: flex; align-items: center; gap: 8px; text-decoration: none; }
-    .footer-link::before { content: '›'; color: var(--gold); font-size: 1.2em; opacity: 0; transform: translateX(-6px); transition: all 0.3s; }
+    .footer-link::before { content: 'â€º'; color: var(--gold); font-size: 1.2em; opacity: 0; transform: translateX(-6px); transition: all 0.3s; }
     .footer-link:hover { color: var(--gold-light); padding-left: 4px; }
     .footer-link:hover::before { opacity: 1; transform: translateX(0); }
     .footer-bottom { background: rgba(0,0,0,0.3); padding-block: 22px; }
     .copyright { font-size: 12px; text-align: center; color: rgba(255,255,255,0.4); }
     .copyright a { display: inline-block; color: var(--gold); text-decoration: none; }
     .footer-link-box { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
-
-    /* Scroll to Top */
-    #scrollToTop {
-      position: fixed; bottom: 80px; right: 20px;
-      width: 46px; height: 46px;
-      background: var(--gold-gradient-horizontal);
-      color: var(--prussian-blue);
-      border: none; border-radius: 50%;
-      display: grid; place-items: center;
-      font-size: 20px;
-      cursor: pointer;
-      z-index: 999;
-      box-shadow: 0 6px 24px rgba(212,175,55,0.35);
-      opacity: 0; pointer-events: none;
-      transform: translateY(20px) scale(0.8);
-      transition: all 0.4s;
-    }
-    #scrollToTop.visible { opacity: 1; pointer-events: all; transform: translateY(0) scale(1); }
-    #scrollToTop:hover { transform: translateY(-4px) scale(1.08); }
 
     /* Reveal Animations */
     .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s, transform 0.8s; }
@@ -510,66 +398,145 @@
       .container { padding-inline: 20px; }
     }
   </style>
+  <link rel="stylesheet" href="./assets/css/site-header.css">
 </head>
 <body>
 
-  <!-- Top Bar -->
-  <div class="topbar">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- =============================================
+       TOP BAR
+  ============================================= -->
+  <div class="topbar" role="banner">
     <div class="topbar-inner">
       <div class="topbar-left">
-        <a href="mailto:biverroyaltyhomes01@gmail.com" class="topbar-link"><ion-icon name="mail-outline"></ion-icon><span>biverroyaltyhomes01@gmail.com</span></a>
-        <div class="topbar-divider"></div>
-        <a href="#" class="topbar-link"><ion-icon name="location-outline"></ion-icon><address>No. 31 Wetheral Road, Angelina Plaza, Owerri</address></a>
-        <div class="topbar-divider"></div>
-        <a href="tel:+2349033137432" class="topbar-link"><ion-icon name="call-outline"></ion-icon><span>+234 903 313 7432</span></a>
+        <a href="mailto:biverroyaltyhomes01@gmail.com" class="topbar-link" aria-label="Email us">
+          <ion-icon name="mail-outline"></ion-icon>
+          <span>biverroyaltyhomes01@gmail.com</span>
+        </a>
+        <div class="topbar-divider" aria-hidden="true"></div>
+        <a href="#" class="topbar-link" aria-label="Our location">
+          <ion-icon name="location-outline"></ion-icon>
+          <address>No. 31 Wetheral Road, Angelina Plaza, Owerri, Imo State</address>
+        </a>
+        <div class="topbar-divider" aria-hidden="true"></div>
+        <a href="tel:+2349033137432" class="topbar-link" aria-label="Call us">
+          <ion-icon name="call-outline"></ion-icon>
+          <span>+234 903 313 7432</span>
+        </a>
       </div>
       <div class="topbar-right">
-        <div class="topbar-socials">
-          <a href="https://www.facebook.com/share/1B8mwpRi5L/" class="topbar-social-link" target="_blank"><ion-icon name="logo-facebook"></ion-icon></a>
-          <a href="https://www.instagram.com/biverroyaltyhomes.ng" class="topbar-social-link" target="_blank"><ion-icon name="logo-instagram"></ion-icon></a>
-          <a href="https://www.tiktok.com/@biverroyaltyhomesltd" class="topbar-social-link" target="_blank"><ion-icon name="logo-youtube"></ion-icon></a>
+        <div class="topbar-socials" aria-label="Social media links">
+          <a href="https://www.facebook.com/share/1B8mwpRi5L/" class="topbar-social-link" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <ion-icon name="logo-facebook"></ion-icon>
+          </a>
+          <a href="https://www.instagram.com/biverroyaltyhomes.ng" class="topbar-social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <ion-icon name="logo-instagram"></ion-icon>
+          </a>
+          <a href="https://www.tiktok.com/@biverroyaltyhomesltd" class="topbar-social-link" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+            <ion-icon name="logo-youtube"></ion-icon>
+          </a>
         </div>
         <a href="property.html" class="topbar-cta">List Property</a>
       </div>
     </div>
   </div>
 
-  <!-- Header -->
-  <header class="header" id="header">
-    <div class="overlay" data-overlay></div>
+  <!-- =============================================
+       SEARCH MODAL — Feature #2
+       Fullscreen property search with instant filtering.
+       Triggered by the search button in the header/bottom bar.
+  ============================================= -->
+  <div id="searchModal" role="dialog" aria-modal="true" aria-label="Search properties">
+    <button class="search-modal-close" id="searchModalClose" aria-label="Close search">
+      <ion-icon name="close-outline"></ion-icon>
+    </button>
+    <p class="search-modal-eyebrow">Property Search</p>
+    <h2 class="search-modal-heading">Find Your <em style="color:var(--gold-light);font-style:italic;">Dream</em> Home</h2>
+    <div class="search-input-wrap">
+      <input type="search" id="searchInput"
+        placeholder="Search by location, type, or price..."
+        autocomplete="off" spellcheck="false"
+        aria-label="Search properties">
+      <ion-icon name="search-outline" class="search-input-icon" aria-hidden="true"></ion-icon>
+    </div>
+    <div class="search-filters" role="group" aria-label="Filter by type">
+      <button class="search-filter-chip active" data-filter="all">All</button>
+      <button class="search-filter-chip" data-filter="sale">For Sale</button>
+      <button class="search-filter-chip" data-filter="rent">For Rent</button>
+      <button class="search-filter-chip" data-filter="1">1 Bed</button>
+      <button class="search-filter-chip" data-filter="2">2 Beds</button>
+      <button class="search-filter-chip" data-filter="3">3+ Beds</button>
+    </div>
+    <div class="search-results-wrap" id="searchResults" aria-live="polite" aria-label="Search results"></div>
+  </div>
+
+  <!-- =============================================
+       HEADER
+  ============================================= -->
+  <header class="header" id="header" data-header>
     <div class="header-bottom">
       <div class="container">
-        <a href="index.html" class="logo"><img src="./assets/images/biver-logo.png" alt="Biver Royalty Homes" height="50"></a>
-        <nav class="navbar" data-navbar>
-          <div class="navbar-top">
-            <a href="index.html" class="logo"><img src="./assets/images/biver-logo.png" alt="Logo" width="150"></a>
-            <button class="nav-close-btn" data-nav-close-btn><ion-icon name="close-outline"></ion-icon></button>
-          </div>
-          <div class="navbar-bottom">
-            <ul class="navbar-list">
-              <li><a href="index.html" class="navbar-link">Home</a></li>
-              <li><a href="about.html" class="navbar-link">About</a></li>
-              <li><a href="service.html" class="navbar-link">Services</a></li>
-              <li><a href="property.html" class="navbar-link">Properties</a></li>
-              <li><a href="https://blog.biverroyaltyhomesltd.com/" class="navbar-link" target="_blank">Blog</a></li>
-              <li><a href="team.html" class="navbar-link">Team</a></li>
-              <li><a href="contact.html" class="navbar-link">Contact</a></li>
-              <li><a href="login.html" class="navbar-link">Login</a></li>
-            </ul>
+        <a href="index.html" class="logo" aria-label="Biver Royalty Homes Home">
+          <img src="./assets/images/biver-logo.png" alt="Biver Royalty Homes" width="auto" height="50">
+        </a>
+
+        <nav class="navbar" data-navbar aria-label="Main navigation">
+          <div class="navbar-inner-wrap">
+            <div class="navbar-top">
+              <a href="index.html" class="logo">
+                <img src="./assets/images/biver-logo.png" alt="Biver Royalty Homes" width="140">
+              </a>
+              <button class="nav-close-btn" data-nav-close-btn aria-label="Close Menu">
+                <ion-icon name="close-outline"></ion-icon>
+              </button>
+            </div>
+
+            <div class="navbar-bottom">
+              <ul class="navbar-list" role="menubar">
+                <li role="none"><a href="index.html" class="navbar-link" data-nav-link role="menuitem">Home</a></li>
+                <li role="none"><a href="about.html" class="navbar-link" data-nav-link role="menuitem">About</a></li>
+                <li role="none"><a href="services.html" class="navbar-link" data-nav-link role="menuitem">Services</a></li>
+                <li role="none"><a href="property.html" class="navbar-link" data-nav-link role="menuitem">Properties</a></li>
+                <li role="none"><a href="https://blog.biverroyaltyhomesltd.com/" class="navbar-link" data-nav-link role="menuitem" target="_blank" rel="noopener noreferrer">Blog</a></li>
+                <li role="none"><a href="team.html" class="navbar-link" data-nav-link role="menuitem">Team</a></li>
+                <li role="none"><a href="contact.html" class="navbar-link" data-nav-link role="menuitem">Contact</a></li>
+                <li role="none"><a href="login.html" class="navbar-link" role="menuitem">Login</a></li>
+              </ul>
+            </div>
+
+            <div class="navbar-footer">
+              <p class="navbar-footer-title">Get in Touch</p>
+              <a href="tel:+2349033137432" class="navbar-footer-link">
+                <ion-icon name="call-outline"></ion-icon>
+                <span>+234 903 313 7432</span>
+              </a>
+              <a href="mailto:biverroyaltyhomes01@gmail.com" class="navbar-footer-link">
+                <ion-icon name="mail-outline"></ion-icon>
+                <span>biverroyaltyhomes01@gmail.com</span>
+              </a>
+              <a href="property.html" class="navbar-cta">List Your Property</a>
+            </div>
           </div>
         </nav>
+
         <div class="header-bottom-actions">
-          <button class="header-bottom-actions-btn"><ion-icon name="search-outline"></ion-icon><span>Search</span></button>
-          <a href="userDashboard.html" class="header-bottom-actions-btn"><ion-icon name="person-outline"></ion-icon><span>Profile</span></a>
-          <a href="favorites.html" class="header-bottom-actions-btn"><ion-icon name="heart-outline"></ion-icon><span>Saved</span></a>
-          <a href="addCart.html" class="header-bottom-actions-btn" style="position:relative;"><ion-icon name="cart-outline"></ion-icon><span>Cart</span><div class="cart-count-badge" id="headerCartCount" style="display:none;">0</div></a>
-          <button class="header-bottom-actions-btn" data-nav-open-btn><ion-icon name="menu-outline"></ion-icon><span>Menu</span></button>
+          <button class="header-bottom-actions-btn" data-search-open aria-label="Search properties" aria-expanded="false" aria-controls="searchModal">
+            <ion-icon name="search-outline"></ion-icon>
+            <span>Search</span>
+          </button>
+          <button class="header-bottom-actions-btn" data-nav-open-btn aria-label="Open Menu" aria-expanded="false">
+            <ion-icon name="menu-outline"></ion-icon>
+            <span>Menu</span>
+          </button>
         </div>
       </div>
     </div>
   </header>
 
-  <main>
+  <div class="overlay" data-overlay aria-hidden="true"></div>
+
+  <main id="main-content">
     <!-- Hero Section -->
     <section class="services-hero">
       <div class="hero-shape"></div>
@@ -748,20 +715,11 @@
 
   <button id="scrollToTop" aria-label="Scroll to top"><ion-icon name="chevron-up-outline"></ion-icon></button>
 
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script src="./assets/js/site-header.js" defer></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   <script>
-    // Header scroll
-    const header = document.getElementById('header');
-    window.addEventListener('scroll', () => { if (window.scrollY > 80) header.classList.add('scrolled'); else header.classList.remove('scrolled'); });
-    // Scroll to top
-    const scrollBtn = document.getElementById('scrollToTop');
-    window.addEventListener('scroll', () => { if (window.scrollY > 600) scrollBtn.classList.add('visible'); else scrollBtn.classList.remove('visible'); });
-    scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-    // Navbar toggle
-    const navbar = document.querySelector("[data-navbar]"), overlay = document.querySelector("[data-overlay]"), closeBtn = document.querySelector("[data-nav-close-btn]"), openBtn = document.querySelector("[data-nav-open-btn]");
-    const toggleNav = () => { navbar.classList.toggle("active"); overlay.classList.toggle("active"); };
-    if (openBtn && closeBtn && overlay) { openBtn.addEventListener("click", toggleNav); closeBtn.addEventListener("click", toggleNav); overlay.addEventListener("click", toggleNav); document.querySelectorAll("[data-nav-link]").forEach(l => l.addEventListener("click", toggleNav)); }
+// Scroll to top
     // Scroll reveal
     const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }); }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
