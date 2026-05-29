@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="List your property with Biver Royalty Homes. Submit property details, images, and videos for expert real estate marketing in Nigeria.">
+  <meta name="keywords" content="list property Nigeria, sell property Owerri, property listing, upload property images, upload property video">
+  <meta name="author" content="Biver Royalty Homes Ltd">
+  <title>List Your Property | Biver Royalty Homes</title>
+  <link rel="shortcut icon" href="./assets/images/BIVER ROYALTY HOMES LTD LOGO_052927 (1).png" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/site-variables.css">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: var(--ff-body); background: var(--white); overflow-x: hidden; color: var(--dark-jungle-green); }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--prussian-blue); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+    .container { max-width: 1200px; margin: 0 auto; padding-inline: 30px; }
+
+    .listing-hero {
+      position: relative;
+      min-height: 72vh;
+      display: flex;
+      align-items: center;
+      padding-block: clamp(90px, 11vh, 140px);
+      background:
+        linear-gradient(125deg, rgba(55,24,1,0.95) 0%, rgba(26,10,0,0.92) 58%, rgba(55,24,1,0.88) 100%),
+        url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&h=1000&fit=crop") center/cover no-repeat;
+      overflow: hidden;
+      z-index: 2;
+    }
+    .listing-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(212,175,55,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212,175,55,0.05) 1px, transparent 1px);
+      background-size: 70px 70px;
+      opacity: 0.45;
+      pointer-events: none;
+    }
+    .listing-hero::after {
+      content: '';
+      position: absolute;
+      right: -12%;
+      top: 12%;
+      width: 52vw;
+      height: 52vw;
+      max-width: 680px;
+      max-height: 680px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,175,55,0.18) 0%, rgba(212,175,55,0.05) 36%, transparent 70%);
+      pointer-events: none;
+    }
+    .listing-hero .container {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.75fr);
+      gap: 50px;
+      align-items: center;
+    }
+    .hero-eyebrow {
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+    .listing-hero h1 {
+      font-family: var(--ff-display);
+      font-size: clamp(3rem, 6vw, 5.8rem);
+      line-height: 0.95;
+      color: var(--white);
+      margin-bottom: 22px;
+      max-width: 780px;
+    }
+    .listing-hero h1 span {
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero-copy {
+      color: rgba(255,255,255,0.72);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      max-width: 620px;
+      margin-bottom: 30px;
+    }
+    .hero-actions {
+      position: relative;
+      z-index: 6;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      opacity: 1;
+      visibility: visible;
+    }
+    .hero-btn,
+    .hero-btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 14px 28px;
+      border-radius: 2px;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      font-size: 12px;
+      font-weight: 700;
+      transition: all 0.3s;
+      opacity: 1;
+      visibility: visible;
+    }
+    .hero-btn {
+      background: var(--gold-gradient);
+      color: var(--prussian-blue);
+    }
+    .hero-btn:hover { transform: translateY(-3px); box-shadow: var(--shadow-gold); }
+    .hero-btn-outline {
+      border: 1px solid rgba(255,255,255,0.28);
+      color: var(--white);
+    }
+    .hero-btn-outline:hover { border-color: var(--gold); color: var(--gold-light); }
+    .seller-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(212,175,55,0.25);
+      border-radius: 24px;
+      padding: 28px;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 24px 70px rgba(0,0,0,0.28);
+    }
+    .seller-card-title {
+      font-family: var(--ff-display);
+      color: var(--white);
+      font-size: 2rem;
+      margin-bottom: 18px;
+    }
+    .seller-card-list { display: grid; gap: 16px; list-style: none; }
+    .seller-card-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+    .seller-card-list ion-icon {
+      color: var(--gold);
+      font-size: 20px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .trust-strip {
+      background: var(--white);
+      margin-top: -28px;
+      position: relative;
+      z-index: 1;
+    }
+    .trust-panel {
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: var(--shadow-2);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      overflow: hidden;
+      border: 1px solid rgba(212,175,55,0.12);
+    }
+    .trust-item {
+      padding: 26px 24px;
+      border-right: 1px solid rgba(55,24,1,0.08);
+    }
+    .trust-item:last-child { border-right: none; }
+    .trust-number {
+      font-family: var(--ff-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--prussian-blue);
+      margin-bottom: 4px;
+    }
+    .trust-label {
+      color: var(--cadet);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+    }
+
+    .listing-section {
+      padding-block: 100px;
+      background:
+        linear-gradient(180deg, var(--white) 0%, var(--cultured-2) 100%);
+    }
+    .section-heading {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 55px;
+    }
+    .section-kicker {
+      color: var(--gold-dark);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .section-heading h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(2.1rem, 4vw, 3.4rem);
+      color: var(--dark-jungle-green);
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+    .section-heading p {
+      color: var(--cadet);
+      line-height: 1.8;
+    }
+    .listing-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.72fr) minmax(0, 1fr);
+      gap: 36px;
+      align-items: start;
+    }
+    .process-card,
+    .listing-form-card {
+      background: var(--white);
+      border: 1px solid rgba(212,175,55,0.12);
+      border-radius: 24px;
+      box-shadow: var(--shadow-1);
+    }
+    .process-card {
+      padding: 34px;
+      position: sticky;
+      top: 110px;
+    }
+    .process-card h3,
+    .listing-form-card h3 {
+      font-family: var(--ff-display);
+      color: var(--prussian-blue);
+      font-size: 2rem;
+      margin-bottom: 18px;
+    }
+    .process-list {
+      display: grid;
+      gap: 18px;
+      list-style: none;
+      margin-bottom: 30px;
+    }
+    .process-list li {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .process-step {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(212,175,55,0.12);
+      color: var(--gold-dark);
+      font-weight: 800;
+    }
+    .process-list strong {
+      display: block;
+      color: var(--dark-jungle-green);
+      margin-bottom: 4px;
+    }
+    .process-list span {
+      color: var(--cadet);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+    .agent-note {
+      border-radius: 18px;
+      background: var(--prussian-blue);
+      color: rgba(255,255,255,0.72);
+      padding: 24px;
+    }
+    .agent-note strong {
+      display: block;
+      color: var(--gold-light);
+      font-family: var(--ff-display);
+      font-size: 1.35rem;
+      margin-bottom: 8px;
+    }
+    .agent-note a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      color: var(--gold);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .listing-form-card { padding: 34px; }
+    .form-intro {
+      color: var(--cadet);
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+    .form-section {
+      padding-block: 28px;
+      border-top: 1px solid rgba(55,24,1,0.08);
+    }
+    .form-section:first-of-type {
+      border-top: none;
+      padding-top: 0;
+    }
+    .form-section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--prussian-blue);
+      margin-bottom: 18px;
+    }
+    .form-section-title ion-icon {
+      color: var(--gold-dark);
+      font-size: 20px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .form-field { display: grid; gap: 8px; }
+    .form-field.full { grid-column: 1 / -1; }
+    .form-field label {
+      color: var(--dark-jungle-green);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .required { color: var(--gold-dark); }
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      border: 1px solid rgba(55,24,1,0.12);
+      background: var(--cultured-2);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font: inherit;
+      color: var(--dark-jungle-green);
+      outline: none;
+      transition: all 0.25s;
+    }
+    .form-field textarea {
+      min-height: 140px;
+      resize: vertical;
+      line-height: 1.7;
+    }
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      background: var(--white);
+      border-color: var(--gold);
+      box-shadow: 0 0 0 4px rgba(212,175,55,0.12);
+    }
+    .hint {
+      color: var(--cadet);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .upload-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .upload-box {
+      position: relative;
+      min-height: 210px;
+      border: 1.5px dashed rgba(212,175,55,0.5);
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(212,175,55,0.08), rgba(212,175,55,0.02)),
+        var(--white);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 24px;
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+    .upload-box:hover,
+    .upload-box.dragover {
+      border-color: var(--gold-dark);
+      box-shadow: var(--shadow-gold);
+      transform: translateY(-2px);
+    }
+    .upload-box input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .upload-content ion-icon {
+      font-size: 42px;
+      color: var(--gold-dark);
+      margin: 0 auto 14px;
+    }
+    .upload-content strong {
+      display: block;
+      color: var(--prussian-blue);
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+    .upload-content span {
+      color: var(--cadet);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .preview-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .preview-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--cultured-2);
+      border: 1px solid rgba(55,24,1,0.08);
+      border-radius: 12px;
+      padding: 10px;
+      color: var(--cadet);
+      font-size: 13px;
+    }
+    .preview-thumb {
+      width: 52px;
+      height: 42px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: rgba(55,24,1,0.08);
+      flex-shrink: 0;
+    }
+    .preview-icon {
+      width: 52px;
+      height: 42px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: rgba(212,175,55,0.15);
+      color: var(--gold-dark);
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .submit-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 8px;
+    }
+    .privacy-note {
+      color: var(--cadet);
+      font-size: 12px;
+      max-width: 380px;
+      line-height: 1.6;
+    }
+    .submit-btn {
+      border: none;
+      background: var(--gold-gradient);
+      color: var(--prussian-blue);
+      border-radius: 2px;
+      padding: 15px 30px;
+      font: inherit;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      transition: all 0.3s;
+    }
+    .submit-btn:hover { transform: translateY(-3px); box-shadow: var(--shadow-gold); }
+    .form-message {
+      display: none;
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: rgba(16,183,89,0.1);
+      color: #087a3d;
+      line-height: 1.6;
+      border: 1px solid rgba(16,183,89,0.18);
+    }
+    .form-message.show { display: block; }
+
+    .marketing-section {
+      padding-block: 90px;
+      background: var(--prussian-blue);
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+    .marketing-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(212,175,55,0.16), transparent 34%),
+                  radial-gradient(circle at 80% 70%, rgba(212,175,55,0.1), transparent 30%);
+      pointer-events: none;
+    }
+    .marketing-section .container {
+      position: relative;
+      z-index: 1;
+    }
+    .marketing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+    .marketing-card {
+      border: 1px solid rgba(212,175,55,0.18);
+      background: rgba(255,255,255,0.05);
+      border-radius: 22px;
+      padding: 28px;
+    }
+    .marketing-card ion-icon {
+      color: var(--gold);
+      font-size: 34px;
+      margin-bottom: 18px;
+    }
+    .marketing-card h3 {
+      font-family: var(--ff-display);
+      font-size: 1.55rem;
+      margin-bottom: 10px;
+    }
+    .marketing-card p {
+      color: rgba(255,255,255,0.64);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    @media (max-width: 992px) {
+      .listing-hero .container,
+      .listing-grid {
+        grid-template-columns: 1fr;
+      }
+      .process-card { position: static; }
+      .trust-panel { grid-template-columns: repeat(2, 1fr); }
+      .trust-item:nth-child(2) { border-right: none; }
+      .trust-item:nth-child(-n + 2) { border-bottom: 1px solid rgba(55,24,1,0.08); }
+      .marketing-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .container { padding-inline: 20px; }
+      .listing-hero { min-height: auto; padding-block: 80px; }
+      .seller-card,
+      .listing-form-card,
+      .process-card { padding: 24px; border-radius: 20px; }
+      .form-grid,
+      .upload-grid,
+      .trust-panel { grid-template-columns: 1fr; }
+      .trust-item,
+      .trust-item:nth-child(2) {
+        border-right: none;
+        border-bottom: 1px solid rgba(55,24,1,0.08);
+      }
+      .trust-item:last-child { border-bottom: none; }
+      .submit-row { align-items: stretch; }
+      .submit-btn { width: 100%; justify-content: center; }
+    }
+  </style>
+  <link rel="stylesheet" href="./assets/css/site-header.css">
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <div class="topbar" role="banner">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <a href="mailto:biverroyaltyhomes01@gmail.com" class="topbar-link" aria-label="Email us">
+          <ion-icon name="mail-outline"></ion-icon>
+          <span>biverroyaltyhomes01@gmail.com</span>
+        </a>
+        <div class="topbar-divider" aria-hidden="true"></div>
+        <a href="#" class="topbar-link" aria-label="Our location">
+          <ion-icon name="location-outline"></ion-icon>
+          <address>No. 31 Wetheral Road, Angelina Plaza, Owerri, Imo State</address>
+        </a>
+        <div class="topbar-divider" aria-hidden="true"></div>
+        <a href="tel:+2349033137432" class="topbar-link" aria-label="Call us">
+          <ion-icon name="call-outline"></ion-icon>
+          <span>+234 903 313 7432</span>
+        </a>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-socials" aria-label="Social media links">
+          <a href="https://www.facebook.com/share/1B8mwpRi5L/" class="topbar-social-link" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <ion-icon name="logo-facebook"></ion-icon>
+          </a>
+          <a href="https://www.instagram.com/biverroyaltyhomes.ng" class="topbar-social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <ion-icon name="logo-instagram"></ion-icon>
+          </a>
+          <a href="https://www.tiktok.com/@biverroyaltyhomesltd" class="topbar-social-link" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+            <ion-icon name="logo-youtube"></ion-icon>
+          </a>
+        </div>
+        <a href="list-your-property.html" class="topbar-cta">List Property</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="searchModal" role="dialog" aria-modal="true" aria-label="Search properties">
+    <button class="search-modal-close" id="searchModalClose" aria-label="Close search">
+      <ion-icon name="close-outline"></ion-icon>
+    </button>
+    <p class="search-modal-eyebrow">Property Search</p>
+    <h2 class="search-modal-heading">Find Your <em style="color:var(--gold-light);font-style:italic;">Dream</em> Home</h2>
+    <div class="search-input-wrap">
+      <input type="search" id="searchInput"
+        placeholder="Search by location, type, or price..."
+        autocomplete="off" spellcheck="false"
+        aria-label="Search properties">
+      <ion-icon name="search-outline" class="search-input-icon" aria-hidden="true"></ion-icon>
+    </div>
+    <div class="search-filters" role="group" aria-label="Filter by type">
+      <button class="search-filter-chip active" data-filter="all">All</button>
+      <button class="search-filter-chip" data-filter="sale">For Sale</button>
+      <button class="search-filter-chip" data-filter="rent">For Rent</button>
+      <button class="search-filter-chip" data-filter="1">1 Bed</button>
+      <button class="search-filter-chip" data-filter="2">2 Beds</button>
+      <button class="search-filter-chip" data-filter="3">3+ Beds</button>
+    </div>
+    <div class="search-results-wrap" id="searchResults" aria-live="polite" aria-label="Search results"></div>
+  </div>
+
+  <header class="header" id="header" data-header>
+    <div class="header-bottom">
+      <div class="container">
+        <a href="index.html" class="logo" aria-label="Biver Royalty Homes Home">
+          <img src="./assets/images/biver-logo.png" alt="Biver Royalty Homes" width="auto" height="50">
+        </a>
+
+        <nav class="navbar" data-navbar aria-label="Main navigation">
+          <div class="navbar-inner-wrap">
+            <div class="navbar-top">
+              <a href="index.html" class="logo">
+                <img src="./assets/images/biver-logo.png" alt="Biver Royalty Homes" width="140">
+              </a>
+              <button class="nav-close-btn" data-nav-close-btn aria-label="Close Menu">
+                <ion-icon name="close-outline"></ion-icon>
+              </button>
+            </div>
+
+            <div class="navbar-bottom">
+              <ul class="navbar-list" role="menubar">
+                <li role="none"><a href="index.html" class="navbar-link" data-nav-link role="menuitem">Home</a></li>
+                <li role="none"><a href="about.html" class="navbar-link" data-nav-link role="menuitem">About</a></li>
+                <li role="none"><a href="services.html" class="navbar-link" data-nav-link role="menuitem">Services</a></li>
+                <li role="none"><a href="property.html" class="navbar-link" data-nav-link role="menuitem">Properties</a></li>
+                <li role="none"><a href="contact.html" class="navbar-link" data-nav-link role="menuitem">Contact</a></li>
+              </ul>
+            </div>
+
+            <div class="navbar-footer">
+              <p class="navbar-footer-title">Get in Touch</p>
+              <a href="tel:+2349033137432" class="navbar-footer-link">
+                <ion-icon name="call-outline"></ion-icon>
+                <span>+234 903 313 7432</span>
+              </a>
+              <a href="mailto:biverroyaltyhomes01@gmail.com" class="navbar-footer-link">
+                <ion-icon name="mail-outline"></ion-icon>
+                <span>biverroyaltyhomes01@gmail.com</span>
+              </a>
+              <a href="list-your-property.html" class="navbar-cta">List Your Property</a>
+            </div>
+          </div>
+        </nav>
+
+        <div class="header-bottom-actions">
+          <button class="header-bottom-actions-btn" data-search-open aria-label="Search properties" aria-expanded="false" aria-controls="searchModal">
+            <ion-icon name="search-outline"></ion-icon>
+            <span>Search</span>
+          </button>
+          <button class="header-bottom-actions-btn" data-nav-open-btn aria-label="Open Menu" aria-expanded="false">
+            <ion-icon name="menu-outline"></ion-icon>
+            <span>Menu</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="overlay" data-overlay aria-hidden="true"></div>
+
+  <main id="main-content">
+    <section class="listing-hero" aria-label="List your property hero">
+      <div class="container">
+        <div class="hero-content">
+          <p class="hero-eyebrow">Sell or rent with confidence</p>
+          <h1>List Your <span>Property</span> With Royal Exposure</h1>
+          <p class="hero-copy">
+            Give your property the presentation it deserves. Submit verified details, professional media, and your preferred selling terms. Our team reviews every listing before promoting it to qualified buyers and tenants.
+          </p>
+          <div class="hero-actions">
+            <a href="#listingForm" class="hero-btn">
+              Start Listing <ion-icon name="arrow-forward-outline"></ion-icon>
+            </a>
+            <a href="tel:+2349033137432" class="hero-btn-outline" aria-label="Call Biver Royalty Homes agent at +234 903 313 7432">
+              Speak With an Agent <ion-icon name="call-outline"></ion-icon>
+            </a>
+          </div>
+        </div>
+        <aside class="seller-card" aria-label="Seller benefits">
+          <h2 class="seller-card-title">Built for serious sellers</h2>
+          <ul class="seller-card-list">
+            <li><ion-icon name="shield-checkmark-outline"></ion-icon><span>Every submission is reviewed before going live to protect seller trust and buyer confidence.</span></li>
+            <li><ion-icon name="videocam-outline"></ion-icon><span>Add property walkthrough videos and multiple image angles for stronger enquiries.</span></li>
+            <li><ion-icon name="people-outline"></ion-icon><span>Our team helps position your property for buyers, renters, and investors.</span></li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section class="trust-strip" aria-label="Listing trust metrics">
+      <div class="container">
+        <div class="trust-panel">
+          <div class="trust-item">
+            <div class="trust-number">01</div>
+            <div class="trust-label">Submit details</div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-number">02</div>
+            <div class="trust-label">Upload media</div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-number">03</div>
+            <div class="trust-label">Agent review</div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-number">04</div>
+            <div class="trust-label">Qualified leads</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="listing-section" aria-label="Property listing form">
+      <div class="container">
+        <div class="section-heading">
+          <p class="section-kicker">Property submission</p>
+          <h2>Tell Us What You Want to Sell, Rent, or Lease</h2>
+          <p>Complete the form below with accurate ownership, pricing, location, and media details. Quality images and videos help your property stand out and attract faster enquiries.</p>
+        </div>
+
+        <div class="listing-grid">
+          <aside class="process-card">
+            <h3>How it works</h3>
+            <ul class="process-list">
+              <li>
+                <div class="process-step">1</div>
+                <div><strong>Submit property details</strong><span>Share location, type, price, features, and seller contact details.</span></div>
+              </li>
+              <li>
+                <div class="process-step">2</div>
+                <div><strong>Upload photos and videos</strong><span>Add clear images and walkthrough videos so buyers can understand the property quickly.</span></div>
+              </li>
+              <li>
+                <div class="process-step">3</div>
+                <div><strong>Verification call</strong><span>A Biver Royalty Homes agent will review the listing and contact you before publication.</span></div>
+              </li>
+              <li>
+                <div class="process-step">4</div>
+                <div><strong>Market professionally</strong><span>Your property is positioned for interested clients through our listing channels.</span></div>
+              </li>
+            </ul>
+            <div class="agent-note">
+              <strong>Need help preparing media?</strong>
+              <p>Our team can guide you on the best photos, video angles, and documents to make your property listing stronger.</p>
+              <a href="tel:+2349033137432"><ion-icon name="call-outline"></ion-icon> +234 903 313 7432</a>
+            </div>
+          </aside>
+
+          <section class="listing-form-card" id="listingForm">
+            <h3>List Your Property</h3>
+            <p class="form-intro">Fields marked with <span class="required">*</span> are required. Images and videos are required so the property can be reviewed properly.</p>
+
+            <form id="propertyListingForm" enctype="multipart/form-data" novalidate>
+              <div class="form-section">
+                <div class="form-section-title"><ion-icon name="person-outline"></ion-icon> Owner information</div>
+                <div class="form-grid">
+                  <div class="form-field">
+                    <label for="ownerName">Full name <span class="required">*</span></label>
+                    <input type="text" id="ownerName" name="ownerName" placeholder="Your full name" required>
+                  </div>
+                  <div class="form-field">
+                    <label for="ownerPhone">Phone number <span class="required">*</span></label>
+                    <input type="tel" id="ownerPhone" name="ownerPhone" placeholder="+234..." required>
+                  </div>
+                  <div class="form-field">
+                    <label for="ownerEmail">Email address</label>
+                    <input type="email" id="ownerEmail" name="ownerEmail" placeholder="you@example.com">
+                  </div>
+                  <div class="form-field">
+                    <label for="contactMethod">Preferred contact</label>
+                    <select id="contactMethod" name="contactMethod">
+                      <option value="phone">Phone call</option>
+                      <option value="whatsapp">WhatsApp</option>
+                      <option value="email">Email</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <div class="form-section-title"><ion-icon name="home-outline"></ion-icon> Property details</div>
+                <div class="form-grid">
+                  <div class="form-field full">
+                    <label for="propertyTitle">Property title <span class="required">*</span></label>
+                    <input type="text" id="propertyTitle" name="propertyTitle" placeholder="Example: Luxury 4 Bedroom Duplex in New Owerri" required>
+                  </div>
+                  <div class="form-field">
+                    <label for="listingType">Listing purpose <span class="required">*</span></label>
+                    <select id="listingType" name="listingType" required>
+                      <option value="">Select purpose</option>
+                      <option value="sale">For Sale</option>
+                      <option value="rent">For Rent</option>
+                      <option value="shortlet">Shortlet</option>
+                      <option value="lease">Lease</option>
+                    </select>
+                  </div>
+                  <div class="form-field">
+                    <label for="propertyType">Property type <span class="required">*</span></label>
+                    <select id="propertyType" name="propertyType" required>
+                      <option value="">Select type</option>
+                      <option value="duplex">Duplex</option>
+                      <option value="bungalow">Bungalow</option>
+                      <option value="apartment">Apartment</option>
+                      <option value="land">Land</option>
+                      <option value="commercial">Commercial property</option>
+                      <option value="estate">Estate development</option>
+                    </select>
+                  </div>
+                  <div class="form-field">
+                    <label for="propertyLocation">Location / area <span class="required">*</span></label>
+                    <input type="text" id="propertyLocation" name="propertyLocation" placeholder="Example: New Owerri, Imo State" required>
+                  </div>
+                  <div class="form-field">
+                    <label for="propertyPrice">Asking price <span class="required">*</span></label>
+                    <input type="text" id="propertyPrice" name="propertyPrice" placeholder="Example: NGN 85,000,000" required>
+                  </div>
+                  <div class="form-field">
+                    <label for="bedrooms">Bedrooms</label>
+                    <input type="number" id="bedrooms" name="bedrooms" min="0" placeholder="4">
+                  </div>
+                  <div class="form-field">
+                    <label for="bathrooms">Bathrooms</label>
+                    <input type="number" id="bathrooms" name="bathrooms" min="0" placeholder="5">
+                  </div>
+                  <div class="form-field">
+                    <label for="propertySize">Size / land measurement</label>
+                    <input type="text" id="propertySize" name="propertySize" placeholder="Example: 500 sqm or 1 plot">
+                  </div>
+                  <div class="form-field">
+                    <label for="ownershipStatus">Ownership status</label>
+                    <select id="ownershipStatus" name="ownershipStatus">
+                      <option value="">Select status</option>
+                      <option value="owner">I am the owner</option>
+                      <option value="agent">I am an authorized agent</option>
+                      <option value="family">Family property</option>
+                      <option value="company">Company-owned property</option>
+                    </select>
+                  </div>
+                  <div class="form-field full">
+                    <label for="propertyAddress">Full property address <span class="required">*</span></label>
+                    <input type="text" id="propertyAddress" name="propertyAddress" placeholder="Street, landmark, area, city, state" required>
+                  </div>
+                  <div class="form-field full">
+                    <label for="propertyFeatures">Key features</label>
+                    <input type="text" id="propertyFeatures" name="propertyFeatures" placeholder="Example: POP ceiling, CCTV, borehole, fitted kitchen, parking">
+                    <span class="hint">Separate features with commas.</span>
+                  </div>
+                  <div class="form-field full">
+                    <label for="propertyDescription">Property description <span class="required">*</span></label>
+                    <textarea id="propertyDescription" name="propertyDescription" placeholder="Describe the property, access road, neighborhood, title documents, and current condition." required></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <div class="form-section-title"><ion-icon name="images-outline"></ion-icon> Media upload</div>
+                <div class="upload-grid">
+                  <div>
+                    <label class="upload-box" for="propertyImages" data-upload-box>
+                      <input type="file" id="propertyImages" name="propertyImages" accept="image/*" multiple required>
+                      <span class="upload-content">
+                        <ion-icon name="image-outline"></ion-icon>
+                        <strong>Upload property images <span class="required">*</span></strong>
+                        <span>Upload clear exterior, interior, kitchen, bathroom, compound, and street-view photos.</span>
+                      </span>
+                    </label>
+                    <div class="preview-list" id="imagePreview" aria-live="polite"></div>
+                  </div>
+                  <div>
+                    <label class="upload-box" for="propertyVideos" data-upload-box>
+                      <input type="file" id="propertyVideos" name="propertyVideos" accept="video/*" multiple required>
+                      <span class="upload-content">
+                        <ion-icon name="videocam-outline"></ion-icon>
+                        <strong>Upload property videos <span class="required">*</span></strong>
+                        <span>Add walkthrough videos, compound views, street access, and room-by-room clips.</span>
+                      </span>
+                    </label>
+                    <div class="preview-list" id="videoPreview" aria-live="polite"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <div class="form-section-title"><ion-icon name="document-text-outline"></ion-icon> Documents and notes</div>
+                <div class="form-grid">
+                  <div class="form-field">
+                    <label for="titleDocument">Title document type</label>
+                    <select id="titleDocument" name="titleDocument">
+                      <option value="">Select document</option>
+                      <option value="c-of-o">Certificate of Occupancy</option>
+                      <option value="deed">Deed of Assignment</option>
+                      <option value="survey">Survey Plan</option>
+                      <option value="allocation">Allocation Paper</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                  <div class="form-field">
+                    <label for="inspectionAvailability">Inspection availability</label>
+                    <input type="text" id="inspectionAvailability" name="inspectionAvailability" placeholder="Example: Weekdays after 2pm">
+                  </div>
+                  <div class="form-field full">
+                    <label for="sellerNotes">Additional notes</label>
+                    <textarea id="sellerNotes" name="sellerNotes" placeholder="Share anything our listing team should know before contacting you."></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="submit-row">
+                <p class="privacy-note">By submitting, you confirm that the property information is accurate and that Biver Royalty Homes may contact you to verify the listing.</p>
+                <button type="submit" class="submit-btn">
+                  Submit Property <ion-icon name="send-outline"></ion-icon>
+                </button>
+              </div>
+              <div class="form-message" id="formMessage" role="status"></div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="marketing-section" aria-label="How Biver Royalty Homes markets properties">
+      <div class="container">
+        <div class="section-heading">
+          <p class="section-kicker">World-class presentation</p>
+          <h2 style="color: var(--white);">We Position Your Property to Attract Serious Buyers</h2>
+          <p style="color: rgba(255,255,255,0.68);">From media review to qualified enquiry handling, our listing process is designed to make your property look credible, premium, and easy to inspect.</p>
+        </div>
+        <div class="marketing-grid">
+          <article class="marketing-card">
+            <ion-icon name="camera-outline"></ion-icon>
+            <h3>Media-led listings</h3>
+            <p>Quality images and videos help clients understand the value of your property before they request inspection.</p>
+          </article>
+          <article class="marketing-card">
+            <ion-icon name="shield-checkmark-outline"></ion-icon>
+            <h3>Verified confidence</h3>
+            <p>We review property details, contact information, and ownership context before moving a listing forward.</p>
+          </article>
+          <article class="marketing-card">
+            <ion-icon name="megaphone-outline"></ion-icon>
+            <h3>Premium promotion</h3>
+            <p>Your property can be presented across listing channels and matched with buyers or tenants seeking that location.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =============================================
+       FOOTER
+  ============================================= -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <img src="./assets/images/biver-logo.png" alt="Biver Royalty Homes" width="150" height="auto" loading="lazy">
+          </a>
+          <p class="section-text">
+            We are a real estate company built on Integrity. We help our clients bring their dream homes to reality within their budget.
+          </p>
+          <ul class="contact-list">
+            <li>
+              <a href="contact.html" class="contact-link">
+                <ion-icon name="location-outline"></ion-icon>
+                <address>No. 31 Wetheral Road, Angelina Plaza Opposite Reem Fuel Station Owerri, Imo State.</address>
+              </a>
+            </li>
+            <li>
+              <a href="tel:+2349033137432" class="contact-link">
+                <ion-icon name="call-outline"></ion-icon>
+                <span>+234 903 313 7432</span>
+              </a>
+            </li>
+            <li>
+              <a href="mailto:biverroyaltyhomes01@gmail.com" class="contact-link">
+                <ion-icon name="mail-outline"></ion-icon>
+                <span>biverroyaltyhomes01@gmail.com</span>
+              </a>
+            </li>
+          </ul>
+          <ul class="social-list">
+            <li><a href="https://www.facebook.com/share/1B8mwpRi5L/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><ion-icon name="logo-facebook"></ion-icon></a></li>
+            <li><a href="#" class="social-link" aria-label="Twitter"><ion-icon name="logo-twitter"></ion-icon></a></li>
+            <li><a href="https://www.instagram.com/biverroyaltyhomes.ng" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><ion-icon name="logo-instagram"></ion-icon></a></li>
+            <li><a href="https://www.tiktok.com/@biverroyaltyhomesltd" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><ion-icon name="logo-youtube"></ion-icon></a></li>
+          </ul>
+        </div>
+        <div class="footer-link-box">
+          <ul class="footer-list">
+            <li><p class="footer-list-title">Company</p></li>
+            <li><a href="about.html" class="footer-link">About Us</a></li>
+            <li><a href="https://blog.biverroyaltyhomesltd.com/" class="footer-link" target="_blank" rel="noopener noreferrer">Blog</a></li>
+            <li><a href="property.html" class="footer-link">All Properties</a></li>
+            <li><a href="#" class="footer-link">Locations Map</a></li>
+            <li><a href="#" class="footer-link">FAQ</a></li>
+            <li><a href="contact.html" class="footer-link">Contact Us</a></li>
+          </ul>
+          <ul class="footer-list">
+            <li><p class="footer-list-title">Services</p></li>
+            <li><a href="addCart.html" class="footer-link">Order Tracking</a></li>
+            <li><a href="favorites.html" class="footer-link">Wish List</a></li>
+            <li><a href="login.html" class="footer-link">Login</a></li>
+            <li><a href="userDashboard.html" class="footer-link">My Account</a></li>
+            <li><a href="#" class="footer-link">Terms &amp; Conditions</a></li>
+            <li><a href="property.html" class="footer-link">Promotions</a></li>
+          </ul>
+          <ul class="footer-list">
+            <li><p class="footer-list-title">Customer Care</p></li>
+            <li><a href="login.html" class="footer-link">Login</a></li>
+            <li><a href="userDashboard.html" class="footer-link">My Account</a></li>
+            <li><a href="favorites.html" class="footer-link">Wish List</a></li>
+            <li><a href="addCart.html" class="footer-link">Order Tracking</a></li>
+            <li><a href="#" class="footer-link">FAQ</a></li>
+            <li><a href="contact.html" class="footer-link">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p class="copyright">
+          &copy; 2025 <a href="#">Biver Royalty Homes</a>. All Rights Reserved | Designed by <a href="#">ERIBS Tech</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <button id="scrollToTop" aria-label="Scroll to top">
+    <ion-icon name="chevron-up-outline"></ion-icon>
+  </button>
+
+  <script src="./assets/js/site-header.js" defer></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script>
+    'use strict';
+
+    const form = document.getElementById('propertyListingForm');
+    const imageInput = document.getElementById('propertyImages');
+    const videoInput = document.getElementById('propertyVideos');
+    const imagePreview = document.getElementById('imagePreview');
+    const videoPreview = document.getElementById('videoPreview');
+    const formMessage = document.getElementById('formMessage');
+
+    function formatFileSize(bytes) {
+      if (!bytes) return '0 KB';
+      const units = ['B', 'KB', 'MB', 'GB'];
+      const index = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1);
+      return `${(bytes / Math.pow(1024, index)).toFixed(index === 0 ? 0 : 1)} ${units[index]}`;
+    }
+
+    function renderPreviews(input, target, type) {
+      target.innerHTML = '';
+      Array.from(input.files || []).forEach((file) => {
+        const item = document.createElement('div');
+        item.className = 'preview-item';
+
+        if (type === 'image') {
+          const img = document.createElement('img');
+          img.className = 'preview-thumb';
+          img.alt = file.name;
+          img.src = URL.createObjectURL(file);
+          img.onload = () => URL.revokeObjectURL(img.src);
+          item.appendChild(img);
+        } else {
+          const icon = document.createElement('div');
+          icon.className = 'preview-icon';
+          icon.innerHTML = '<ion-icon name="videocam-outline"></ion-icon>';
+          item.appendChild(icon);
+        }
+
+        const text = document.createElement('span');
+        text.textContent = `${file.name} - ${formatFileSize(file.size)}`;
+        item.appendChild(text);
+        target.appendChild(item);
+      });
+    }
+
+    document.querySelectorAll('[data-upload-box]').forEach((box) => {
+      const input = box.querySelector('input[type="file"]');
+      ['dragenter', 'dragover'].forEach((eventName) => {
+        box.addEventListener(eventName, (event) => {
+          event.preventDefault();
+          box.classList.add('dragover');
+        });
+      });
+      ['dragleave', 'drop'].forEach((eventName) => {
+        box.addEventListener(eventName, () => box.classList.remove('dragover'));
+      });
+      box.addEventListener('drop', (event) => {
+        event.preventDefault();
+        if (event.dataTransfer.files.length) {
+          input.files = event.dataTransfer.files;
+          input.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      });
+    });
+
+    imageInput.addEventListener('change', () => renderPreviews(imageInput, imagePreview, 'image'));
+    videoInput.addEventListener('change', () => renderPreviews(videoInput, videoPreview, 'video'));
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      if (!imageInput.files.length || !videoInput.files.length) {
+        formMessage.textContent = 'Please upload at least one property image and one property video before submitting.';
+        formMessage.className = 'form-message show';
+        formMessage.style.background = 'rgba(249, 90, 90, 0.1)';
+        formMessage.style.borderColor = 'rgba(249, 90, 90, 0.18)';
+        formMessage.style.color = '#a12727';
+        return;
+      }
+
+      formMessage.textContent = 'Your property listing details are ready. A Biver Royalty Homes agent will contact you to verify the submission and complete the listing process.';
+      formMessage.className = 'form-message show';
+      formMessage.style.background = 'rgba(16,183,89,0.1)';
+      formMessage.style.borderColor = 'rgba(16,183,89,0.18)';
+      formMessage.style.color = '#087a3d';
+      formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  </script>
+</body>
+</html>
