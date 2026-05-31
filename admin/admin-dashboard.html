@@ -2,2312 +2,661 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Royal Command Center — Biver Royalty Homes</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="description" content="Biver Royalty Homes Admin Dashboard – Manage properties, users, testimonials, and site content.">
+  <title>Admin Dashboard | Biver Royalty Homes</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   <style>
-    /* =============================================
-       ROYAL COMMAND CENTER — ADMIN DASHBOARD
-       Biver Royalty Homes Ltd
-       ============================================= */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     :root {
-      --prussian-blue: #1a0c02;
-      --prussian-light: #2a1810;
+      --prussian-blue: #371801;
       --gold: #D4AF37;
       --gold-light: #FFD700;
       --gold-dark: #B8860B;
-      --gold-glow: rgba(212, 175, 55, 0.15);
-      --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #FFD700 50%, #B8860B 100%);
-      --glass-bg: rgba(26, 12, 2, 0.65);
-      --glass-border: rgba(212, 175, 55, 0.12);
-      --glass-highlight: rgba(255, 255, 255, 0.03);
-      --text-primary: #f0e6d3;
-      --text-secondary: rgba(240, 230, 211, 0.55);
-      --text-muted: rgba(240, 230, 211, 0.3);
-      --success: #10b759;
-      --danger: #e74c3c;
-      --warning: #f39c12;
-      --info: #3498db;
+      --gold-gradient: linear-gradient(90deg, #D4AF37 0%, #FFD700 50%, #B8860B 100%);
+      --dark-bg: #0f0a03;
+      --sidebar-bg: #1e1508;
+      --card-bg: #ffffff;
+      --text-dark: #2c2418;
+      --text-muted: #6c5e4e;
+      --border-light: #e9e5dc;
+      --danger: #dc3545;
+      --success: #198754;
+      --warning: #ffc107;
+      --info: #0dcaf0;
       --ff-display: 'Cormorant Garamond', serif;
       --ff-body: 'Outfit', sans-serif;
-      --radius: 16px;
-      --radius-sm: 10px;
-      --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      --shadow-gold: 0 8px 32px rgba(212, 175, 55, 0.12);
+      --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 12px 30px rgba(0, 0, 0, 0.08);
+      --transition: 0.2s ease;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
     body {
       font-family: var(--ff-body);
-      background: var(--prussian-blue);
-      color: var(--text-primary);
+      background: #f9f7f2;
+      color: var(--text-dark);
       overflow-x: hidden;
+    }
+
+    .dashboard {
+      display: flex;
       min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
     }
 
-    /* Animated Architectural Grid Background */
-    .bg-grid {
+    .sidebar {
+      width: 280px;
+      background: var(--sidebar-bg);
+      color: #fff;
       position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    .bg-grid::before {
-      content: '';
-      position: absolute;
-      inset: -50%;
-      background-image:
-        linear-gradient(rgba(212,175,55,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(212,175,55,0.04) 1px, transparent 1px);
-      background-size: 80px 80px;
-      animation: gridDrift 30s linear infinite;
-    }
-    @keyframes gridDrift {
-      from { transform: translate(0, 0); }
-      to { transform: translate(80px, 80px); }
-    }
-    .bg-glow {
-      position: fixed;
-      width: 600px; height: 600px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%);
-      top: -200px; right: -200px;
-      pointer-events: none;
-      z-index: 0;
-      animation: glowPulse 4s ease-in-out infinite;
-    }
-    @keyframes glowPulse {
-      0%, 100% { transform: scale(1); opacity: 0.6; }
-      50% { transform: scale(1.2); opacity: 1; }
-    }
-
-    /* Ambient Gold Particles */
-    .particles {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 1;
-      overflow: hidden;
-    }
-    .particle {
-      position: absolute;
-      border-radius: 50%;
-      background: var(--gold);
-      opacity: 0;
-      animation: particleFloat var(--dur, 6s) ease-in-out var(--delay, 0s) infinite;
-    }
-    @keyframes particleFloat {
-      0% { opacity: 0; transform: translateY(0) scale(0); }
-      20% { opacity: var(--op, 0.4); transform: translateY(-30px) scale(1); }
-      80% { opacity: var(--op, 0.4); transform: translateY(-100px) scale(0.7); }
-      100% { opacity: 0; transform: translateY(-150px) scale(0); }
-    }
-
-    /* =============================================
-       LOGIN GATE
-       ============================================= */
-    #loginGate {
-      position: fixed;
-      inset: 0;
-      z-index: 99999;
-      background: var(--prussian-blue);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 32px;
-      transition: opacity 0.8s var(--transition), visibility 0.8s;
-    }
-    #loginGate.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-    .login-card {
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius);
-      padding: 48px 40px;
-      width: min(420px, 90vw);
-      box-shadow: var(--shadow-gold), 0 20px 60px rgba(0,0,0,0.4);
-      position: relative;
-      overflow: hidden;
-    }
-    .login-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--gold-gradient);
-    }
-    .login-logo {
-      text-align: center;
-      margin-bottom: 32px;
-    }
-    .login-logo h1 {
-      font-family: var(--ff-display);
-      font-size: 1.8rem;
-      color: var(--text-primary);
-      letter-spacing: 2px;
-    }
-    .login-logo span { color: var(--gold); }
-    .login-logo p {
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-top: 6px;
-    }
-    .input-group {
-      margin-bottom: 20px;
-      position: relative;
-    }
-    .input-group label {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      margin-bottom: 8px;
-    }
-    .input-group input {
-      width: 100%;
-      background: rgba(0,0,0,0.2);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-sm);
-      padding: 14px 16px;
-      color: var(--text-primary);
-      font-family: var(--ff-body);
-      font-size: 14px;
-      outline: none;
-      transition: all 0.3s;
-    }
-    .input-group input:focus {
-      border-color: var(--gold-dark);
-      box-shadow: 0 0 0 3px rgba(212,175,55,0.1);
-    }
-    .login-btn {
-      width: 100%;
-      background: var(--gold-gradient);
-      color: var(--prussian-blue);
-      font-family: var(--ff-body);
-      font-weight: 700;
-      font-size: 13px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 16px;
-      border: none;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s;
-      margin-top: 8px;
-    }
-    .login-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(212,175,55,0.3);
-    }
-
-    /* =============================================
-       APP SHELL
-       ============================================= */
-    #app { display: none; opacity: 0; transition: opacity 0.6s ease; }
-    #app.active { display: block; opacity: 1; }
-
-    /* =============================================
-       TOP BAR (The Crown)
-       ============================================= */
-    .topbar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 72px;
-      background: rgba(26, 12, 2, 0.8);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--glass-border);
+      height: 100vh;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 24px;
-      transition: all 0.3s;
+      overflow-y: auto;
+      box-shadow: 4px 0 20px rgba(0,0,0,0.08);
     }
-    .topbar-left {
-      display: flex;
-      align-items: center;
-      gap: 20px;
+    .sidebar-header {
+      padding: 28px 24px;
+      border-bottom: 1px solid rgba(212,175,55,0.2);
     }
-    .menu-toggle {
-      width: 40px; height: 40px;
-      border-radius: 10px;
-      background: rgba(212,175,55,0.08);
-      border: 1px solid var(--glass-border);
-      color: var(--gold);
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-size: 20px;
-    }
-    .menu-toggle:hover {
-      background: var(--gold);
-      color: var(--prussian-blue);
-      border-color: var(--gold);
-    }
-    .brand-mark {
+    .sidebar-logo {
       display: flex;
       align-items: center;
       gap: 12px;
     }
-    .brand-crest {
-      width: 36px; height: 36px;
-      border: 1.5px solid var(--gold);
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
+    .sidebar-logo img {
+      width: 48px;
+      height: auto;
+    }
+    .sidebar-logo span {
       font-family: var(--ff-display);
-      font-weight: 700;
-      font-size: 16px;
-      color: var(--gold);
-      position: relative;
-    }
-    .brand-crest::after {
-      content: '';
-      position: absolute;
-      inset: -4px;
-      border-radius: 50%;
-      border: 1px solid rgba(212,175,55,0.3);
-      animation: crestPulse 2s ease-in-out infinite;
-    }
-    @keyframes crestPulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.1); opacity: 0.5; }
-    }
-    .brand-text h2 {
-      font-family: var(--ff-display);
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      line-height: 1;
-    }
-    .brand-text span { color: var(--gold); font-style: italic; }
-    .brand-text p {
-      font-size: 9px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    .topbar-center {
-      flex: 1;
-      max-width: 480px;
-      margin: 0 24px;
-      position: relative;
-    }
-    .global-search {
-      width: 100%;
-      background: rgba(0,0,0,0.25);
-      border: 1px solid var(--glass-border);
-      border-radius: 100px;
-      padding: 10px 18px 10px 42px;
-      color: var(--text-primary);
-      font-family: var(--ff-body);
-      font-size: 13px;
-      outline: none;
-      transition: all 0.3s;
-    }
-    .global-search:focus {
-      border-color: var(--gold-dark);
-      background: rgba(0,0,0,0.35);
-      box-shadow: 0 0 20px rgba(212,175,55,0.08);
-    }
-    .search-icon {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-muted);
-      font-size: 18px;
-      pointer-events: none;
-    }
-    .kbd-hint {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 10px;
-      color: var(--text-muted);
-      background: rgba(255,255,255,0.05);
-      padding: 2px 6px;
-      border-radius: 4px;
-      border: 1px solid var(--glass-border);
-    }
-
-    .topbar-right {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .topbar-btn {
-      width: 40px; height: 40px;
-      border-radius: 10px;
-      background: rgba(212,175,55,0.06);
-      border: 1px solid var(--glass-border);
-      color: var(--text-secondary);
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      transition: all 0.3s;
-      position: relative;
-      font-size: 20px;
-    }
-    .topbar-btn:hover {
-      background: rgba(212,175,55,0.15);
-      color: var(--gold);
-      border-color: rgba(212,175,55,0.3);
-      transform: translateY(-2px);
-    }
-    .topbar-btn .badge {
-      position: absolute;
-      top: -4px; right: -4px;
-      width: 18px; height: 18px;
-      background: var(--danger);
-      color: white;
-      font-size: 10px;
-      font-weight: 700;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      border: 2px solid var(--prussian-blue);
-    }
-    .profile-btn {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 4px 12px 4px 4px;
-      border-radius: 100px;
-      background: rgba(212,175,55,0.06);
-      border: 1px solid var(--glass-border);
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .profile-btn:hover { border-color: rgba(212,175,55,0.3); }
-    .profile-avatar {
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      background: var(--gold-gradient);
-      display: grid;
-      place-items: center;
-      font-weight: 700;
-      font-size: 12px;
-      color: var(--prussian-blue);
-    }
-    .profile-name {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    /* =============================================
-       SIDE NAV (The Scepter)
-       ============================================= */
-    .side-nav {
-      position: fixed;
-      top: 72px; left: 0; bottom: 0;
-      width: 72px;
-      background: rgba(26, 12, 2, 0.7);
-      backdrop-filter: blur(16px);
-      border-right: 1px solid var(--glass-border);
-      z-index: 99;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px 0;
-      transition: width 0.4s var(--transition);
-      overflow: hidden;
-    }
-    .side-nav.expanded { width: 220px; }
-    .side-nav.expanded .nav-label { opacity: 1; transform: translateX(0); }
-    .side-nav.expanded .nav-item { justify-content: flex-start; padding-left: 20px; }
-
-    .nav-item {
-      width: calc(100% - 16px);
-      margin: 4px 8px;
-      padding: 12px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      cursor: pointer;
-      transition: all 0.3s;
-      position: relative;
-      color: var(--text-secondary);
-      white-space: nowrap;
-    }
-    .nav-item:hover {
-      background: rgba(212,175,55,0.08);
-      color: var(--gold);
-    }
-    .nav-item.active {
-      background: rgba(212,175,55,0.12);
-      color: var(--gold);
-    }
-    .nav-item.active::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 8px; bottom: 8px;
-      width: 3px;
-      background: var(--gold-gradient);
-      border-radius: 0 3px 3px 0;
-    }
-    .nav-icon {
-      width: 24px; height: 24px;
-      display: grid;
-      place-items: center;
-      font-size: 22px;
-      flex-shrink: 0;
-    }
-    .nav-label {
-      font-size: 13px;
-      font-weight: 500;
-      opacity: 0;
-      transform: translateX(-10px);
-      transition: all 0.3s;
-    }
-    .nav-divider {
-      width: 24px;
-      height: 1px;
-      background: var(--glass-border);
-      margin: 12px 0;
-      transition: width 0.4s;
-    }
-    .side-nav.expanded .nav-divider { width: calc(100% - 40px); }
-
-    .nav-footer {
-      margin-top: auto;
-      width: 100%;
-      padding: 0 8px;
-    }
-    .status-pill {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: 100px;
-      background: rgba(16, 183, 89, 0.1);
-      border: 1px solid rgba(16, 183, 89, 0.2);
-      font-size: 11px;
-      color: var(--success);
-      white-space: nowrap;
-    }
-    .status-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--success);
-      animation: statusBlink 2s ease-in-out infinite;
-    }
-    @keyframes statusBlink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-
-    /* =============================================
-       MAIN CONTENT (The Throne Room)
-       ============================================= */
-    .main-content {
-      margin-left: 72px;
-      margin-top: 72px;
-      padding: 28px;
-      min-height: calc(100vh - 72px);
-      position: relative;
-      z-index: 10;
-      transition: margin-left 0.4s var(--transition);
-    }
-    .side-nav.expanded ~ .main-content { margin-left: 220px; }
-
-    /* =============================================
-       BENTO GRID SYSTEM
-       ============================================= */
-    .bento-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 20px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-    .bento-card {
-      background: var(--glass-bg);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius);
-      padding: 24px;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.4s var(--transition);
-      transform-style: preserve-3d;
-    }
-    .bento-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      padding: 1.5px;
-      background: var(--gold-gradient);
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      opacity: 0;
-      transition: opacity 0.4s;
-      pointer-events: none;
-    }
-    .bento-card:hover::before { opacity: 0.4; }
-    .bento-card:hover {
-      transform: translateY(-4px) scale(1.01);
-      box-shadow: var(--shadow-gold), 0 20px 60px rgba(0,0,0,0.3);
-      border-color: rgba(212,175,55,0.25);
-    }
-    .bento-card .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 20px;
-    }
-    .bento-card .card-title {
-      font-family: var(--ff-display);
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-    .bento-card .card-subtitle {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 4px;
-      letter-spacing: 0.5px;
-    }
-    .bento-card .card-action {
-      width: 32px; height: 32px;
-      border-radius: 8px;
-      background: rgba(212,175,55,0.08);
-      border: 1px solid var(--glass-border);
-      color: var(--gold);
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-size: 18px;
-    }
-    .bento-card .card-action:hover {
-      background: var(--gold);
-      color: var(--prussian-blue);
-    }
-
-    /* Grid spans */
-    .span-3 { grid-column: span 3; }
-    .span-4 { grid-column: span 4; }
-    .span-6 { grid-column: span 6; }
-    .span-8 { grid-column: span 8; }
-    .span-12 { grid-column: span 12; }
-
-    /* =============================================
-       STAT ORBS (Circular Stats)
-       ============================================= */
-    .stat-orb {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 12px;
-    }
-    .orb-ring {
-      width: 120px; height: 120px;
-      position: relative;
-      display: grid;
-      place-items: center;
-    }
-    .orb-ring svg {
-      position: absolute;
-      inset: 0;
-      transform: rotate(-90deg);
-    }
-    .orb-ring .track {
-      fill: none;
-      stroke: rgba(212,175,55,0.1);
-      stroke-width: 6;
-    }
-    .orb-ring .progress {
-      fill: none;
-      stroke: url(#goldGradient);
-      stroke-width: 6;
-      stroke-linecap: round;
-      stroke-dasharray: 339.292;
-      stroke-dashoffset: 339.292;
-      transition: stroke-dashoffset 1.5s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .orb-value {
-      font-family: var(--ff-display);
-      font-size: 1.6rem;
+      font-size: 1.3rem;
       font-weight: 700;
       color: var(--gold-light);
-      line-height: 1;
     }
-    .orb-label {
-      font-size: 12px;
-      color: var(--text-secondary);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      max-width: 100px;
+    .sidebar-nav {
+      padding: 32px 16px;
     }
-    .orb-change {
-      font-size: 11px;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 100px;
-      margin-top: -4px;
+    .nav-item {
+      margin-bottom: 8px;
     }
-    .orb-change.up { background: rgba(16,183,89,0.15); color: var(--success); }
-    .orb-change.down { background: rgba(231,76,60,0.15); color: var(--danger); }
-
-    /* =============================================
-       CHARTS & DATA VIZ
-       ============================================= */
-    .chart-container {
-      height: 200px;
-      position: relative;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 8px;
-      padding-top: 20px;
-    }
-    .chart-bar {
-      flex: 1;
-      background: rgba(212,175,55,0.15);
-      border-radius: 6px 6px 0 0;
-      position: relative;
-      transition: all 0.4s;
-      cursor: pointer;
-      min-height: 4px;
-    }
-    .chart-bar:hover {
-      background: var(--gold-gradient);
-      transform: scaleY(1.05);
-    }
-    .chart-bar .tooltip {
-      position: absolute;
-      bottom: calc(100% + 8px);
-      left: 50%;
-      transform: translateX(-50%) translateY(4px);
-      background: var(--prussian-blue);
-      border: 1px solid var(--glass-border);
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 11px;
-      color: var(--gold);
-      white-space: nowrap;
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.3s;
-    }
-    .chart-bar:hover .tooltip {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-    .chart-labels {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 8px;
-      font-size: 10px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    /* Sparkline */
-    .sparkline {
-      width: 100%;
-      height: 60px;
-    }
-    .sparkline path {
-      fill: none;
-      stroke: var(--gold);
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      filter: drop-shadow(0 0 6px rgba(212,175,55,0.4));
-    }
-    .sparkline .area {
-      fill: url(#goldGradientFade);
-      stroke: none;
-      opacity: 0.3;
-    }
-
-    /* =============================================
-       PROPERTY ROWS
-       ============================================= */
-    .property-row {
+    .nav-link {
       display: flex;
       align-items: center;
       gap: 14px;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--glass-border);
-      transition: all 0.3s;
-      cursor: pointer;
-    }
-    .property-row:last-child { border-bottom: none; }
-    .property-row:hover { padding-left: 8px; }
-    .property-thumb {
-      width: 48px; height: 48px;
-      border-radius: 10px;
-      object-fit: cover;
-      border: 1px solid var(--glass-border);
-    }
-    .property-info { flex: 1; min-width: 0; }
-    .property-info h4 {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-primary);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .property-info p {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-    .property-price {
-      font-family: var(--ff-display);
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--gold);
-      text-align: right;
-    }
-    .property-status {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: 100px;
-      white-space: nowrap;
-    }
-    .status-approved { background: rgba(16,183,89,0.12); color: var(--success); border: 1px solid rgba(16,183,89,0.2); }
-    .status-pending { background: rgba(243,156,18,0.12); color: var(--warning); border: 1px solid rgba(243,156,18,0.2); }
-    .status-sold { background: rgba(231,76,60,0.12); color: var(--danger); border: 1px solid rgba(231,76,60,0.2); }
-
-    /* =============================================
-       ACTIVITY FEED
-       ============================================= */
-    .activity-item {
-      display: flex;
-      gap: 14px;
-      padding: 14px 0;
-      border-bottom: 1px solid var(--glass-border);
-      transition: all 0.3s;
-    }
-    .activity-item:last-child { border-bottom: none; }
-    .activity-icon {
-      width: 36px; height: 36px;
-      border-radius: 10px;
-      display: grid;
-      place-items: center;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-    .activity-icon.add { background: rgba(16,183,89,0.1); color: var(--success); }
-    .activity-icon.edit { background: rgba(52,152,219,0.1); color: var(--info); }
-    .activity-icon.sale { background: rgba(212,175,55,0.1); color: var(--gold); }
-    .activity-icon.user { background: rgba(155,89,182,0.1); color: #9b59b6; }
-    .activity-content h5 {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-    .activity-content p {
-      font-size: 12px;
-      color: var(--text-secondary);
-      margin-top: 2px;
-      line-height: 1.4;
-    }
-    .activity-time {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 4px;
-      white-space: nowrap;
-    }
-
-    /* =============================================
-       QUICK ACTIONS (Floating Dock)
-       ============================================= */
-    .quick-actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .action-chip {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 18px;
-      border-radius: 100px;
-      background: rgba(212,175,55,0.06);
-      border: 1px solid var(--glass-border);
-      color: var(--text-secondary);
-      font-size: 13px;
+      padding: 12px 20px;
+      border-radius: 12px;
+      color: rgba(255,255,255,0.7);
       font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s;
-      white-space: nowrap;
+      transition: all 0.2s;
+      text-decoration: none;
     }
-    .action-chip:hover {
-      background: var(--gold);
-      color: var(--prussian-blue);
-      border-color: var(--gold);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(212,175,55,0.25);
+    .nav-link ion-icon {
+      font-size: 22px;
     }
-    .action-chip ion-icon { font-size: 18px; }
-
-    /* =============================================
-       CALENDAR / DATE WIDGET
-       ============================================= */
-    .date-widget {
-      text-align: center;
+    .nav-link:hover, .nav-link.active {
+      background: rgba(212,175,55,0.12);
+      color: var(--gold-light);
+    }
+    .nav-link.active {
+      border-left: 3px solid var(--gold);
+      background: linear-gradient(90deg, rgba(212,175,55,0.15), transparent);
+    }
+    .sidebar-footer {
+      position: absolute;
+      bottom: 24px;
+      left: 0;
+      right: 0;
+      padding: 20px 24px;
+      border-top: 1px solid rgba(212,175,55,0.15);
+    }
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-weight: 500;
       padding: 8px 0;
     }
-    .date-day {
-      font-family: var(--ff-display);
-      font-size: 3.5rem;
-      font-weight: 700;
-      color: var(--gold);
-      line-height: 1;
-    }
-    .date-month {
-      font-size: 13px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      margin-top: 4px;
-    }
-    .date-weekday {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-    .clock-time {
-      font-family: var(--ff-display);
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-top: 12px;
-      letter-spacing: 2px;
-    }
+    .logout-btn:hover { color: var(--gold-light); }
 
-    /* =============================================
-       LEAD PIPELINE
-       ============================================= */
-    .pipeline {
-      display: flex;
-      gap: 12px;
-      margin-top: 8px;
-    }
-    .pipeline-stage {
+    .main-content {
       flex: 1;
-      text-align: center;
-      padding: 16px 8px;
-      border-radius: var(--radius-sm);
-      background: rgba(0,0,0,0.15);
-      border: 1px solid var(--glass-border);
-      transition: all 0.3s;
-      cursor: pointer;
+      margin-left: 280px;
+      transition: margin 0.3s;
     }
-    .pipeline-stage:hover {
-      border-color: var(--gold-dark);
-      background: rgba(212,175,55,0.05);
-    }
-    .pipeline-stage .num {
-      font-family: var(--ff-display);
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--text-primary);
-    }
-    .pipeline-stage .label {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 4px;
-      letter-spacing: 0.5px;
-    }
-    .pipeline-stage .bar {
-      width: 100%;
-      height: 3px;
-      background: var(--glass-border);
-      border-radius: 3px;
-      margin-top: 10px;
-      overflow: hidden;
-    }
-    .pipeline-stage .bar-fill {
-      height: 100%;
-      background: var(--gold-gradient);
-      border-radius: 3px;
-      transition: width 1s ease;
-    }
-
-    /* =============================================
-       TABLES
-       ============================================= */
-    .data-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
-    .data-table th {
-      text-align: left;
-      padding: 12px 16px;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      border-bottom: 1px solid var(--glass-border);
-      white-space: nowrap;
-    }
-    .data-table td {
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--glass-border);
-      color: var(--text-secondary);
-      vertical-align: middle;
-    }
-    .data-table tr:hover td {
-      background: rgba(212,175,55,0.03);
-      color: var(--text-primary);
-    }
-    .data-table tr:last-child td { border-bottom: none; }
-
-    /* =============================================
-       PAGINATION
-       ============================================= */
-    .pagination {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      margin-top: 20px;
-    }
-    .page-btn {
-      width: 36px; height: 36px;
-      border-radius: 8px;
-      background: transparent;
-      border: 1px solid var(--glass-border);
-      color: var(--text-secondary);
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-size: 13px;
-    }
-    .page-btn:hover, .page-btn.active {
-      background: var(--gold);
-      color: var(--prussian-blue);
-      border-color: var(--gold);
-    }
-
-    /* =============================================
-       MODALS
-       ============================================= */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(8px);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.4s;
-    }
-    .modal-overlay.active { opacity: 1; visibility: visible; }
-    .modal {
-      background: var(--prussian-light);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius);
-      width: min(600px, 100%);
-      max-height: 90vh;
-      overflow-y: auto;
-      transform: translateY(20px) scale(0.98);
-      transition: all 0.4s var(--transition);
-      position: relative;
-    }
-    .modal-overlay.active .modal {
-      transform: translateY(0) scale(1);
-    }
-    .modal-header {
-      padding: 24px 28px;
-      border-bottom: 1px solid var(--glass-border);
+    .topbar {
+      background: white;
+      padding: 16px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      border-bottom: 1px solid var(--border-light);
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      backdrop-filter: blur(8px);
+      background: rgba(255,255,255,0.92);
     }
-    .modal-header h3 {
-      font-family: var(--ff-display);
-      font-size: 1.4rem;
-      font-weight: 700;
-    }
-    .modal-close {
-      width: 36px; height: 36px;
-      border-radius: 8px;
-      background: rgba(212,175,55,0.08);
-      border: 1px solid var(--glass-border);
-      color: var(--gold);
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-size: 20px;
-    }
-    .modal-close:hover {
-      background: var(--gold);
-      color: var(--prussian-blue);
-    }
-    .modal-body { padding: 24px 28px; }
-    .modal-footer {
-      padding: 20px 28px;
-      border-top: 1px solid var(--glass-border);
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-    }
-
-    /* Form Elements */
-    .form-group { margin-bottom: 20px; }
-    .form-group label {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      margin-bottom: 8px;
-    }
-    .form-control {
-      width: 100%;
-      background: rgba(0,0,0,0.2);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-sm);
-      padding: 12px 14px;
-      color: var(--text-primary);
-      font-family: var(--ff-body);
-      font-size: 14px;
-      outline: none;
-      transition: all 0.3s;
-    }
-    .form-control:focus {
-      border-color: var(--gold-dark);
-      box-shadow: 0 0 0 3px rgba(212,175,55,0.1);
-    }
-    textarea.form-control { resize: vertical; min-height: 100px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-
-    /* =============================================
-       COMMAND PALETTE
-       ============================================= */
-    .command-palette {
-      position: fixed;
-      inset: 0;
-      z-index: 2000;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding-top: 15vh;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s;
-    }
-    .command-palette.active { opacity: 1; visibility: visible; }
-    .command-palette .overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(4px);
-    }
-    .command-box {
-      position: relative;
-      width: min(640px, 90vw);
-      background: var(--prussian-light);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-      overflow: hidden;
-      transform: translateY(-10px);
-      transition: transform 0.3s;
-    }
-    .command-palette.active .command-box { transform: translateY(0); }
-    .command-input-wrap {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--glass-border);
-    }
-    .command-input-wrap ion-icon { color: var(--text-muted); font-size: 20px; }
-    .command-input {
-      flex: 1;
+    .menu-toggle {
+      display: none;
       background: none;
       border: none;
-      color: var(--text-primary);
-      font-family: var(--ff-body);
-      font-size: 16px;
-      outline: none;
-    }
-    .command-input::placeholder { color: var(--text-muted); }
-    .command-list {
-      max-height: 400px;
-      overflow-y: auto;
-      padding: 8px;
-    }
-    .command-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 12px;
-      border-radius: 8px;
+      font-size: 28px;
       cursor: pointer;
-      transition: all 0.2s;
-      color: var(--text-secondary);
+      color: var(--prussian-blue);
     }
-    .command-item:hover, .command-item.active {
-      background: rgba(212,175,55,0.1);
-      color: var(--gold);
+    .page-title {
+      font-family: var(--ff-display);
+      font-size: 1.8rem;
+      font-weight: 600;
     }
-    .command-item ion-icon { font-size: 20px; }
-    .command-item .cmd-label { flex: 1; font-size: 14px; }
-    .command-item .cmd-key {
-      font-size: 11px;
-      color: var(--text-muted);
-      background: rgba(0,0,0,0.2);
-      padding: 2px 8px;
-      border-radius: 4px;
-      border: 1px solid var(--glass-border);
+    .admin-badge {
+      background: var(--gold-gradient);
+      padding: 6px 16px;
+      border-radius: 40px;
+      color: var(--prussian-blue);
+      font-weight: 600;
+      font-size: 0.85rem;
     }
 
-    /* =============================================
-       NOTIFICATION PANEL
-       ============================================= */
-    .notif-panel {
-      position: fixed;
-      top: 72px; right: 0;
-      width: 380px;
-      max-height: calc(100vh - 72px);
-      background: var(--prussian-light);
-      border-left: 1px solid var(--glass-border);
-      backdrop-filter: blur(20px);
-      z-index: 98;
-      transform: translateX(100%);
-      transition: transform 0.4s var(--transition);
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
     }
-    .notif-panel.active { transform: translateX(0); }
-    .notif-header {
-      padding: 20px 24px;
-      border-bottom: 1px solid var(--glass-border);
+    .stat-card {
+      background: var(--card-bg);
+      padding: 24px 20px;
+      border-radius: 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid rgba(212,175,55,0.2);
+    }
+    .stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .stat-info h3 { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); margin-bottom: 8px; }
+    .stat-number { font-size: 2.5rem; font-weight: 700; font-family: var(--ff-display); color: var(--prussian-blue); }
+    .stat-icon { font-size: 48px; color: var(--gold-dark); opacity: 0.7; }
+
+    .panel {
+      background: white;
+      border-radius: 28px;
+      padding: 24px 28px;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-light);
+    }
+    .panel-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 16px;
     }
-    .notif-header h3 {
+    .panel-header h2 {
       font-family: var(--ff-display);
-      font-size: 1.2rem;
+      font-size: 1.6rem;
     }
-    .notif-body { flex: 1; padding: 16px; }
-    .notif-item {
-      display: flex;
-      gap: 12px;
-      padding: 12px;
-      border-radius: var(--radius-sm);
-      margin-bottom: 8px;
-      transition: all 0.3s;
+    .btn-primary {
+      background: var(--gold-gradient);
+      border: none;
+      padding: 10px 24px;
+      border-radius: 40px;
+      font-weight: 600;
+      color: var(--prussian-blue);
       cursor: pointer;
-      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.2s;
     }
-    .notif-item:hover {
-      background: rgba(212,175,55,0.05);
-      border-color: var(--glass-border);
+    .btn-primary:hover { transform: scale(1.02); box-shadow: 0 4px 12px rgba(212,175,55,0.4); }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold-dark);
+      padding: 8px 20px;
+      border-radius: 40px;
+      cursor: pointer;
     }
-    .notif-item.unread { border-left: 2px solid var(--gold); }
-    .notif-icon {
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      font-size: 18px;
-      flex-shrink: 0;
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+      border: none;
     }
-    .notif-content p {
-      font-size: 13px;
-      color: var(--text-secondary);
-      line-height: 1.4;
+    table {
+      width: 100%;
+      border-collapse: collapse;
     }
-    .notif-content strong { color: var(--text-primary); font-weight: 600; }
-    .notif-time {
-      font-size: 11px;
+    th, td {
+      padding: 14px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-light);
+    }
+    th { font-weight: 600; color: var(--prussian-blue); }
+    .action-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      margin: 0 4px;
       color: var(--text-muted);
-      margin-top: 4px;
     }
+    .action-btn.edit:hover { color: var(--gold-dark); }
+    .action-btn.delete:hover { color: var(--danger); }
 
-    /* =============================================
-       MOBILE BOTTOM NAV
-       ============================================= */
-    .mobile-nav {
+    .modal {
       display: none;
       position: fixed;
-      bottom: 0; left: 0; right: 0;
-      height: 64px;
-      background: rgba(26, 12, 2, 0.9);
-      backdrop-filter: blur(20px);
-      border-top: 1px solid var(--glass-border);
-      z-index: 100;
-      justify-content: space-around;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
       align-items: center;
-      padding: 0 12px;
+      justify-content: center;
+      z-index: 1000;
     }
-    .mobile-nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      color: var(--text-muted);
-      font-size: 10px;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
+    .modal-content {
+      background: white;
+      max-width: 550px;
+      width: 90%;
+      border-radius: 32px;
+      padding: 32px;
+      position: relative;
+    }
+    .modal-content h3 { margin-bottom: 20px; font-family: var(--ff-display); }
+    .modal-content input, .modal-content textarea, .modal-content select {
+      width: 100%;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      font-family: var(--ff-body);
+    }
+    .modal-close {
+      position: absolute;
+      top: 20px; right: 24px;
+      font-size: 28px;
       cursor: pointer;
-      transition: all 0.3s;
-      padding: 8px 12px;
-      border-radius: 12px;
-    }
-    .mobile-nav-item ion-icon { font-size: 22px; }
-    .mobile-nav-item.active {
-      color: var(--gold);
-      background: rgba(212,175,55,0.1);
     }
 
-    /* =============================================
-       SCROLLBAR
-       ============================================= */
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 10px; }
-
-    /* =============================================
-       RESPONSIVE
-       ============================================= */
-    @media (max-width: 1200px) {
-      .span-3 { grid-column: span 6; }
-      .span-4 { grid-column: span 6; }
+    @media (max-width: 992px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .main-content { margin-left: 0; }
+      .menu-toggle { display: block; }
     }
-    @media (max-width: 768px) {
-      .side-nav { display: none; }
-      .main-content { margin-left: 0; padding: 16px; padding-bottom: 80px; }
-      .topbar-center { display: none; }
-      .brand-text p { display: none; }
-      .mobile-nav { display: flex; }
-      .span-3, .span-4, .span-6, .span-8 { grid-column: span 12; }
-      .notif-panel { width: 100%; }
-      .pipeline { flex-direction: column; }
-      .form-row { grid-template-columns: 1fr; }
+    .loading-spinner {
+      text-align: center;
+      padding: 40px;
     }
-    @media (max-width: 480px) {
-      .topbar { padding: 0 12px; }
-      .profile-name { display: none; }
-      .bento-card { padding: 16px; }
+    .toast-msg {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      background: var(--prussian-blue);
+      color: white;
+      padding: 14px 20px;
+      border-radius: 40px;
+      z-index: 1100;
     }
-
-    /* =============================================
-       ANIMATIONS
-       ============================================= */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-in {
-      animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      opacity: 0;
-    }
-    .delay-1 { animation-delay: 0.1s; }
-    .delay-2 { animation-delay: 0.2s; }
-    .delay-3 { animation-delay: 0.3s; }
-    .delay-4 { animation-delay: 0.4s; }
-    .delay-5 { animation-delay: 0.5s; }
   </style>
-<base target="_blank">
 </head>
 <body>
-
-  <!-- SVG Gradients -->
-  <svg width="0" height="0" style="position:absolute;">
-    <defs>
-      <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" style="stop-color:#D4AF37"/>
-        <stop offset="50%" style="stop-color:#FFD700"/>
-        <stop offset="100%" style="stop-color:#B8860B"/>
-      </linearGradient>
-      <linearGradient id="goldGradientFade" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" style="stop-color:#D4AF37;stop-opacity:0.4"/>
-        <stop offset="100%" style="stop-color:#D4AF37;stop-opacity:0"/>
-      </linearGradient>
-    </defs>
-  </svg>
-
-  <!-- Background Effects -->
-  <div class="bg-grid"></div>
-  <div class="bg-glow"></div>
-  <div class="particles" id="particles"></div>
-
-  <!-- =============================================
-       LOGIN GATE
-       ============================================= -->
-  <div id="loginGate">
-    <div class="login-card">
-      <div class="login-logo">
-        <h1>Biver <span>Royalty</span> Homes</h1>
-        <p>Royal Command Center</p>
+<div class="dashboard">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <img src="./assets/images/biver-logo.png" alt="Logo" onerror="this.src='https://placehold.co/48x48?text=BR'">
+        <span>Biver Royalty</span>
       </div>
-      <div class="input-group">
-        <label>Email Address</label>
-        <input type="email" id="loginEmail" placeholder="admin@biverroyaltyhomes.com" value="admin@biverroyaltyhomes.com">
-      </div>
-      <div class="input-group">
-        <label>Password</label>
-        <input type="password" id="loginPass" placeholder="••••••••" value="password">
-      </div>
-      <button class="login-btn" onclick="doLogin()">Enter Command Center</button>
     </div>
-    <p style="font-size:12px;color:var(--text-muted);letter-spacing:1px;">SECURE ADMIN PORTAL · AUTHORIZED PERSONNEL ONLY</p>
+    <div class="sidebar-nav">
+      <div class="nav-item"><a href="admin/admin-dashboard.html" class="nav-link active" data-section="overview"><ion-icon name="speedometer-outline"></ion-icon> Overview</a></div>
+      <div class="nav-item"><a href="admin/admin-property.html" class="nav-link" data-section="properties"><ion-icon name="home-outline"></ion-icon> Properties</a></div>
+      <div class="nav-item"><a href="admin/admin-analytics.html" class="nav-link" data-section="users"><ion-icon name="people-outline"></ion-icon> Analytics</a></div>
+      <div class="nav-item"><a href="admin/admin-testimonial.html" class="nav-link" data-section="testimonials"><ion-icon name="chatbubbles-outline"></ion-icon> Testimonials</a></div>
+      <div class="nav-item"><a href="admin/admin-contact.html" class="nav-link" data-section="inquiries"><ion-icon name="mail-outline"></ion-icon> Inquiries</a></div>
+      <div class="nav-item"><a href="admin/admin-setting.html" class="nav-link" data-section="settings"><ion-icon name="settings-outline"></ion-icon> Settings</a></div>
+    </div>
+    <div class="sidebar-footer">
+      <a href="admin/admin-view-site.html" class="logout-btn" target="_blank"><ion-icon name="eye-outline"></ion-icon> View Site</a>
+      <a href="admin/admin-login.html" id="logoutBtn" class="logout-btn"><ion-icon name="log-out-outline"></ion-icon> Logout</a>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <div class="topbar">
+      <button class="menu-toggle" id="menuToggle"><ion-icon name="menu-outline"></ion-icon></button>
+      <h1 class="page-title" id="mainTitle">Dashboard</h1>
+      <div class="admin-badge">Admin Portal</div>
+    </div>
+
+    <div style="padding: 32px 28px;" id="dynamicContent">
+      <div class="loading-spinner">Loading dashboard...</div>
+    </div>
   </div>
+</div>
 
-  <!-- =============================================
-       APP SHELL
-       ============================================= -->
-  <div id="app">
-
-    <!-- Top Bar -->
-    <header class="topbar">
-      <div class="topbar-left">
-        <button class="menu-toggle" onclick="toggleNav()" aria-label="Toggle navigation">
-          <ion-icon name="menu-outline"></ion-icon>
-        </button>
-        <div class="brand-mark">
-          <div class="brand-crest">B</div>
-          <div class="brand-text">
-            <h2>Biver <span>Royalty</span></h2>
-            <p>Administration</p>
-          </div>
-        </div>
-      </div>
-      <div class="topbar-center">
-        <ion-icon name="search-outline" class="search-icon"></ion-icon>
-        <input type="text" class="global-search" placeholder="Search properties, leads, or commands..." id="globalSearch">
-        <span class="kbd-hint">⌘K</span>
-      </div>
-      <div class="topbar-right">
-        <button class="topbar-btn" onclick="toggleNotif()" aria-label="Notifications">
-          <ion-icon name="notifications-outline"></ion-icon>
-          <span class="badge">5</span>
-        </button>
-        <button class="topbar-btn" onclick="openCommandPalette()" aria-label="Command palette">
-          <ion-icon name="terminal-outline"></ion-icon>
-        </button>
-        <div class="profile-btn">
-          <div class="profile-avatar">AD</div>
-          <span class="profile-name">Admin</span>
-          <ion-icon name="chevron-down-outline" style="font-size:14px;color:var(--text-muted);"></ion-icon>
-        </div>
-      </div>
-    </header>
-
-    <!-- Side Navigation -->
-    <nav class="side-nav" id="sideNav" onmouseenter="expandNav()" onmouseleave="collapseNav()">
-      <div class="nav-item active" onclick="setSection('dashboard')">
-        <div class="nav-icon"><ion-icon name="grid-outline"></ion-icon></div>
-        <span class="nav-label">Dashboard</span>
-      </div>
-      <div class="nav-item" onclick="setSection('properties')">
-        <div class="nav-icon"><ion-icon name="home-outline"></ion-icon></div>
-        <span class="nav-label">Properties</span>
-      </div>
-      <div class="nav-item" onclick="setSection('leads')">
-        <div class="nav-icon"><ion-icon name="people-outline"></ion-icon></div>
-        <span class="nav-label">Leads</span>
-      </div>
-      <div class="nav-item" onclick="setSection('inquiries')">
-        <div class="nav-icon"><ion-icon name="mail-unread-outline"></ion-icon></div>
-        <span class="nav-label">Inquiries</span>
-      </div>
-      <div class="nav-item" onclick="setSection('analytics')">
-        <div class="nav-icon"><ion-icon name="bar-chart-outline"></ion-icon></div>
-        <span class="nav-label">Analytics</span>
-      </div>
-      <div class="nav-item" onclick="setSection('testimonials')">
-        <div class="nav-icon"><ion-icon name="chatbubble-outline"></ion-icon></div>
-        <span class="nav-label">Testimonials</span>
-      </div>
-      <div class="nav-item" onclick="setSection('content')">
-        <div class="nav-icon"><ion-icon name="image-outline"></ion-icon></div>
-        <span class="nav-label">Media</span>
-      </div>
-      <div class="nav-divider"></div>
-      <div class="nav-item" onclick="setSection('settings')">
-        <div class="nav-icon"><ion-icon name="settings-outline"></ion-icon></div>
-        <span class="nav-label">Settings</span>
-      </div>
-      <div class="nav-footer">
-        <div class="status-pill">
-          <div class="status-dot"></div>
-          <span>System Online</span>
-        </div>
-      </div>
-    </nav>
-
-    <!-- Notification Panel -->
-    <aside class="notif-panel" id="notifPanel">
-      <div class="notif-header">
-        <h3>Notifications</h3>
-        <button class="modal-close" onclick="toggleNotif()"><ion-icon name="close-outline"></ion-icon></button>
-      </div>
-      <div class="notif-body">
-        <div class="notif-item unread">
-          <div class="notif-icon" style="background:rgba(16,183,89,0.1);color:var(--success);"><ion-icon name="checkmark-circle-outline"></ion-icon></div>
-          <div class="notif-content">
-            <p><strong>New property approved</strong> — Luxury 4-Bedroom Villa is now live.</p>
-            <div class="notif-time">2 minutes ago</div>
-          </div>
-        </div>
-        <div class="notif-item unread">
-          <div class="notif-icon" style="background:rgba(52,152,219,0.1);color:var(--info);"><ion-icon name="person-add-outline"></ion-icon></div>
-          <div class="notif-content">
-            <p><strong>New lead registered</strong> — Chisom O. requested a viewing.</p>
-            <div class="notif-time">15 minutes ago</div>
-          </div>
-        </div>
-        <div class="notif-item">
-          <div class="notif-icon" style="background:rgba(212,175,55,0.1);color:var(--gold);"><ion-icon name="star-outline"></ion-icon></div>
-          <div class="notif-content">
-            <p><strong>New testimonial</strong> — Emeka U. left a 5-star review.</p>
-            <div class="notif-time">1 hour ago</div>
-          </div>
-        </div>
-        <div class="notif-item">
-          <div class="notif-icon" style="background:rgba(231,76,60,0.1);color:var(--danger);"><ion-icon name="alert-circle-outline"></ion-icon></div>
-          <div class="notif-content">
-            <p><strong>Server alert</strong> — API response time exceeded 500ms.</p>
-            <div class="notif-time">3 hours ago</div>
-          </div>
-        </div>
-        <div class="notif-item">
-          <div class="notif-icon" style="background:rgba(155,89,182,0.1);color:#9b59b6;"><ion-icon name="cash-outline"></ion-icon></div>
-          <div class="notif-content">
-            <p><strong>Payment received</strong> — ₦450,000 rental deposit processed.</p>
-            <div class="notif-time">Yesterday</div>
-          </div>
-        </div>
-      </div>
-    </aside>
-
-    <!-- Command Palette -->
-    <div class="command-palette" id="commandPalette">
-      <div class="overlay" onclick="closeCommandPalette()"></div>
-      <div class="command-box">
-        <div class="command-input-wrap">
-          <ion-icon name="search-outline"></ion-icon>
-          <input type="text" class="command-input" placeholder="Type a command or search..." id="commandInput" autocomplete="off">
-        </div>
-        <div class="command-list" id="commandList"></div>
-      </div>
-    </div>
-
-    <!-- Main Content -->
-    <main class="main-content" id="mainContent">
-      <!-- DASHBOARD SECTION -->
-      <div id="section-dashboard" class="section-page">
-        <div class="bento-grid">
-          <!-- Date Widget -->
-          <div class="bento-card span-3 animate-in delay-1">
-            <div class="date-widget">
-              <div class="date-day" id="dateDay">--</div>
-              <div class="date-month" id="dateMonth">-------</div>
-              <div class="date-weekday" id="dateWeekday">--------</div>
-              <div class="clock-time" id="clockTime">--:--</div>
-            </div>
-          </div>
-
-          <!-- Revenue Orb -->
-          <div class="bento-card span-3 animate-in delay-2">
-            <div class="stat-orb">
-              <div class="orb-ring">
-                <svg viewBox="0 0 120 120"><circle class="track" cx="60" cy="60" r="54"/><circle class="progress" cx="60" cy="60" r="54" id="orbRevenue"/></svg>
-                <div class="orb-value">₦84M</div>
-              </div>
-              <div class="orb-label">Revenue YTD</div>
-              <div class="orb-change up">+24% vs last year</div>
-            </div>
-          </div>
-
-          <!-- Properties Orb -->
-          <div class="bento-card span-3 animate-in delay-3">
-            <div class="stat-orb">
-              <div class="orb-ring">
-                <svg viewBox="0 0 120 120"><circle class="track" cx="60" cy="60" r="54"/><circle class="progress" cx="60" cy="60" r="54" id="orbProperties"/></svg>
-                <div class="orb-value">524</div>
-              </div>
-              <div class="orb-label">Total Listings</div>
-              <div class="orb-change up">+12 this week</div>
-            </div>
-          </div>
-
-          <!-- Occupancy Orb -->
-          <div class="bento-card span-3 animate-in delay-4">
-            <div class="stat-orb">
-              <div class="orb-ring">
-                <svg viewBox="0 0 120 120"><circle class="track" cx="60" cy="60" r="54"/><circle class="progress" cx="60" cy="60" r="54" id="orbOccupancy"/></svg>
-                <div class="orb-value">78%</div>
-              </div>
-              <div class="orb-label">Occupancy Rate</div>
-              <div class="orb-change up">+5% this month</div>
-            </div>
-          </div>
-
-          <!-- Revenue Chart -->
-          <div class="bento-card span-8 animate-in delay-2">
-            <div class="card-header">
-              <div>
-                <div class="card-title">Revenue Trajectory</div>
-                <div class="card-subtitle">Monthly performance across all property types</div>
-              </div>
-              <button class="card-action"><ion-icon name="download-outline"></ion-icon></button>
-            </div>
-            <svg class="sparkline" viewBox="0 0 800 60" preserveAspectRatio="none">
-              <path class="area" d="M0,60 L0,45 Q100,40 200,35 T400,25 T600,30 T800,15 L800,60 Z"/>
-              <path d="M0,45 Q100,40 200,35 T400,25 T600,30 T800,15"/>
-            </svg>
-            <div class="chart-labels">
-              <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
-            </div>
-          </div>
-
-          <!-- Quick Actions -->
-          <div class="bento-card span-4 animate-in delay-3">
-            <div class="card-header">
-              <div>
-                <div class="card-title">Quick Actions</div>
-                <div class="card-subtitle">Frequently used commands</div>
-              </div>
-            </div>
-            <div class="quick-actions">
-              <div class="action-chip" onclick="openModal('addProperty')">
-                <ion-icon name="add-circle-outline"></ion-icon> Add Property
-              </div>
-              <div class="action-chip" onclick="setSection('leads')">
-                <ion-icon name="person-add-outline"></ion-icon> New Lead
-              </div>
-              <div class="action-chip" onclick="openModal('addTestimonial')">
-                <ion-icon name="chatbubble-outline"></ion-icon> Testimonial
-              </div>
-              <div class="action-chip" onclick="setSection('analytics')">
-                <ion-icon name="bar-chart-outline"></ion-icon> Reports
-              </div>
-            </div>
-          </div>
-
-          <!-- Property Distribution -->
-          <div class="bento-card span-4 animate-in delay-3">
-            <div class="card-header">
-              <div>
-                <div class="card-title">Listing Types</div>
-                <div class="card-subtitle">Distribution by category</div>
-              </div>
-            </div>
-            <div class="chart-container" style="height:160px;">
-              <div class="chart-bar" style="height:65%" data-label="Sale"><div class="tooltip">For Sale: 65%</div></div>
-              <div class="chart-bar" style="height:45%" data-label="Rent"><div class="tooltip">For Rent: 45%</div></div>
-              <div class="chart-bar" style="height:25%" data-label="Land"><div class="tooltip">Land: 25%</div></div>
-              <div class="chart-bar" style="height:15%" data-label="Commercial"><div class="tooltip">Commercial: 15%</div></div>
-            </div>
-            <div class="chart-labels">
-              <span>Sale</span><span>Rent</span><span>Land</span><span>Commercial</span>
-            </div>
-          </div>
-
-          <!-- Recent Properties -->
-          <div class="bento-card span-8 animate-in delay-4">
-            <div class="card-header">
-              <div>
-                <div class="card-title">Recent Properties</div>
-                <div class="card-subtitle">Latest listings requiring attention</div>
-              </div>
-              <button class="card-action" onclick="setSection('properties')"><ion-icon name="arrow-forward-outline"></ion-icon></button>
-            </div>
-            <div id="recentProperties">
-              <!-- Populated by JS -->
-            </div>
-          </div>
-
-          <!-- Lead Pipeline -->
-          <div class="bento-card span-12 animate-in delay-5">
-            <div class="card-header">
-              <div>
-                <div class="card-title">Lead Pipeline</div>
-                <div class="card-subtitle">Conversion funnel overview</div>
-              </div>
-            </div>
-            <div class="pipeline">
-              <div class="pipeline-stage">
-                <div class="num">142</div>
-                <div class="label">New Inquiries</div>
-                <div class="bar"><div class="bar-fill" style="width:100%"></div></div>
-              </div>
-              <div class="pipeline-stage">
-                <div class="num">89</div>
-                <div class="label">Contacted</div>
-                <div class="bar"><div class="bar-fill" style="width:63%"></div></div>
-              </div>
-              <div class="pipeline-stage">
-                <div class="num">56</div>
-                <div class="label">Viewings</div>
-                <div class="bar"><div class="bar-fill" style="width:39%"></div></div>
-              </div>
-              <div class="pipeline-stage">
-                <div class="num">34</div>
-                <div class="label">Negotiating</div>
-                <div class="bar"><div class="bar-fill" style="width:24%"></div></div>
-              </div>
-              <div class="pipeline-stage">
-                <div class="num">18</div>
-                <div class="label">Closed</div>
-                <div class="bar"><div class="bar-fill" style="width:13%"></div></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Activity Feed -->
-          <div class="bento-card span-6 animate-in delay-4">
-            <div class="card-header">
-              <div>
-                <div class="card-title">Activity Log</div>
-                <div class="card-subtitle">Real-time system events</div>
-              </div>
-            </div>
-            <div id="activityFeed">
-              <div class="activity-item">
-                <div class="activity-icon add"><ion-icon name="add-outline"></ion-icon></div>
-                <div class="activity-content">
-                  <h5>New property listed</h5>
-                  <p>Luxury 4-Bedroom Villa added to World Bank Estate</p>
-                  <div class="activity-time">2 minutes ago</div>
-                </div>
-              </div>
-              <div class="activity-item">
-                <div class="activity-icon sale"><ion-icon name="checkmark-outline"></ion-icon></div>
-                <div class="activity-content">
-                  <h5>Property marked as sold</h5>
-                  <p>3-Bedroom Apartment in New Owerri — ₦45M</p>
-                  <div class="activity-time">1 hour ago</div>
-                </div>
-              </div>
-              <div class="activity-item">
-                <div class="activity-icon user"><ion-icon name="person-outline"></ion-icon></div>
-                <div class="activity-content">
-                  <h5>New agent registered</h5>
-                  <p>Chioma N. joined as field agent for Aladinma zone</p>
-                  <div class="activity-time">3 hours ago</div>
-                </div>
-              </div>
-              <div class="activity-item">
-                <div class="activity-icon edit"><ion-icon name="create-outline"></ion-icon></div>
-                <div class="activity-content">
-                  <h5>Price updated</h5>
-                  <p>Executive Mansion reduced from ₦120M to ₦115M</p>
-                  <div class="activity-time">5 hours ago</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Recent Inquiries -->
-          <div class="bento-card span-6 animate-in delay-5">
-            <div class="card-header">
-              <div>
-                <div class="card-title">Latest Inquiries</div>
-                <div class="card-subtitle">Unread client messages</div>
-              </div>
-              <button class="card-action" onclick="setSection('inquiries')"><ion-icon name="arrow-forward-outline"></ion-icon></button>
-            </div>
-            <div id="inquiryList">
-              <div class="activity-item">
-                <div class="activity-icon" style="background:rgba(52,152,219,0.1);color:var(--info);"><ion-icon name="mail-outline"></ion-icon></div>
-                <div class="activity-content">
-                  <h5>Chisom O. — Viewing Request</h5>
-                  <p>Interested in 4-bedroom duplex at Works Layout</p>
-                  <div class="activity-time">10 minutes ago · <span style="color:var(--gold)">Unread</span></div>
-                </div>
-              </div>
-              <div class="activity-item">
-                <div class="activity-icon" style="background:rgba(52,152,219,0.1);color:var(--info);"><ion-icon name="mail-outline"></ion-icon></div>
-                <div class="activity-content">
-                  <h5>Emeka U. — Price Negotiation</h5>
-                  <p>Offering ₦38M for bungalow at Aladinma</p>
-                  <div class="activity-time">2 hours ago · <span style="color:var(--gold)">Unread</span></div>
-                </div>
-              </div>
-              <div class="activity-item">
-                <div class="activity-icon" style="background:rgba(212,175,55,0.1);color:var(--gold);"><ion-icon name="call-outline"></ion-icon></div>
-                <div class="activity-content">
-                  <h5>Adaobi N. — Callback requested</h5>
-                  <p>+234 803 555 0192 · Government Station inquiry</p>
-                  <div class="activity-time">Yesterday · <span style="color:var(--text-muted)">Replied</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- PROPERTIES SECTION -->
-      <div id="section-properties" class="section-page" style="display:none;">
-        <div class="bento-grid">
-          <div class="bento-card span-12 animate-in">
-            <div class="card-header">
-              <div>
-                <div class="card-title">Property Management</div>
-                <div class="card-subtitle">All listings · 524 total</div>
-              </div>
-              <div style="display:flex;gap:10px;">
-                <button class="action-chip" onclick="openModal('addProperty')"><ion-icon name="add-outline"></ion-icon> Add Property</button>
-                <button class="action-chip"><ion-icon name="filter-outline"></ion-icon> Filter</button>
-              </div>
-            </div>
-            <div style="overflow-x:auto;">
-              <table class="data-table">
-                <thead>
-                  <tr><th>Property</th><th>Location</th><th>Type</th><th>Price</th><th>Status</th><th>Agent</th><th>Actions</th></tr>
-                </thead>
-                <tbody id="propertiesTable"></tbody>
-              </table>
-            </div>
-            <div class="pagination">
-              <button class="page-btn"><ion-icon name="chevron-back-outline"></ion-icon></button>
-              <button class="page-btn active">1</button>
-              <button class="page-btn">2</button>
-              <button class="page-btn">3</button>
-              <button class="page-btn">4</button>
-              <button class="page-btn"><ion-icon name="chevron-forward-outline"></ion-icon></button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- LEADS SECTION -->
-      <div id="section-leads" class="section-page" style="display:none;">
-        <div class="bento-grid">
-          <div class="bento-card span-12 animate-in">
-            <div class="card-header">
-              <div>
-                <div class="card-title">Lead Management</div>
-                <div class="card-subtitle">Track and convert prospects</div>
-              </div>
-              <button class="action-chip"><ion-icon name="add-outline"></ion-icon> Add Lead</button>
-            </div>
-            <div style="overflow-x:auto;">
-              <table class="data-table">
-                <thead>
-                  <tr><th>Name</th><th>Contact</th><th>Interest</th><th>Budget</th><th>Stage</th><th>Assigned</th><th>Actions</th></tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><strong>Chisom O.</strong></td>
-                    <td>chisom.o@email.com</td>
-                    <td>4-Bed Duplex</td>
-                    <td>₦50M - ₦70M</td>
-                    <td><span class="property-status status-pending">Viewing</span></td>
-                    <td>Agent Chioma</td>
-                    <td><button class="card-action"><ion-icon name="create-outline"></ion-icon></button></td>
-                  </tr>
-                  <tr>
-                    <td><strong>Emeka U.</strong></td>
-                    <td>+234 903 555 0123</td>
-                    <td>Bungalow</td>
-                    <td>₦30M - ₦40M</td>
-                    <td><span class="property-status status-approved">Negotiating</span></td>
-                    <td>Agent John</td>
-                    <td><button class="card-action"><ion-icon name="create-outline"></ion-icon></button></td>
-                  </tr>
-                  <tr>
-                    <td><strong>Adaobi N.</strong></td>
-                    <td>adaobi.n@email.com</td>
-                    <td>Apartment (Rent)</td>
-                    <td>₦400K - ₦600K/mo</td>
-                    <td><span class="property-status status-pending">Inquiry</span></td>
-                    <td>Unassigned</td>
-                    <td><button class="card-action"><ion-icon name="create-outline"></ion-icon></button></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- INQUIRIES SECTION -->
-      <div id="section-inquiries" class="section-page" style="display:none;">
-        <div class="bento-grid">
-          <div class="bento-card span-12 animate-in">
-            <div class="card-header">
-              <div>
-                <div class="card-title">Client Inquiries</div>
-                <div class="card-subtitle">Messages from website and direct contacts</div>
-              </div>
-            </div>
-            <div id="inquiriesTable"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ANALYTICS SECTION -->
-      <div id="section-analytics" class="section-page" style="display:none;">
-        <div class="bento-grid">
-          <div class="bento-card span-6 animate-in">
-            <div class="card-header">
-              <div><div class="card-title">Traffic Sources</div><div class="card-subtitle">Where visitors come from</div></div>
-            </div>
-            <div class="chart-container" style="height:200px;">
-              <div class="chart-bar" style="height:45%"><div class="tooltip">Direct: 45%</div></div>
-              <div class="chart-bar" style="height:30%"><div class="tooltip">Social: 30%</div></div>
-              <div class="chart-bar" style="height:15%"><div class="tooltip">Search: 15%</div></div>
-              <div class="chart-bar" style="height:10%"><div class="tooltip">Referral: 10%</div></div>
-            </div>
-            <div class="chart-labels"><span>Direct</span><span>Social</span><span>Search</span><span>Referral</span></div>
-          </div>
-          <div class="bento-card span-6 animate-in delay-1">
-            <div class="card-header">
-              <div><div class="card-title">Device Breakdown</div><div class="card-subtitle">Mobile vs Desktop vs Tablet</div></div>
-            </div>
-            <div class="chart-container" style="height:200px;">
-              <div class="chart-bar" style="height:62%"><div class="tooltip">Mobile: 62%</div></div>
-              <div class="chart-bar" style="height:30%"><div class="tooltip">Desktop: 30%</div></div>
-              <div class="chart-bar" style="height:8%"><div class="tooltip">Tablet: 8%</div></div>
-            </div>
-            <div class="chart-labels"><span>Mobile</span><span>Desktop</span><span>Tablet</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TESTIMONIALS SECTION -->
-      <div id="section-testimonials" class="section-page" style="display:none;">
-        <div class="bento-grid">
-          <div class="bento-card span-12 animate-in">
-            <div class="card-header">
-              <div>
-                <div class="card-title">Testimonials</div>
-                <div class="card-subtitle">Manage client reviews and ratings</div>
-              </div>
-              <button class="action-chip" onclick="openModal('addTestimonial')"><ion-icon name="add-outline"></ion-icon> Add Testimonial</button>
-            </div>
-            <div style="overflow-x:auto;">
-              <table class="data-table">
-                <thead>
-                  <tr><th>Client</th><th>Rating</th><th>Message</th><th>Date</th><th>Visible</th><th>Actions</th></tr>
-                </thead>
-                <tbody id="testimonialsTable"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- CONTENT SECTION -->
-      <div id="section-content" class="section-page" style="display:none;">
-        <div class="bento-grid">
-          <div class="bento-card span-12 animate-in">
-            <div class="card-header">
-              <div><div class="card-title">Media Library</div><div class="card-subtitle">Manage images, videos, and documents</div></div>
-            </div>
-            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:16px;margin-top:16px;">
-              <div style="aspect-ratio:1;border-radius:12px;background:rgba(0,0,0,0.2);border:1px solid var(--glass-border);display:grid;place-items:center;cursor:pointer;transition:all 0.3s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--glass-border)'">
-                <ion-icon name="add-outline" style="font-size:32px;color:var(--text-muted);"></ion-icon>
-              </div>
-              <div style="aspect-ratio:1;border-radius:12px;background:url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=300&h=300&fit=crop') center/cover;border:1px solid var(--glass-border);position:relative;overflow:hidden;">
-                <div style="position:absolute;inset:0;background:rgba(0,0,0,0.4);opacity:0;transition:opacity 0.3s;display:grid;place-items:center;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0">
-                  <ion-icon name="trash-outline" style="font-size:24px;color:var(--danger);"></ion-icon>
-                </div>
-              </div>
-              <div style="aspect-ratio:1;border-radius:12px;background:url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=300&h=300&fit=crop') center/cover;border:1px solid var(--glass-border);position:relative;overflow:hidden;">
-                <div style="position:absolute;inset:0;background:rgba(0,0,0,0.4);opacity:0;transition:opacity 0.3s;display:grid;place-items:center;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0">
-                  <ion-icon name="trash-outline" style="font-size:24px;color:var(--danger);"></ion-icon>
-                </div>
-              </div>
-              <div style="aspect-ratio:1;border-radius:12px;background:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=300&h=300&fit=crop') center/cover;border:1px solid var(--glass-border);position:relative;overflow:hidden;">
-                <div style="position:absolute;inset:0;background:rgba(0,0,0,0.4);opacity:0;transition:opacity 0.3s;display:grid;place-items:center;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0">
-                  <ion-icon name="trash-outline" style="font-size:24px;color:var(--danger);"></ion-icon>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SETTINGS SECTION -->
-      <div id="section-settings" class="section-page" style="display:none;">
-        <div class="bento-grid">
-          <div class="bento-card span-6 animate-in">
-            <div class="card-header">
-              <div><div class="card-title">General Settings</div><div class="card-subtitle">Website configuration</div></div>
-            </div>
-            <div class="form-group">
-              <label>Company Name</label>
-              <input type="text" class="form-control" value="Biver Royalty Homes Ltd">
-            </div>
-            <div class="form-group">
-              <label>Contact Email</label>
-              <input type="email" class="form-control" value="biverroyaltyhomes01@gmail.com">
-            </div>
-            <div class="form-group">
-              <label>Phone Number</label>
-              <input type="tel" class="form-control" value="+234 903 313 7432">
-            </div>
-            <div class="form-group">
-              <label>Office Address</label>
-              <textarea class="form-control">No. 31 Wetheral Road, Angelina Plaza, Owerri, Imo State</textarea>
-            </div>
-            <button class="login-btn" style="margin-top:10px;">Save Changes</button>
-          </div>
-          <div class="bento-card span-6 animate-in delay-1">
-            <div class="card-header">
-              <div><div class="card-title">API & Integrations</div><div class="card-subtitle">Connected services</div></div>
-            </div>
-            <div class="form-group">
-              <label>API Base URL</label>
-              <input type="text" class="form-control" value="https://api.biverroyaltyhomesltd.com/api" readonly style="opacity:0.6;">
-            </div>
-            <div class="form-group">
-              <label>Google Maps API Key</label>
-              <input type="password" class="form-control" value="••••••••••••••••">
-            </div>
-            <div class="form-group">
-              <label>SMTP Provider</label>
-              <input type="text" class="form-control" value="SendGrid">
-            </div>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--glass-border);">
-              <div>
-                <div style="font-size:13px;font-weight:600;">Maintenance Mode</div>
-                <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Temporarily disable public site</div>
-              </div>
-              <div style="width:44px;height:24px;border-radius:100px;background:var(--success);position:relative;cursor:pointer;">
-                <div style="width:20px;height:20px;border-radius:50%;background:white;position:absolute;top:2px;right:2px;box-shadow:0 2px 4px rgba(0,0,0,0.2);"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
-
-    <!-- Mobile Bottom Nav -->
-    <nav class="mobile-nav">
-      <div class="mobile-nav-item active" onclick="setSection('dashboard')">
-        <ion-icon name="grid-outline"></ion-icon>
-        <span>Home</span>
-      </div>
-      <div class="mobile-nav-item" onclick="setSection('properties')">
-        <ion-icon name="home-outline"></ion-icon>
-        <span>Properties</span>
-      </div>
-      <div class="mobile-nav-item" onclick="setSection('leads')">
-        <ion-icon name="people-outline"></ion-icon>
-        <span>Leads</span>
-      </div>
-      <div class="mobile-nav-item" onclick="setSection('analytics')">
-        <ion-icon name="bar-chart-outline"></ion-icon>
-        <span>Stats</span>
-      </div>
-      <div class="mobile-nav-item" onclick="setSection('settings')">
-        <ion-icon name="settings-outline"></ion-icon>
-        <span>More</span>
-      </div>
-    </nav>
-
-    <!-- ADD PROPERTY MODAL -->
-    <div class="modal-overlay" id="modal-addProperty">
-      <div class="modal">
-        <div class="modal-header">
-          <h3>Add New Property</h3>
-          <button class="modal-close" onclick="closeModal('addProperty')"><ion-icon name="close-outline"></ion-icon></button>
-        </div>
-        <div class="modal-body">
-          <div class="form-row">
-            <div class="form-group"><label>Property Title</label><input type="text" class="form-control" placeholder="e.g. Luxury 4-Bedroom Villa"></div>
-            <div class="form-group"><label>Price (₦)</label><input type="number" class="form-control" placeholder="85000000"></div>
-          </div>
-          <div class="form-row">
-            <div class="form-group"><label>Type</label>
-              <select class="form-control">
-                <option>For Sale</option><option>For Rent</option><option>Land</option><option>Commercial</option>
-              </select>
-            </div>
-            <div class="form-group"><label>Location</label><input type="text" class="form-control" placeholder="e.g. World Bank Estate, Owerri"></div>
-          </div>
-          <div class="form-row">
-            <div class="form-group"><label>Bedrooms</label><input type="number" class="form-control" value="3"></div>
-            <div class="form-group"><label>Bathrooms</label><input type="number" class="form-control" value="2"></div>
-          </div>
-          <div class="form-group"><label>Description</label><textarea class="form-control" placeholder="Describe the property..."></textarea></div>
-          <div class="form-group"><label>Upload Images</label>
-            <div style="padding:24px;border:2px dashed var(--glass-border);border-radius:var(--radius-sm);text-align:center;color:var(--text-muted);cursor:pointer;transition:all 0.3s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--glass-border)'">
-              <ion-icon name="cloud-upload-outline" style="font-size:32px;margin-bottom:8px;"></ion-icon>
-              <p style="font-size:13px;">Drag & drop images here or click to browse</p>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="action-chip" onclick="closeModal('addProperty')">Cancel</button>
-          <button class="login-btn" style="width:auto;padding:12px 28px;" onclick="saveProperty()">Save Property</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ADD TESTIMONIAL MODAL -->
-    <div class="modal-overlay" id="modal-addTestimonial">
-      <div class="modal">
-        <div class="modal-header">
-          <h3>Add Testimonial</h3>
-          <button class="modal-close" onclick="closeModal('addTestimonial')"><ion-icon name="close-outline"></ion-icon></button>
-        </div>
-        <div class="modal-body">
-          <div class="form-row">
-            <div class="form-group"><label>Client Name</label><input type="text" class="form-control" placeholder="e.g. Chisom O."></div>
-            <div class="form-group"><label>Rating</label>
-              <select class="form-control"><option>5 Stars</option><option>4 Stars</option><option>3 Stars</option></select>
-            </div>
-          </div>
-          <div class="form-group"><label>Testimonial</label><textarea class="form-control" placeholder="Client feedback..."></textarea></div>
-        </div>
-        <div class="modal-footer">
-          <button class="action-chip" onclick="closeModal('addTestimonial')">Cancel</button>
-          <button class="login-btn" style="width:auto;padding:12px 28px;">Save Testimonial</button>
-        </div>
-      </div>
-    </div>
-
+<div id="entityModal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close" id="closeModal">&times;</span>
+    <h3 id="modalTitle">Add / Edit</h3>
+    <form id="entityForm">
+      <input type="hidden" id="entityId">
+      <div id="modalFields"></div>
+      <button type="submit" class="btn-primary">Save Changes</button>
+    </form>
   </div>
+</div>
 
-  <script>
-    /* =============================================
-       ROYAL COMMAND CENTER — JavaScript
-       ============================================= */
+<script>
+  (function() {
+    const API_BASE = "https://api.biverroyaltyhomesltd.com/api";
+    let currentSection = "overview";
+    let chartInstance = null;
+    let propertiesData = [], usersData = [], testimonialsData = [], inquiriesData = [];
+    let currentModalType = null;
 
-    // Demo Data
-    const demoProperties = [
-      { id: "1", title: "Luxury 4-Bedroom Villa", price: 85000000, type: "sale", location: "World Bank Estate", bedrooms: 4, bathrooms: 4, area: 350, status: "approved", image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=100&h=100&fit=crop", agent: "Chioma N." },
-      { id: "2", title: "Modern 3-Bedroom Apt", price: 450000, type: "rent", location: "New Owerri", bedrooms: 3, bathrooms: 2, area: 180, status: "approved", image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=100&h=100&fit=crop", agent: "John O." },
-      { id: "3", title: "Executive 5-Bed Mansion", price: 120000000, type: "sale", location: "Gov. Station Layout", bedrooms: 5, bathrooms: 5, area: 500, status: "pending", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=100&h=100&fit=crop", agent: "Unassigned" },
-      { id: "4", title: "Cozy 2-Bed Bungalow", price: 32000000, type: "sale", location: "Aladinma", bedrooms: 2, bathrooms: 2, area: 120, status: "approved", image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=100&h=100&fit=crop", agent: "Chioma N." },
-      { id: "5", title: "4-Bedroom Duplex", price: 650000, type: "rent", location: "Works Layout", bedrooms: 4, bathrooms: 3, area: 280, status: "sold", image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=100&h=100&fit=crop", agent: "John O." },
-      { id: "6", title: "3-Bedroom Terrace", price: 55000000, type: "sale", location: "PH Road", bedrooms: 3, bathrooms: 3, area: 200, status: "approved", image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=100&h=100&fit=crop", agent: "Chioma N." }
-    ];
-
-    const demoTestimonials = [
-      { id: "1", name: "Chisom O.", rating: 5, message: "Biver Royalty Homes made finding my dream house in Owerri so easy. Highly professional!", date: "2025-05-20", visible: true },
-      { id: "2", name: "Emeka U.", rating: 5, message: "Top-notch property management services. I have peace of mind.", date: "2025-05-18", visible: true },
-      { id: "3", name: "Adaobi N.", rating: 4, message: "Seamless purchasing process from start to finish.", date: "2025-05-15", visible: true }
-    ];
-
-    // Login
-    function doLogin() {
-      const gate = document.getElementById('loginGate');
-      const app = document.getElementById('app');
-      gate.classList.add('hidden');
-      setTimeout(() => {
-        app.classList.add('active');
-        initDashboard();
-      }, 400);
+    function getToken() { return localStorage.getItem('token'); }
+    
+    function isAuthenticated() { return !!getToken(); }
+    
+    if (!isAuthenticated()) {
+      window.location.href = 'admin-login.html';
+      return;
     }
 
-    // Navigation
-    function toggleNav() {
-      document.getElementById('sideNav').classList.toggle('expanded');
-    }
-    function expandNav() { if(window.innerWidth > 768) document.getElementById('sideNav').classList.add('expanded'); }
-    function collapseNav() { document.getElementById('sideNav').classList.remove('expanded'); }
-
-    function setSection(name) {
-      document.querySelectorAll('.section-page').forEach(s => s.style.display = 'none');
-      document.getElementById('section-' + name).style.display = 'block';
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      document.querySelectorAll('.mobile-nav-item').forEach(n => n.classList.remove('active'));
-      // Mark active nav
-      const navMap = { dashboard:0, properties:1, leads:2, inquiries:3, analytics:4, testimonials:5, content:6, settings:7 };
-      const idx = navMap[name];
-      if (idx !== undefined) {
-        const sideItems = document.querySelectorAll('.side-nav .nav-item');
-        if (sideItems[idx]) sideItems[idx].classList.add('active');
-        const mobileItems = document.querySelectorAll('.mobile-nav-item');
-        if (mobileItems[idx < 4 ? idx : 4]) mobileItems[idx < 4 ? idx : 4].classList.add('active');
+    async function apiFetch(endpoint, options = {}) {
+      const token = getToken();
+      const headers = { 'Content-Type': 'application/json', ...options.headers };
+      if (token) headers['Authorization'] = `Bearer ${token}`;
+      const res = await fetch(`${API_BASE}${endpoint}`, { ...options, headers });
+      if (res.status === 401) { 
+        logout(); 
+        throw new Error('Unauthorized');
       }
-      window.scrollTo(0,0);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
     }
 
-    // Notifications
-    function toggleNotif() {
-      document.getElementById('notifPanel').classList.toggle('active');
+    function showToast(msg, isError = false) {
+      let toast = document.querySelector('.toast-msg');
+      if(toast) toast.remove();
+      toast = document.createElement('div');
+      toast.className = 'toast-msg';
+      toast.style.background = isError ? '#dc3545' : '#371801';
+      toast.innerText = msg;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
     }
 
-    // Command Palette
-    const commands = [
-      { label: 'Add Property', icon: 'add-circle-outline', action: () => openModal('addProperty') },
-      { label: 'View Properties', icon: 'home-outline', action: () => setSection('properties') },
-      { label: 'View Leads', icon: 'people-outline', action: () => setSection('leads') },
-      { label: 'View Analytics', icon: 'bar-chart-outline', action: () => setSection('analytics') },
-      { label: 'Settings', icon: 'settings-outline', action: () => setSection('settings') },
-      { label: 'Toggle Navigation', icon: 'menu-outline', action: toggleNav },
-      { label: 'Notifications', icon: 'notifications-outline', action: toggleNotif }
-    ];
-    function openCommandPalette() {
-      document.getElementById('commandPalette').classList.add('active');
-      document.getElementById('commandInput').value = '';
-      document.getElementById('commandInput').focus();
-      renderCommands(commands);
-    }
-    function closeCommandPalette() {
-      document.getElementById('commandPalette').classList.remove('active');
-    }
-    function renderCommands(list) {
-      const box = document.getElementById('commandList');
-      box.innerHTML = list.map((c,i) => `
-        <div class="command-item ${i===0?'active':''}" onclick="commands[${commands.indexOf(c)}].action();closeCommandPalette();">
-          <ion-icon name="${c.icon}"></ion-icon>
-          <span class="cmd-label">${c.label}</span>
-        </div>
-      `).join('');
-    }
-    document.getElementById('commandInput').addEventListener('input', e => {
-      const q = e.target.value.toLowerCase();
-      renderCommands(commands.filter(c => c.label.toLowerCase().includes(q)));
-    });
-    document.addEventListener('keydown', e => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openCommandPalette(); }
-      if (e.key === 'Escape') { closeCommandPalette(); document.getElementById('notifPanel').classList.remove('active'); }
-    });
-
-    // Modals
-    function openModal(id) { document.getElementById('modal-'+id).classList.add('active'); }
-    function closeModal(id) { document.getElementById('modal-'+id).classList.remove('active'); }
-    function saveProperty() {
-      closeModal('addProperty');
-      showToast('Property saved successfully');
+    function logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = 'admin-login.html';
     }
 
-    // Toast
-    function showToast(msg) {
-      const t = document.createElement('div');
-      t.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--prussian-blue);border:1px solid var(--gold);color:var(--gold);padding:12px 24px;border-radius:100px;z-index:9999;font-size:13px;font-weight:600;box-shadow:0 8px 32px rgba(0,0,0,0.4);animation:fadeInUp 0.4s ease;';
-      t.textContent = msg;
-      document.body.appendChild(t);
-      setTimeout(() => t.remove(), 3000);
-    }
-
-    // Clock & Date
-    function updateClock() {
-      const now = new Date();
-      document.getElementById('dateDay').textContent = String(now.getDate()).padStart(2,'0');
-      document.getElementById('dateMonth').textContent = now.toLocaleString('en-US',{month:'long'});
-      document.getElementById('dateWeekday').textContent = now.toLocaleString('en-US',{weekday:'long'});
-      document.getElementById('clockTime').textContent = now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:false});
-    }
-    setInterval(updateClock, 1000); updateClock();
-
-    // Populate Recent Properties
-    function renderRecentProperties() {
-      const container = document.getElementById('recentProperties');
-      container.innerHTML = demoProperties.slice(0,4).map(p => `
-        <div class="property-row">
-          <img src="${p.image}" class="property-thumb" alt="${p.title}">
-          <div class="property-info">
-            <h4>${p.title}</h4>
-            <p>${p.location} · ${p.bedrooms} bed · ${p.bathrooms} bath</p>
-          </div>
-          <div class="property-price">₦${(p.price/1000000).toFixed(0)}M</div>
-          <span class="property-status status-${p.status}">${p.status}</span>
-        </div>
-      `).join('');
-    }
-
-    // Populate Properties Table
-    function renderPropertiesTable() {
-      const tbody = document.getElementById('propertiesTable');
-      tbody.innerHTML = demoProperties.map(p => `
-        <tr>
-          <td><div style="display:flex;align-items:center;gap:10px;"><img src="${p.image}" style="width:36px;height:36px;border-radius:8px;object-fit:cover;"><strong style="color:var(--text-primary);font-size:13px;">${p.title}</strong></div></td>
-          <td>${p.location}</td>
-          <td style="text-transform:capitalize;">${p.type}</td>
-          <td style="font-family:var(--ff-display);font-weight:700;color:var(--gold);">₦${p.price.toLocaleString()}</td>
-          <td><span class="property-status status-${p.status}">${p.status}</span></td>
-          <td>${p.agent}</td>
-          <td><div style="display:flex;gap:6px;"><button class="card-action"><ion-icon name="create-outline"></ion-icon></button><button class="card-action" style="color:var(--danger);"><ion-icon name="trash-outline"></ion-icon></button></div></td>
-        </tr>
-      `).join('');
-    }
-
-    // Populate Testimonials Table
-    function renderTestimonialsTable() {
-      const tbody = document.getElementById('testimonialsTable');
-      tbody.innerHTML = demoTestimonials.map(t => `
-        <tr>
-          <td><strong style="color:var(--text-primary);">${t.name}</strong></td>
-          <td><span style="color:var(--gold);">${'★'.repeat(t.rating)}${'☆'.repeat(5-t.rating)}</span></td>
-          <td>${t.message}</td>
-          <td>${t.date}</td>
-          <td><span style="color:${t.visible?'var(--success)':'var(--danger)'};font-size:12px;font-weight:600;">${t.visible?'Visible':'Hidden'}</span></td>
-          <td><div style="display:flex;gap:6px;"><button class="card-action"><ion-icon name="create-outline"></ion-icon></button><button class="card-action" style="color:var(--danger);"><ion-icon name="trash-outline"></ion-icon></button></div></td>
-        </tr>
-      `).join('');
-    }
-
-    // Animate Orbs
-    function animateOrbs() {
-      setTimeout(() => {
-        document.getElementById('orbRevenue').style.strokeDashoffset = '67.8'; // 80%
-        document.getElementById('orbProperties').style.strokeDashoffset = '101.7'; // 70%
-        document.getElementById('orbOccupancy').style.strokeDashoffset = '74.6'; // 78%
-      }, 600);
-    }
-
-    // Particles
-    function initParticles() {
-      const container = document.getElementById('particles');
-      for (let i = 0; i < 20; i++) {
-        const p = document.createElement('div');
-        p.className = 'particle';
-        const size = 2 + Math.random() * 3;
-        p.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;bottom:${Math.random()*30}%;--dur:${5+Math.random()*8}s;--delay:${Math.random()*5}s;--op:${0.2+Math.random()*0.4}`;
-        container.appendChild(p);
+    async function verifyAdmin() {
+      try {
+        const res = await fetch(`${API_BASE}/users/me`, {
+          headers: { 'Authorization': `Bearer ${getToken()}` }
+        });
+        if (!res.ok) throw new Error();
+        const user = await res.json();
+        if (user.role !== 'admin') throw new Error();
+      } catch (err) {
+        logout();
       }
     }
 
-    // Init
-    function initDashboard() {
-      renderRecentProperties();
-      renderPropertiesTable();
-      renderTestimonialsTable();
-      animateOrbs();
-      initParticles();
+    async function fetchAllData() {
+      try {
+        const [properties, users, testimonials, inquiries] = await Promise.all([
+          apiFetch('/properties?limit=100').catch(() => ({ properties: [] })),
+          apiFetch('/users?limit=50').catch(() => ({ users: [] })),
+          apiFetch('/testimonials').catch(() => ({ data: [] })),
+          apiFetch('/contacts').catch(() => ({ contacts: [] }))
+        ]);
+        propertiesData = properties.properties || [];
+        usersData = users.users || [];
+        testimonialsData = testimonials.data || [];
+        inquiriesData = inquiries.contacts || [];
+      } catch (err) { 
+        console.error(err); 
+        showToast('Failed to load some data', true); 
+      }
     }
-  </script>
+
+    async function renderSection(section) {
+      const container = document.getElementById('dynamicContent');
+      if (!container) return;
+      await fetchAllData();
+      if (section === 'overview') renderOverview(container);
+      else if (section === 'properties') renderPropertiesTable(container);
+      else if (section === 'users') renderUsersTable(container);
+      else if (section === 'testimonials') renderTestimonialsTable(container);
+      else if (section === 'inquiries') renderInquiriesTable(container);
+      else if (section === 'settings') renderSettings(container);
+      document.getElementById('mainTitle').innerText = section.charAt(0).toUpperCase() + section.slice(1);
+      currentSection = section;
+    }
+
+    function renderOverview(container) {
+      const totalProps = propertiesData.length;
+      const totalUsers = usersData.length;
+      const totalTest = testimonialsData.length;
+      const totalInq = inquiriesData.length;
+      const monthlyData = [12, 19, 15, 17, 22, 25, 30, 28, 34, 40, 45, 48];
+      container.innerHTML = `
+        <div class="stats-grid">
+          <div class="stat-card"><div><h3>Total Properties</h3><div class="stat-number">${totalProps}</div></div><ion-icon name="home-outline" class="stat-icon"></ion-icon></div>
+          <div class="stat-card"><div><h3>Registered Users</h3><div class="stat-number">${totalUsers}</div></div><ion-icon name="people-outline" class="stat-icon"></ion-icon></div>
+          <div class="stat-card"><div><h3>Testimonials</h3><div class="stat-number">${totalTest}</div></div><ion-icon name="chatbubbles-outline" class="stat-icon"></ion-icon></div>
+          <div class="stat-card"><div><h3>Inquiries</h3><div class="stat-number">${totalInq}</div></div><ion-icon name="mail-outline" class="stat-icon"></ion-icon></div>
+        </div>
+        <div class="panel"><div class="panel-header"><h2>Monthly Listings Activity</h2></div><canvas id="listingsChart" height="200"></canvas></div>
+        <div class="panel"><div class="panel-header"><h2>Recent Properties</h2><a href="#" class="btn-outline" data-nav="properties">View All</a></div>
+        <table><thead><tr><th>Title</th><th>Price (₦)</th><th>Status</th><th>Approval</th></tr></thead><tbody>
+          ${propertiesData.slice(0,5).map(p => `<tr><td>${p.title}</td><td>₦${p.price?.toLocaleString()}</td><td>${p.type}</td><td>${p.approvalStatus || 'pending'}</td></tr>`).join('')}
+        </tbody></table>
+        </div>`;
+      
+      const ctx = document.getElementById('listingsChart')?.getContext('2d');
+      if (ctx) {
+        if (chartInstance) chartInstance.destroy();
+        chartInstance = new Chart(ctx, { type: 'line', data: { labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'], datasets: [{ label: 'Listings added', data: monthlyData, borderColor: '#D4AF37', backgroundColor: 'rgba(212,175,55,0.1)', tension: 0.3, fill: true }] }, options: { responsive: true } });
+      }
+      document.querySelectorAll('[data-nav]').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const section = link.getAttribute('data-nav');
+          if(section) setActiveSection(section);
+        });
+      });
+    }
+
+    function renderPropertiesTable(container) {
+      container.innerHTML = `<div class="panel"><div class="panel-header"><h2>Manage Properties</h2><button class="btn-primary" id="addPropertyBtn"><ion-icon name="add-circle-outline"></ion-icon> Add Property</button></div>
+        <table id="propsTable"><thead><tr><th>Title</th><th>Price</th><th>Type</th><th>Approval</th><th>Actions</th></tr></thead><tbody>${propertiesData.map(p => `<tr data-id="${p._id}"><td>${p.title}</td><td>₦${p.price?.toLocaleString()}</td><td>${p.type}</td><td>${p.approvalStatus || 'pending'}</td><td><button class="action-btn edit" data-id="${p._id}"><ion-icon name="create-outline"></ion-icon></button><button class="action-btn delete" data-id="${p._id}"><ion-icon name="trash-outline"></ion-icon></button></td></tr>`).join('')}</tbody></table></div>`;
+      document.getElementById('addPropertyBtn')?.addEventListener('click', () => openPropertyModal());
+      document.querySelectorAll('.edit').forEach(btn => btn.addEventListener('click', (e) => { const id = btn.getAttribute('data-id'); openPropertyModal(id); }));
+      document.querySelectorAll('.delete').forEach(btn => btn.addEventListener('click', async (e) => { const id = btn.getAttribute('data-id'); if(confirm('Delete property?')) await deleteEntity('properties', id); renderSection('properties'); }));
+    }
+
+    function renderUsersTable(container) {
+      container.innerHTML = `<div class="panel"><div class="panel-header"><h2>Users</h2><button class="btn-primary" id="addUserBtn">Add User</button></div><table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Actions</th></tr></thead><tbody>${usersData.map(u => `<tr><td>${u.name}</td><td>${u.email}</td><td>${u.role || 'user'}</td><td><button class="action-btn edit" data-id="${u._id}"><ion-icon name="create-outline"></ion-icon></button><button class="action-btn delete" data-id="${u._id}"><ion-icon name="trash-outline"></ion-icon></button></td></tr>`).join('')}</tbody></table></div>`;
+      document.getElementById('addUserBtn')?.addEventListener('click', () => openUserModal());
+      document.querySelectorAll('.edit').forEach(btn => btn.addEventListener('click', (e) => { const id = btn.getAttribute('data-id'); openUserModal(id); }));
+      document.querySelectorAll('.delete').forEach(btn => btn.addEventListener('click', async (e) => { const id = btn.getAttribute('data-id'); if(confirm('Delete user?')) await deleteEntity('users', id); renderSection('users'); }));
+    }
+
+    function renderTestimonialsTable(container) {
+      container.innerHTML = `<div class="panel"><div class="panel-header"><h2>Testimonials</h2><button class="btn-primary" id="addTestBtn">Add Testimonial</button></div><table><thead><tr><th>Name</th><th>Message</th><th>Actions</th></tr></thead><tbody>${testimonialsData.map(t => `<tr><td>${t.name}</td><td>${t.message.substring(0,60)}</td><td><button class="action-btn edit" data-id="${t._id}"><ion-icon name="create-outline"></ion-icon></button><button class="action-btn delete" data-id="${t._id}"><ion-icon name="trash-outline"></ion-icon></button></td></tr>`).join('')}</tbody></table></div>`;
+      document.getElementById('addTestBtn')?.addEventListener('click', () => openTestimonialModal());
+      document.querySelectorAll('.edit').forEach(btn => btn.addEventListener('click', (e) => { const id = btn.getAttribute('data-id'); openTestimonialModal(id); }));
+      document.querySelectorAll('.delete').forEach(btn => btn.addEventListener('click', async (e) => { const id = btn.getAttribute('data-id'); if(confirm('Delete testimonial?')) await deleteEntity('testimonials', id); renderSection('testimonials'); }));
+    }
+
+    function renderInquiriesTable(container) {
+      container.innerHTML = `<div class="panel"><div class="panel-header"><h2>Contact Inquiries</h2></div><table><thead><tr><th>Name</th><th>Email</th><th>Message</th><th>Date</th><th>Action</th></tr></thead><tbody>${inquiriesData.map(i => `<tr><td>${i.name}</td><td>${i.email}</td><td>${i.message?.substring(0,50)}</td><td>${new Date(i.createdAt).toLocaleDateString()}</td><td><button class="action-btn delete" data-id="${i._id}"><ion-icon name="trash-outline"></ion-icon></button></td></tr>`).join('')}</tbody></table></div>`;
+      document.querySelectorAll('.delete').forEach(btn => btn.addEventListener('click', async (e) => { const id = btn.getAttribute('data-id'); if(confirm('Delete inquiry?')) await deleteEntity('contacts', id); renderSection('inquiries'); }));
+    }
+
+    function renderSettings(container) {
+      container.innerHTML = `<div class="panel"><div class="panel-header"><h2>Site Settings</h2></div><form id="siteSettingsForm"><div style="margin-bottom:20px;"><label>Site Name</label><input type="text" id="siteName" value="Biver Royalty Homes" class="form-control"></div><div><label>Contact Email</label><input type="email" id="siteEmail" value="biverroyaltyhomes01@gmail.com"></div><button type="submit" class="btn-primary">Save Settings</button></form><hr style="margin:30px 0"><div><h3>Danger Zone</h3><button id="clearCacheBtn" class="btn-danger" style="background:#dc3545; margin-top:10px;">Clear Dashboard Cache</button></div></div>`;
+      document.getElementById('siteSettingsForm')?.addEventListener('submit', (e) => { e.preventDefault(); showToast('Settings saved (demo)'); });
+      document.getElementById('clearCacheBtn')?.addEventListener('click', () => { localStorage.removeItem('dashboardCache'); showToast('Cache cleared'); });
+    }
+
+    async function deleteEntity(type, id) {
+      try { 
+        await apiFetch(`/${type}/${id}`, { method: 'DELETE' }); 
+        showToast(`${type} deleted`); 
+        await renderSection(currentSection);
+      } catch(e){ showToast('Delete failed', true); }
+    }
+
+    function openPropertyModal(id = null) {
+      currentModalType = 'property';
+      const prop = id ? propertiesData.find(p => p._id === id) : null;
+      document.getElementById('modalTitle').innerText = prop ? 'Edit Property' : 'Add Property';
+      document.getElementById('modalFields').innerHTML = `
+        <input type="text" id="title" placeholder="Title" value="${prop?.title || ''}">
+        <input type="number" id="price" placeholder="Price (₦)" value="${prop?.price || ''}">
+        <select id="type"><option ${prop?.type === 'sale' ? 'selected' : ''}>sale</option><option ${prop?.type === 'rent' ? 'selected' : ''}>rent</option></select>
+        <input type="text" id="location" placeholder="Location" value="${prop?.location || ''}">
+        <textarea id="description" placeholder="Description">${prop?.description || ''}</textarea>
+      `;
+      document.getElementById('entityId').value = id || '';
+      document.getElementById('entityModal').style.display = 'flex';
+      const form = document.getElementById('entityForm');
+      form.onsubmit = async (e) => { e.preventDefault(); await saveProperty(); };
+    }
+
+    async function saveProperty() {
+      const id = document.getElementById('entityId').value;
+      const payload = { 
+        title: document.getElementById('title').value, 
+        price: parseInt(document.getElementById('price').value), 
+        type: document.getElementById('type').value, 
+        location: document.getElementById('location').value, 
+        description: document.getElementById('description').value 
+      };
+      try {
+        if (id) await apiFetch(`/properties/${id}`, { method: 'PUT', body: JSON.stringify(payload) });
+        else await apiFetch('/properties', { method: 'POST', body: JSON.stringify(payload) });
+        showToast('Property saved');
+        closeModal();
+        renderSection('properties');
+      } catch(e) { showToast('Error saving', true); }
+    }
+
+    function openUserModal(id = null) {
+      currentModalType = 'user';
+      const user = id ? usersData.find(u => u._id === id) : null;
+      document.getElementById('modalTitle').innerText = user ? 'Edit User' : 'Add User';
+      document.getElementById('modalFields').innerHTML = `
+        <input type="text" id="name" placeholder="Full Name" value="${user?.name || ''}">
+        <input type="email" id="email" placeholder="Email" value="${user?.email || ''}">
+        <select id="role"><option ${user?.role === 'admin' ? 'selected' : ''}>admin</option><option ${user?.role === 'user' ? 'selected' : ''}>user</option></select>
+      `;
+      document.getElementById('entityId').value = id || '';
+      document.getElementById('entityModal').style.display = 'flex';
+      const form = document.getElementById('entityForm');
+      form.onsubmit = async (e) => { e.preventDefault(); await saveUser(); };
+    }
+
+    async function saveUser() {
+      const id = document.getElementById('entityId').value;
+      const payload = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        role: document.getElementById('role').value
+      };
+      try {
+        if (id) await apiFetch(`/users/${id}`, { method: 'PUT', body: JSON.stringify(payload) });
+        else await apiFetch('/users', { method: 'POST', body: JSON.stringify(payload) });
+        showToast('User saved');
+        closeModal();
+        renderSection('users');
+      } catch(e) { showToast('Error saving user', true); }
+    }
+
+    function openTestimonialModal(id = null) {
+      currentModalType = 'testimonial';
+      const testimonial = id ? testimonialsData.find(t => t._id === id) : null;
+      document.getElementById('modalTitle').innerText = testimonial ? 'Edit Testimonial' : 'Add Testimonial';
+      document.getElementById('modalFields').innerHTML = `
+        <input type="text" id="name" placeholder="Client Name" value="${testimonial?.name || ''}">
+        <textarea id="message" placeholder="Testimonial message">${testimonial?.message || ''}</textarea>
+        <input type="number" id="rating" placeholder="Rating (1-5)" min="1" max="5" value="${testimonial?.rating || 5}">
+      `;
+      document.getElementById('entityId').value = id || '';
+      document.getElementById('entityModal').style.display = 'flex';
+      const form = document.getElementById('entityForm');
+      form.onsubmit = async (e) => { e.preventDefault(); await saveTestimonial(); };
+    }
+
+    async function saveTestimonial() {
+      const id = document.getElementById('entityId').value;
+      const payload = {
+        name: document.getElementById('name').value,
+        message: document.getElementById('message').value,
+        rating: parseInt(document.getElementById('rating').value)
+      };
+      try {
+        if (id) await apiFetch(`/testimonials/${id}`, { method: 'PUT', body: JSON.stringify(payload) });
+        else await apiFetch('/testimonials', { method: 'POST', body: JSON.stringify(payload) });
+        showToast('Testimonial saved');
+        closeModal();
+        renderSection('testimonials');
+      } catch(e) { showToast('Error saving testimonial', true); }
+    }
+
+    function closeModal() { document.getElementById('entityModal').style.display = 'none'; }
+
+    function setActiveSection(section) {
+      currentSection = section;
+      renderSection(section);
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        if(link.getAttribute('data-section') === section) link.classList.add('active');
+      });
+    }
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', (e) => { 
+        e.preventDefault(); 
+        const section = link.getAttribute('data-section'); 
+        if(section) setActiveSection(section); 
+      });
+    });
+    document.getElementById('menuToggle')?.addEventListener('click', () => document.getElementById('sidebar')?.classList.toggle('open'));
+    document.getElementById('closeModal')?.addEventListener('click', closeModal);
+    document.getElementById('logoutBtn')?.addEventListener('click', logout);
+    
+    window.addEventListener('click', (e) => { if (e.target === document.getElementById('entityModal')) closeModal(); });
+
+    verifyAdmin().then(() => {
+      renderSection('overview');
+    }).catch(() => logout());
+  })();
+</script>
 </body>
 </html>
