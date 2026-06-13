@@ -1,0 +1,21 @@
+/* Shared utilities (replace inline style attributes) */
+.u-hidden { display: none !important; }
+.u-flex { display: flex !important; }
+.u-block { display: block !important; }
+.u-grid { display: grid !important; }
+.u-mt-20 { margin-top: 20px; }
+.search-modal-heading em { color: var(--gold-light); font-style: italic; }
+.service-card .card-icon ion-icon { font-size: 52px; color: var(--gold); }
+.section-subtitle--left { --text-align: left; margin-inline: 0; }
+.section-title--left { text-align: left; margin-bottom: 16px; }
+.sidebar-logo { text-decoration: none; color: inherit; }
+.bg-slide--1 { background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1920&auto=format&fit=crop&q=80'); }
+
+#propertiesList:not(.u-hidden) { display: flex; }
+#propertiesEmpty:not(.u-hidden),
+#testimonialsEmpty:not(.u-hidden) { display: flex; }
+#testimonialsError:not(.u-hidden) { display: flex; }
+#testimonialsSlider:not(.u-hidden) { display: block; }
+.properties-error .btn,
+.testimonials-error .btn,
+.properties-empty .btn { margin-top: 20px; }

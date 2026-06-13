@@ -4,11 +4,66 @@
 (function () {
   'use strict';
 
-  const API_BASE_URL = 'https://api.biverroyaltyhomesltd.com/api';
+  function getSiteConfig() {
+    return window.BIVER_SITE || {};
+  }
+
+  function propertiesApiUrl() {
+    const cfg = getSiteConfig();
+    if (cfg.propertiesApi) return cfg.propertiesApi;
+    const base = cfg.base || detectSiteBase();
+    return (base ? base : '') + '/api/properties.php';
+  }
+
+  function detectSiteBase() {
+    const path = window.location.pathname.replace(/\/$/, '');
+    const segment = path.split('/').pop() || 'index';
+    const page = segment.replace(/\.php$/, '');
+    if (path.endsWith('/' + page)) {
+      return path.slice(0, -(page.length + 1));
+    }
+    return '';
+  }
+
+  function pageUrl(name, params) {
+    if (window.BIVER_SITE?.page) {
+      return window.BIVER_SITE.page(name, params || {});
+    }
+    const base = detectSiteBase();
+    let url = (base ? base : '') + '/' + String(name).replace(/^\//, '');
+    if (params && typeof params === 'object') {
+      const qs = new URLSearchParams();
+      Object.entries(params).forEach(([key, value]) => {
+        if (value !== null && value !== undefined && value !== '') {
+          qs.set(key, String(value));
+        }
+      });
+      const query = qs.toString();
+      if (query) url += '?' + query;
+    }
+    return url || '/';
+  }
+
+  function propertyDetailUrl(id) {
+    if (window.BIVER_SITE?.propertyDetail) {
+      return window.BIVER_SITE.propertyDetail(id);
+    }
+    return pageUrl('property-detail', { id: id });
+  }
 
   function formatNumber(num) {
     if (!num) return '0';
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+  function resolveMediaUrl(url) {
+    if (!url) return '';
+    if (url.startsWith('http') || url.startsWith('/')) return url;
+    if (url.startsWith('assets/')) {
+      const base = getSiteConfig().base || detectSiteBase();
+      return (base ? base + '/' : './') + url;
+    }
+    return url;
   }
 
   function initHeaderScroll() {
@@ -107,16 +162,16 @@
   }
 
   function initActiveNavLink() {
-    const path = window.location.pathname;
-    const page = path.split('/').pop() || 'index.html';
+    const path = window.location.pathname.replace(/\/$/, '');
+    const page = (path.split('/').pop() || 'index').replace(/\.php$/, '');
 
     document.querySelectorAll('.navbar-link').forEach((link) => {
       const href = link.getAttribute('href') || '';
       if (!href || href.startsWith('http')) return;
-      const linkPage = href.split('/').pop();
+      const linkPage = (href.split('/').pop() || '').split('?')[0].replace(/\.php$/, '');
       const isActive =
         linkPage === page ||
-        (page === '' && linkPage === 'index.html');
+        (page === '' && linkPage === 'index');
 
       if (isActive) {
         link.classList.add('active-page');
@@ -198,14 +253,19 @@
     resultsEl.innerHTML = '<div class="search-loading">Loading properties...</div>';
     resultsEl.classList.add('has-results');
     try {
-      const response = await fetch(`${API_BASE_URL}/properties?limit=100`);
+      const response = await fetch(`${propertiesApiUrl()}?limit=100`);
       const data = await response.json();
-      searchCache = (data.properties || []).filter((p) => p.approvalStatus === 'approved');
+      if (!response.ok || data.success === false) {
+        throw new Error(data.message || 'Failed to load properties');
+      }
+      searchCache = data.properties || [];
       resultsEl.innerHTML = '';
       resultsEl.classList.remove('has-results');
+      const input = document.getElementById('searchInput');
+      if (input && input.value.trim()) renderResults(input.value.trim());
     } catch {
       resultsEl.innerHTML =
-        '<div class="search-no-results"><ion-icon name="alert-circle-outline"></ion-icon><p>Could not load properties. Check your connection.</p></div>';
+        '<div class="search-no-results"><ion-icon name="alert-circle-outline"></ion-icon><p>Could not load properties. Please try again.</p></div>';
     }
   }
 
@@ -245,23 +305,21 @@
       return;
     }
 
-    const base = API_BASE_URL.replace('/api', '');
     resultsEl.innerHTML = filtered
       .slice(0, 12)
       .map((p) => {
-        const imgSrc =
-          p.images && p.images.length > 0
-            ? p.images[0].startsWith('http')
-              ? p.images[0]
-              : base + p.images[0]
-            : 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=120&h=80&fit=crop';
+        const imgSrc = resolveMediaUrl(
+          (p.images && p.images[0]) || p.imageUrl ||
+          'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=120&h=80&fit=crop'
+        );
         const price =
           p.type === 'rent'
-            ? '₦' + formatNumber(p.price) + '/mo'
-            : '₦' + formatNumber(p.price);
+            ? '\u20A6' + formatNumber(p.price) + '/mo'
+            : '\u20A6' + formatNumber(p.price);
         const badgeClass = p.type === 'rent' ? 'rent' : '';
         const badgeLabel = p.type === 'rent' ? 'For Rent' : 'For Sale';
-        return `<a href="property-detail.html?id=${p._id}" class="search-result-item">
+        const detailUrl = propertyDetailUrl(p._id || p.id);
+        return `<a href="${detailUrl}" class="search-result-item">
           <img src="${imgSrc}" alt="${p.title || ''}" class="search-result-thumb" loading="lazy">
           <div class="search-result-info">
             <div class="search-result-title">${p.title || 'Property'}</div>
@@ -301,5 +359,5 @@
     init();
   }
 
-  window.BiverSiteHeader = { init };
+  window.BiverSiteHeader = { init, pageUrl, propertyDetailUrl, propertiesApiUrl };
 })();

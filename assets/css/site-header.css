@@ -593,6 +593,30 @@
     #scrollToTop.visible { opacity: 1; pointer-events: all; transform: translateY(0) scale(1); }
     #scrollToTop:hover { transform: translateY(-4px) scale(1.08); box-shadow: 0 12px 30px rgba(212,175,55,0.45); }
     @media (min-width: 768px) { #scrollToTop { bottom: 30px; } }
+    /* Chat widget is bottom-right — stack scroll-to-top above the launcher */
+    body.brh-chat-present #scrollToTop,
+    body:has(#brh-chat-root) #scrollToTop {
+      right: 28px;
+      left: auto;
+      bottom: calc(24px + 64px + 14px);
+      z-index: 99989;
+    }
+    body.brh-chat-active #scrollToTop {
+      right: auto;
+      left: 24px;
+      bottom: 30px;
+    }
+    @media (max-width: 480px) {
+      body.brh-chat-present #scrollToTop,
+      body:has(#brh-chat-root) #scrollToTop {
+        right: 20px;
+        bottom: calc(16px + 64px + 12px);
+      }
+      body.brh-chat-active #scrollToTop {
+        left: 16px;
+        bottom: 24px;
+      }
+    }
 
     /* =============================================
        ACTIVE NAV LINK — Feature #1

@@ -1,0 +1,39 @@
+/* Newsletter subscribers admin */
+.stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.stat-pill { background: white; border: 1px solid var(--border-light); border-radius: 16px; padding: 16px; text-align: center; }
+.stat-pill strong { display: block; font-size: 1.8rem; font-family: var(--ff-display); color: var(--prussian-blue); }
+.stat-pill span { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+.admin-panel { background: white; border-radius: 28px; padding: 24px 28px; margin-bottom: 24px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-light); }
+.subscribers-toolbar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 20px; }
+.subscribers-toolbar input, .subscribers-toolbar select {
+  padding: 10px 16px; border: 1px solid var(--border-light); border-radius: 40px;
+  font-family: var(--ff-body); min-width: 180px; flex: 1 1 180px;
+}
+.subscribers-table-wrap { overflow-x: auto; border-radius: 16px; border: 1px solid var(--border-light); background: white; }
+.subscribers-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; min-width: 520px; }
+.subscribers-table th, .subscribers-table td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--border-light); }
+.subscribers-table th { background: #f9f7f2; font-weight: 600; color: var(--prussian-blue); }
+.subscribers-table tr:last-child td { border-bottom: none; }
+.subscriber-status { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; }
+.subscriber-status.active { background: #d1e7dd; color: #0f5132; }
+.subscriber-status.unsubscribed { background: #f0f0f0; color: var(--text-muted); }
+.row-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.row-actions button { font-size: 0.78rem; padding: 6px 12px; }
+.add-subscriber-form { display: grid; grid-template-columns: 1fr 1fr auto; gap: 12px; align-items: end; margin-bottom: 24px; }
+.add-subscriber-form .form-field input { padding: 10px 16px; border: 1px solid var(--border-light); border-radius: 40px; width: 100%; font-family: var(--ff-body); }
+.add-subscriber-form label { font-size: 0.82rem; font-weight: 600; color: var(--prussian-blue); display: block; margin-bottom: 6px; }
+
+@media (max-width: 768px) {
+  .add-subscriber-form { grid-template-columns: 1fr; }
+  .add-subscriber-form .admin-btn-primary { width: 100%; justify-content: center; }
+  .topbar { padding: 14px 16px; flex-wrap: wrap; gap: 10px; }
+  .page-title { font-size: 1.4rem; }
+  .admin-content-pad { padding: 20px 16px; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .stats-row { grid-template-columns: 1fr; }
+  .subscribers-toolbar { flex-direction: column; align-items: stretch; }
+  .subscribers-toolbar input, .subscribers-toolbar select { min-width: 0; width: 100%; }
+}

@@ -1,0 +1,714 @@
+/* =============================================
+   PROMO BANNER + COOKIE CONSENT
+   Biver Royalty Homes — index & reusable
+============================================= */
+
+/* --- Promotional banner --- */
+.promo-banner-section {
+  padding: clamp(32px, 5vw, 64px) 0;
+  background: linear-gradient(180deg, var(--seashell, #fff9f7) 0%, var(--white, #fff) 100%);
+  position: relative;
+  overflow: hidden;
+  opacity: 1;
+  visibility: visible;
+}
+
+.promo-banner-section.is-hidden {
+  display: none;
+}
+
+/* Full-screen spotlight — first thing after preloader */
+body.promo-open {
+  overflow: hidden;
+}
+
+.promo-banner-section.is-spotlight {
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 32px);
+  background:
+    radial-gradient(ellipse at 50% 20%, rgba(212, 175, 55, 0.16) 0%, transparent 55%),
+    rgba(10, 6, 3, 0.88);
+  backdrop-filter: blur(10px);
+  animation: promoSpotlightIn 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes promoSpotlightIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.promo-banner-section.is-spotlight .promo-banner-shell {
+  width: min(920px, 100%);
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+}
+
+.promo-banner-section.is-spotlight .promo-banner-header {
+  margin-bottom: 16px;
+}
+
+.promo-banner-section.is-spotlight .promo-banner-section-title {
+  color: var(--white, #fff);
+}
+
+.promo-banner-section.is-spotlight .promo-banner-section-subtitle {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.promo-banner-section.is-spotlight .promo-banner-footnote {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.promo-banner-section.is-spotlight .promo-banner-frame {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  animation: promoFramePop 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+
+@keyframes promoFramePop {
+  from { opacity: 0; transform: translateY(24px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.promo-banner-shell {
+  width: min(1140px, calc(100% - 30px));
+  margin-inline: auto;
+  position: relative;
+}
+
+.promo-banner-header {
+  text-align: center;
+  margin-bottom: clamp(20px, 3vw, 32px);
+}
+
+.promo-banner-section-eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-dark, #B8860B);
+  margin-bottom: 10px;
+}
+
+.promo-banner-section-title {
+  font-family: var(--ff-display, 'Cormorant Garamond', serif);
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  color: var(--prussian-blue, #371801);
+  line-height: 1.15;
+}
+
+.promo-banner-section-subtitle {
+  margin-top: 10px;
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  color: var(--cadet, hsl(200, 15%, 43%));
+  max-width: 620px;
+  margin-inline: auto;
+  line-height: 1.6;
+}
+
+.promo-banner-sparkle {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.22) 0%, transparent 70%);
+  pointer-events: none;
+  animation: promoSparkleFloat 7s ease-in-out infinite;
+}
+
+.promo-banner-sparkle--1 { top: 8%; left: 4%; }
+.promo-banner-sparkle--2 { bottom: 12%; right: 6%; animation-delay: -3s; }
+
+@keyframes promoSparkleFloat {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
+  50%      { transform: translateY(-12px) scale(1.08); opacity: 1; }
+}
+
+.promo-banner-glow {
+  position: absolute;
+  inset: -20% -10%;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(212, 175, 55, 0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 50%, rgba(55, 24, 1, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+  animation: promoGlowPulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes promoGlowPulse {
+  from { opacity: 0.65; transform: scale(1); }
+  to   { opacity: 1; transform: scale(1.04); }
+}
+
+.promo-banner-frame {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow:
+    0 24px 60px rgba(55, 24, 1, 0.12),
+    0 0 0 1px rgba(212, 175, 55, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transform: translateY(24px);
+  opacity: 0;
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.9s ease;
+}
+
+.promo-banner-section.is-visible .promo-banner-frame,
+.promo-banner-section .promo-banner-frame.is-ready {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.promo-banner-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(135deg, #D4AF37, #FFD700, #B8860B, #D4AF37);
+  background-size: 300% 300%;
+  animation: promoBorderShift 6s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes promoBorderShift {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+.promo-banner-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 5;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--prussian-blue, #371801);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  backdrop-filter: blur(8px);
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.promo-banner-close:hover {
+  transform: scale(1.08) rotate(90deg);
+  background: var(--white, #fff);
+  box-shadow: 0 8px 24px rgba(55, 24, 1, 0.15);
+}
+
+.promo-banner-link {
+  display: block;
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.promo-banner-media {
+  position: relative;
+  overflow: hidden;
+}
+
+.promo-banner-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 4;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--gold-gradient, linear-gradient(90deg, #D4AF37, #FFD700, #B8860B));
+  color: var(--prussian-blue, #371801);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+}
+
+.promo-banner-badge--inline {
+  position: static;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.promo-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(26, 15, 6, 0.55) 100%);
+  opacity: 0.75;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.promo-banner-link:hover .promo-banner-overlay {
+  opacity: 0.95;
+}
+
+.promo-banner-picture,
+.promo-banner-flier {
+  display: block;
+  width: 100%;
+}
+
+.promo-banner-flier {
+  max-height: min(70vh, 520px);
+  object-fit: contain;
+  background: linear-gradient(145deg, #1a0f06 0%, #371801 100%);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+}
+
+.promo-banner-link:hover .promo-banner-flier {
+  transform: scale(1.015);
+  filter: brightness(1.04);
+}
+
+.promo-banner-hover-cta {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%) translateY(16px);
+  opacity: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  background: var(--gold-gradient, linear-gradient(90deg, #D4AF37, #FFD700, #B8860B));
+  color: var(--prussian-blue, #371801);
+  font-family: var(--ff-body, 'Outfit', sans-serif);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 0 12px 32px rgba(212, 175, 55, 0.45);
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 4;
+}
+
+.promo-banner-link:hover .promo-banner-hover-cta {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.promo-banner-fallback {
+  position: relative;
+  min-height: 280px;
+  padding: clamp(40px, 6vw, 72px) clamp(24px, 5vw, 56px);
+  overflow: hidden;
+}
+
+.promo-banner-fallback-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(125deg, rgba(55, 24, 1, 0.94) 0%, rgba(26, 15, 6, 0.98) 45%, rgba(55, 24, 1, 0.9) 100%),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4AF37' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.promo-banner-fallback-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 85% 20%, rgba(212, 175, 55, 0.35) 0%, transparent 45%);
+  animation: promoShimmer 5s ease-in-out infinite alternate;
+}
+
+@keyframes promoShimmer {
+  from { opacity: 0.5; }
+  to   { opacity: 1; }
+}
+
+.promo-banner-fallback-content {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+}
+
+.promo-banner-eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-light, #FFD700);
+  margin-bottom: 12px;
+}
+
+.promo-banner-title {
+  font-family: var(--ff-display, 'Cormorant Garamond', serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--white, #fff);
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.promo-banner-subtitle {
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.promo-banner-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  background: var(--gold-gradient, linear-gradient(90deg, #D4AF37, #FFD700, #B8860B));
+  color: var(--prussian-blue, #371801);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 0 12px 32px rgba(212, 175, 55, 0.35);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.promo-banner-link:hover .promo-banner-cta {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(212, 175, 55, 0.5);
+}
+
+.promo-banner-footnote {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+  font-size: 0.8125rem;
+  color: var(--cadet, hsl(200, 15%, 43%));
+}
+
+.promo-banner-footnote ion-icon {
+  color: var(--gold, #D4AF37);
+  font-size: 1rem;
+}
+
+.promo-banner-upload-hint {
+  position: relative;
+  z-index: 1;
+  margin-top: 24px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.promo-banner-upload-hint code {
+  font-family: ui-monospace, monospace;
+  color: rgba(212, 175, 55, 0.8);
+}
+
+/* --- Cookie banner --- */
+.cookie-banner-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: rgba(10, 6, 3, 0.35);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.cookie-banner-backdrop.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cookie-banner {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  z-index: 9999;
+  width: min(680px, calc(100vw - 24px));
+  transform: translateX(-50%) translateY(calc(100% + 40px)) scale(0.94);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    transform 0.85s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.5s ease,
+    visibility 0.5s;
+}
+
+.cookie-banner.is-visible {
+  transform: translateX(-50%) translateY(0) scale(1);
+  opacity: 1;
+  visibility: visible;
+}
+
+.cookie-banner.is-exiting {
+  transform: translateX(-50%) translateY(calc(100% + 24px)) scale(0.96);
+  opacity: 0;
+}
+
+.cookie-banner-inner {
+  position: relative;
+  overflow: hidden;
+  border-radius: 22px;
+  padding: clamp(22px, 4vw, 28px);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  box-shadow:
+    0 32px 80px rgba(55, 24, 1, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+}
+
+.cookie-banner-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(212, 175, 55, 0.12) 50%,
+    transparent 60%
+  );
+  background-size: 200% 100%;
+  animation: cookieShimmer 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes cookieShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.cookie-banner-inner {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.cookie-banner-icon-wrap {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+}
+
+.cookie-banner-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  animation: cookieRingPulse 2.4s ease-out infinite;
+}
+
+.cookie-banner-ring--2 {
+  animation-delay: 0.8s;
+}
+
+@keyframes cookieRingPulse {
+  0%   { transform: scale(0.85); opacity: 0.8; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+.cookie-banner-icon {
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--gold-gradient, linear-gradient(135deg, #D4AF37, #FFD700));
+  color: var(--prussian-blue, #371801);
+  font-size: 1.5rem;
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4);
+  animation: cookieIconFloat 3s ease-in-out infinite;
+}
+
+@keyframes cookieIconFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+
+.cookie-banner-eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-dark, #B8860B);
+  margin-bottom: 6px;
+}
+
+.cookie-banner-title {
+  font-family: var(--ff-display, 'Cormorant Garamond', serif);
+  font-size: clamp(1.35rem, 3vw, 1.65rem);
+  font-weight: 700;
+  color: var(--prussian-blue, #371801);
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.cookie-banner-desc {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--cadet, hsl(200, 15%, 43%));
+  margin-bottom: 18px;
+}
+
+.cookie-banner-prefs {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  animation: cookiePrefsIn 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes cookiePrefsIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.cookie-pref {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.cookie-pref input {
+  margin-top: 4px;
+  accent-color: var(--gold, #D4AF37);
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.cookie-pref-copy strong {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--prussian-blue, #371801);
+}
+
+.cookie-pref-copy small {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--cadet, hsl(200, 15%, 43%));
+  margin-top: 2px;
+}
+
+.cookie-banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cookie-btn {
+  flex: 1 1 auto;
+  min-width: fit-content;
+  padding: 12px 18px;
+  border-radius: 999px;
+  font-family: var(--ff-body, 'Outfit', sans-serif);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  border: 1px solid transparent;
+}
+
+.cookie-btn:active {
+  transform: scale(0.97);
+}
+
+.cookie-btn--primary {
+  background: var(--gold-gradient, linear-gradient(90deg, #D4AF37, #FFD700, #B8860B));
+  color: var(--prussian-blue, #371801);
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.35);
+}
+
+.cookie-btn--primary:hover {
+  box-shadow: 0 12px 32px rgba(212, 175, 55, 0.5);
+  transform: translateY(-1px);
+}
+
+.cookie-btn--outline {
+  background: transparent;
+  border-color: rgba(55, 24, 1, 0.2);
+  color: var(--prussian-blue, #371801);
+}
+
+.cookie-btn--outline:hover {
+  border-color: var(--gold, #D4AF37);
+  background: rgba(212, 175, 55, 0.08);
+}
+
+.cookie-btn--ghost {
+  background: transparent;
+  color: var(--cadet, hsl(200, 15%, 43%));
+}
+
+.cookie-btn--ghost:hover {
+  color: var(--prussian-blue, #371801);
+}
+
+@media (max-width: 640px) {
+  .cookie-banner-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .cookie-banner-icon-wrap {
+    width: 48px;
+    height: 48px;
+  }
+
+  .cookie-banner-actions {
+    flex-direction: column;
+  }
+
+  .cookie-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .promo-banner-hover-cta {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promo-banner-section.is-spotlight,
+  .promo-banner-section.is-spotlight .promo-banner-frame {
+    animation: none !important;
+  }
+
+  .promo-banner-frame,
+  .promo-banner-glow,
+  .promo-banner-flier,
+  .cookie-banner,
+  .cookie-banner-shimmer,
+  .cookie-banner-ring,
+  .cookie-banner-icon {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .promo-banner-section .promo-banner-frame {
+    transform: none;
+    opacity: 1;
+  }
+}
