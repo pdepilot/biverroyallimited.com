@@ -8,8 +8,20 @@
     body {
       font-family: var(--ff-body);
       background: var(--white);
-      overflow-x: hidden;
+      overflow-x: clip;
       color: var(--dark-jungle-green);
+      width: 100%;
+      max-width: 100%;
+    }
+
+    html {
+      overflow-x: clip;
+      max-width: 100%;
+    }
+
+    main {
+      overflow-x: clip;
+      max-width: 100%;
     }
 
     ::-webkit-scrollbar { width: 6px; }
@@ -236,6 +248,7 @@
     /* Visual Story - Parallax Images */
     .visual-story {
       position: relative;
+      overflow: hidden;
     }
 
     .main-image {
@@ -687,6 +700,14 @@
 
     /* Responsive */
     @media (max-width: 992px) {
+      .reveal-left,
+      .reveal-right {
+        transform: translateY(32px);
+      }
+      .reveal-left.visible,
+      .reveal-right.visible {
+        transform: translateY(0);
+      }
       .narrative-grid { grid-template-columns: 1fr; gap: 50px; }
       .philosophy-grid { grid-template-columns: 1fr; gap: 25px; }
       .team-grid { grid-template-columns: repeat(2, 1fr); }
@@ -700,10 +721,24 @@
       .timeline-item:nth-child(even) .timeline-content::before { display: none; }
     }
     @media (max-width: 768px) {
+      .about-hero {
+        min-height: auto;
+        padding-block: 100px 60px;
+      }
       .container { padding-inline: 20px; }
       .stats-grid { gap: 15px; }
-      .stat-card { padding: 16px 20px; min-width: 130px; }
+      .stat-card { padding: 16px 20px; min-width: 0; flex: 1 1 calc(50% - 8px); }
       .team-grid { grid-template-columns: 1fr; max-width: 300px; margin: 0 auto; }
-      .floating-image { left: -20px; bottom: -20px; width: 50%; }
+      .floating-image { left: 0; bottom: -20px; width: 50%; }
       .footer-link-box { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal,
+      .reveal-left,
+      .reveal-right {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
     }

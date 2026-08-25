@@ -146,7 +146,7 @@ class SMTP
      * $mail->Debugoutput = new myPsr3Logger;
      * ```
      *
-     * @var string|callable|\Psr\Log\LoggerInterface
+     * @var string|callable|object
      */
     public $Debugoutput = 'echo';
 
@@ -290,7 +290,10 @@ class SMTP
             return;
         }
         //Is this a PSR-3 logger?
-        if ($this->Debugoutput instanceof \Psr\Log\LoggerInterface) {
+        if (
+            is_object($this->Debugoutput)
+            && in_array('Psr\\Log\\LoggerInterface', class_implements($this->Debugoutput) ?: [], true)
+        ) {
             //Remove trailing line breaks potentially added by calls to SMTP::client_send()
             $this->Debugoutput->debug(rtrim($str, "\r\n"));
 

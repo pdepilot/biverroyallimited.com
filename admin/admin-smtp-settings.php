@@ -45,6 +45,7 @@ $csrfToken = AuthSecurity::generateCsrfToken();
             <label for="mailProvider">Provider</label>
             <select id="mailProvider">
               <option value="gmail">Gmail (Google SMTP)</option>
+              <option value="hostinger">Hostinger Email</option>
               <option value="sendgrid">SendGrid</option>
               <option value="brevo">Brevo (Sendinblue)</option>
               <option value="custom">Custom SMTP</option>
@@ -108,13 +109,20 @@ $csrfToken = AuthSecurity::generateCsrfToken();
           </div>
 
           <div class="form-field">
-            <label><input type="checkbox" id="mailNotifyOnContact" checked> Send admin alert on new contact enquiries</label>
+            <label><input type="checkbox" id="mailNotifyOnContact" checked> Send admin alert email on new contact enquiries</label>
+          </div>
+
+          <div class="form-field">
+            <label><input type="checkbox" id="mailAutoReplyOnContact" checked> Send automatic reply email to the visitor</label>
           </div>
 
           <div class="smtp-actions">
             <button type="submit" class="admin-btn-primary"><ion-icon name="save-outline"></ion-icon> Save Settings</button>
             <button type="button" class="admin-btn-outline" id="testBtn"><ion-icon name="paper-plane-outline"></ion-icon> Send Test Email</button>
+            <button type="button" class="admin-btn-outline" id="diagnoseBtn"><ion-icon name="pulse-outline"></ion-icon> Diagnose SMTP</button>
           </div>
+
+          <pre class="smtp-diagnose u-hidden" id="diagnoseOutput"></pre>
 
           <div class="form-field">
             <label for="mailTestEmail">Test recipient (optional)</label>
@@ -163,12 +171,19 @@ $csrfToken = AuthSecurity::generateCsrfToken();
     document.getElementById('mailReplyTo').value = mail.replyTo || '';
     document.getElementById('mailNotifyEmail').value = mail.notifyEmail || '';
     document.getElementById('mailNotifyOnContact').checked = !!mail.notifyOnContact;
+    const autoReply = document.getElementById('mailAutoReplyOnContact');
+    if (autoReply) autoReply.checked = mail.autoReplyOnContact !== false;
     document.getElementById('mailPasswordHint').textContent = mail.passwordSet
       ? 'Password is saved. Leave blank to keep it.'
       : 'No password saved yet.';
-    document.getElementById('mailStatusLine').textContent = mail.isReady
+    let status = mail.isReady
       ? 'SMTP is configured and ready.'
       : 'SMTP is incomplete — save host, username, and password.';
+    if (!mail.isReady) {
+      if (mail.mailLocalExists === false) status += ' (config/mail.local.php missing on server)';
+      if (mail.composerInstalled === false) status += ' (vendor/ missing — run composer install)';
+    }
+    document.getElementById('mailStatusLine').textContent = status;
   }
 
   async function load() {
@@ -193,6 +208,7 @@ $csrfToken = AuthSecurity::generateCsrfToken();
         replyTo: document.getElementById('mailReplyTo').value,
         notifyEmail: document.getElementById('mailNotifyEmail').value,
         notifyOnContact: document.getElementById('mailNotifyOnContact').checked ? '1' : '0',
+        autoReplyOnContact: document.getElementById('mailAutoReplyOnContact').checked ? '1' : '0',
       });
       toast('SMTP settings saved');
       load();
@@ -209,6 +225,45 @@ $csrfToken = AuthSecurity::generateCsrfToken();
       });
       toast(res.message);
     } catch (err) {
+      toast(err.message, true);
+    }
+  });
+
+  document.getElementById('diagnoseBtn').addEventListener('click', async () => {
+    const box = document.getElementById('diagnoseOutput');
+    box.classList.remove('u-hidden');
+    box.textContent = 'Running SMTP diagnosis…';
+    try {
+      const res = await api('POST', { action: 'diagnose' });
+      const d = res.diagnosis || {};
+      const lines = [];
+      lines.push('=== SMTP Diagnosis ===');
+      lines.push('Provider: ' + (d.provider || '—'));
+      lines.push('Host: ' + (d.host || '—') + ':' + (d.port || '—') + ' (' + (d.encryption || '—') + ')');
+      lines.push('Username: ' + (d.username || '—'));
+      lines.push('From: ' + (d.from_email || '—'));
+      lines.push('Password saved: ' + (d.password_set ? 'yes' : 'NO'));
+      lines.push('mail.local.php on server: ' + (d.mail_local_exists ? 'yes' : 'NO'));
+      lines.push('vendor/ (Composer): ' + (d.composer_installed ? 'yes' : 'NO'));
+      lines.push('');
+      (d.checks || []).forEach(c => {
+        lines.push((c.ok ? '[OK] ' : '[FAIL] ') + c.label + (c.detail ? ' — ' + c.detail : ''));
+      });
+      if (d.attempts && d.attempts.length) {
+        lines.push('');
+        lines.push('Connection attempts:');
+        d.attempts.forEach(a => {
+          lines.push('  • ' + a.label + ': ' + (a.connected ? 'CONNECTED' : 'FAILED'));
+          if (!a.connected && a.error) lines.push('    ' + a.error);
+        });
+      }
+      if (d.recommendation) {
+        lines.push('');
+        lines.push('Recommendation: ' + d.recommendation);
+      }
+      box.textContent = lines.join('\n');
+    } catch (err) {
+      box.textContent = 'Diagnosis failed: ' + err.message;
       toast(err.message, true);
     }
   });

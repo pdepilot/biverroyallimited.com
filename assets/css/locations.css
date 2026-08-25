@@ -1,0 +1,161 @@
+/* Owerri locations / local SEO landing page */
+
+.page-locations .loc-body { padding-top: 28px; }
+
+.loc-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.7fr);
+  gap: 36px;
+  align-items: start;
+  margin-bottom: 48px;
+}
+
+.loc-copy h2,
+.loc-map-wrap h2,
+.loc-areas-title,
+.loc-faq h2 {
+  font-family: var(--ff-display);
+  color: #371801;
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  margin: 0 0 14px;
+}
+
+.loc-copy p,
+.loc-areas-lead,
+.loc-faq p {
+  line-height: 1.75;
+  color: #4a3c2e;
+  margin: 0 0 16px;
+}
+
+.loc-copy a { color: #371801; font-weight: 600; }
+
+.loc-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.loc-btn {
+  display: inline-block;
+  padding: 12px 18px;
+  background: #371801;
+  color: #D4AF37 !important;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+}
+
+.loc-btn-alt {
+  background: transparent;
+  color: #371801 !important;
+  border: 1px solid rgba(55, 24, 1, 0.25);
+}
+
+.loc-nap {
+  background: #fffdf8;
+  border: 1px solid rgba(55, 24, 1, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  position: sticky;
+  top: 100px;
+}
+
+.loc-nap-label {
+  margin: 0 0 6px;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #9e7a2c;
+  font-weight: 700;
+}
+
+.loc-nap h2 {
+  font-family: var(--ff-display);
+  margin: 0 0 12px;
+  color: #371801;
+  font-size: 1.45rem;
+}
+
+.loc-nap address {
+  font-style: normal;
+  line-height: 1.6;
+  margin: 0 0 12px;
+  color: #4a3c2e;
+}
+
+.loc-nap p { margin: 0 0 8px; }
+.loc-nap a { color: #371801; font-weight: 600; }
+.loc-hours { color: #9e7a2c !important; font-weight: 600; }
+.loc-map-link { display: inline-block; margin-top: 8px; }
+
+.loc-map-wrap { margin-bottom: 48px; }
+.loc-map-wrap iframe {
+  width: 100%;
+  min-height: 320px;
+  border: 0;
+  border-radius: 16px;
+}
+
+.loc-areas-lead { max-width: 62ch; }
+.loc-areas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.loc-areas a {
+  display: block;
+  height: 100%;
+  padding: 18px;
+  background: #fff;
+  border: 1px solid rgba(55, 24, 1, 0.08);
+  border-radius: 14px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.loc-areas a:hover { border-color: #D4AF37; box-shadow: 0 8px 24px rgba(55, 24, 1, 0.06); }
+.loc-areas span {
+  display: inline-block;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #9e7a2c;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.loc-areas strong {
+  display: block;
+  color: #371801;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+.loc-areas p { margin: 0; font-size: 0.9rem; color: #5c4d3d; line-height: 1.55; }
+
+.loc-faq { margin: 48px 0 12px; }
+.loc-faq details {
+  background: #fff;
+  border: 1px solid rgba(55, 24, 1, 0.08);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+}
+.loc-faq summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #371801;
+}
+.loc-faq details p { margin: 10px 0 0; }
+.loc-faq-more { margin-top: 16px; }
+
+@media (max-width: 900px) {
+  .loc-layout { grid-template-columns: 1fr; }
+  .loc-nap { position: static; }
+}

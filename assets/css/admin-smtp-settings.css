@@ -7,6 +7,18 @@
   font-family: var(--ff-body); width: 100%;
 }
 .smtp-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.smtp-diagnose {
+  margin-top: 16px;
+  padding: 16px;
+  background: #1e1508;
+  color: #f0e6d3;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  max-width: 720px;
+}
 
 @media (max-width: 768px) {
   .admin-content-pad { padding: 20px 16px; }

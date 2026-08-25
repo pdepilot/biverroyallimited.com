@@ -160,9 +160,14 @@
 
     /* Mobile drawer starts below sticky header — never overlaps the main logo */
     @media (max-width: 1199px) {
+      .header-bottom .container {
+        justify-content: flex-start;
+        gap: 0;
+      }
       .header-bottom .logo {
         position: relative;
         z-index: 1061;
+        margin-right: 0;
       }
       .navbar {
         top: var(--mobile-header-height, 86px);
@@ -170,8 +175,9 @@
       }
       .header-bottom-actions {
         margin-left: auto;
-        padding-left: 16px;
-        gap: 12px;
+        padding-left: 24px;
+        gap: 14px;
+        flex-shrink: 0;
       }
       body.nav-open .header-bottom {
         background: #ffffff;
@@ -525,49 +531,40 @@
     }
 
     /* =============================================
-       MOBILE BOTTOM BAR
-       FIX: Ensure mobile bottom bar z-index is lower than navbar
+       MOBILE HEADER ACTIONS
+       Search + menu stay in the sticky header (not a bottom bar).
     ============================================= */
     @media (max-width: 767px) {
+      .header-bottom .container {
+        justify-content: flex-start;
+        gap: 12px;
+      }
       .header-bottom-actions {
-        background: var(--white);
-        position: fixed;
-        bottom: 0; left: 0;
-        width: 100%;
+        position: static;
+        margin-left: auto;
+        width: auto;
         display: flex;
-        justify-content: space-evenly;
-        padding-block: 12px 10px;
-        box-shadow: 0 -2px 30px rgba(0,0,0,0.1);
-        /* FIX: z-index must be below overlay (1050) and navbar (1100) */
-        z-index: 940;
-        border-top: 1px solid rgba(212,175,55,0.2);
-        /* FIX: Solid background — no transparency or blur that could cause issues */
-        backdrop-filter: none;
-        margin-left: 0;
-        padding-left: 0;
-        gap: 0;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 2px;
+        padding: 0;
+        background: transparent;
+        box-shadow: none;
+        border: none;
+        z-index: auto;
       }
       .header-bottom-actions-btn {
-        flex-direction: column;
-        height: auto; width: auto;
-        padding: 4px 10px;
-        border-radius: 8px;
-        /* FIX: Ensure btn icons are always on their own layer */
+        flex-direction: row;
+        width: 42px;
+        height: 42px;
+        padding: 0;
+        border-radius: 50%;
         position: relative;
         z-index: 1;
       }
-      .header-bottom-actions-btn ion-icon {
-        /* FIX: Explicit color on mobile so scroll state doesn't affect it */
-        color: var(--prussian-blue) !important;
-      }
       .header-bottom-actions-btn span {
-        display: block;
-        color: var(--cadet) !important;
+        display: none;
       }
-      .footer { margin-bottom: 70px; }
-
-      /* FIX: On mobile, scrolled state should NOT change bottom bar icon colors */
-      .header.scrolled ~ * .header-bottom-actions-btn ion-icon { color: var(--prussian-blue); }
     }
 
     /* =============================================
@@ -575,7 +572,7 @@
        FIX: z-index adjusted to stay above content but below navbar
     ============================================= */
     #scrollToTop {
-      position: fixed; bottom: 80px; right: 20px;
+      position: fixed; bottom: 30px; right: 20px;
       width: 46px; height: 46px;
       background: var(--gold-gradient);
       color: var(--prussian-blue);
@@ -653,7 +650,7 @@
     /* =============================================
        SEARCH MODAL — Feature #2
        Fullscreen overlay with instant filter UI.
-       z-index: 10000 — above navbar (1100) and preloader (99999 during load only).
+       z-index: 10000 — above navbar (1100).
     ============================================= */
     #searchModal {
       position: fixed;
@@ -894,11 +891,6 @@
       text-transform: uppercase;
     }
 
-@media (min-width: 768px) {
-  .header-bottom-actions { position: static; box-shadow: none; padding: 0; border: none; background: transparent; }
-  .header-bottom-actions-btn { flex-direction: row; }
-  .footer { margin-bottom: 0; }
-}
 @media (min-width: 1200px) {
   .header-bottom .container { padding-inline: 30px; }
 }
@@ -910,7 +902,8 @@
 .topbar a, .header a { text-decoration: none; }
 .topbar ion-icon, .header ion-icon, .topbar img, .header img { display: block; }
 .topbar-link, .topbar-social-link, .topbar-cta { display: flex; }
-.topbar-link span, .topbar-link address { display: block; }
+.topbar-link span, .topbar-link address { display: block; max-width: 100%; }
+
 .header-bottom-actions-btn, .nav-close-btn { display: grid; border: none; background: none; font: inherit; cursor: pointer; }
 .nav-close-btn { background: rgba(55, 24, 1, 0.05); border: 1px solid rgba(55, 24, 1, 0.1); }
 

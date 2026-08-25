@@ -153,6 +153,7 @@ final class ServiceAreaRepository
             'title'       => (string) $row['title'],
             'tag'         => (string) $row['tag'],
             'imageUrl'    => $imageUrl,
+            'storedImage' => (string) ($row['image_url'] ?? ''),
             'description' => (string) $row['description'],
             'meta1Icon'   => (string) ($row['meta1_icon'] ?? 'home-outline'),
             'meta1Text'   => (string) ($row['meta1_text'] ?? ''),

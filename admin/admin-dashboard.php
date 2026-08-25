@@ -158,6 +158,10 @@ require_once dirname(__DIR__) . '/includes/admin_guard.php';
     }
 
     loadDashboard();
+    window.addEventListener('bre:new-contact', () => {
+      loadDashboard();
+      showToast('New contact inquiry received');
+    });
   })();
 </script>
 </body>

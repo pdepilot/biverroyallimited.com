@@ -12,6 +12,7 @@
 .bg-slide--1 { background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1920&auto=format&fit=crop&q=80'); }
 
 #propertiesList:not(.u-hidden) { display: flex; }
+#propertiesError:not(.u-hidden),
 #propertiesEmpty:not(.u-hidden),
 #testimonialsEmpty:not(.u-hidden) { display: flex; }
 #testimonialsError:not(.u-hidden) { display: flex; }

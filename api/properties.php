@@ -41,14 +41,21 @@ try {
         'success'    => true,
         'properties' => $properties,
         'count'      => count($properties),
-    ]);
+    ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_INVALID_UTF8_SUBSTITUTE);
 } catch (PDOException $e) {
+    error_log('Properties API DB error: ' . $e->getMessage());
     http_response_code(503);
+    $code = (string) $e->getCode();
+    $hint = 'Property database unavailable. Check config/database.local.php on the server (Hostinger MySQL name, user, and password).';
+    if (str_contains($e->getMessage(), "doesn't exist") || $code === '42S02') {
+        $hint = 'Property tables are missing. Import the SQL install scripts on Hostinger.';
+    }
     echo json_encode([
         'success' => false,
-        'message' => 'Property database unavailable. Please try again later.',
+        'message' => $hint,
     ]);
 } catch (Throwable $e) {
+    error_log('Properties API error: ' . $e->getMessage());
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Unable to load properties.']);
 }

@@ -1,0 +1,207 @@
+/* SEO / AdSense / legal / share helpers — Biver Royalty Homes */
+
+.seo-breadcrumbs {
+  padding: 18px 0 0;
+}
+.seo-breadcrumbs ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  font-size: 0.82rem;
+  color: rgba(55, 24, 1, 0.65);
+}
+.seo-breadcrumbs li:not(:last-child)::after {
+  content: '/';
+  margin-left: 10px;
+  color: rgba(212, 175, 55, 0.8);
+}
+.seo-breadcrumbs a {
+  color: inherit;
+  text-decoration: none;
+}
+.seo-breadcrumbs a:hover { color: #371801; text-decoration: underline; }
+.seo-breadcrumbs [aria-current="page"] { color: #371801; font-weight: 600; }
+
+.seo-share {
+  margin: 28px 0 8px;
+  padding: 18px 0 0;
+  border-top: 1px solid rgba(55, 24, 1, 0.08);
+}
+.seo-share-label {
+  margin: 0 0 10px;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #9e7a2c;
+  font-weight: 700;
+}
+.seo-share-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.seo-share-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 999px;
+  color: #371801;
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: #fffdf8;
+}
+.seo-share-btn:hover { background: #371801; color: #D4AF37; border-color: #371801; }
+
+.adsense-slot {
+  margin: 24px 0;
+  min-height: 0;
+  text-align: center;
+}
+.adsense-slot[hidden] { display: none !important; }
+.adsense-slot--top { margin-top: 12px; }
+.adsense-slot--in_content { margin: 28px 0; }
+.adsense-slot--article_end { margin: 36px 0 12px; }
+
+.seo-cookie-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: #D4AF37;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.footer-legal-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  justify-content: center;
+  margin-top: 8px;
+  font-size: 0.8rem;
+}
+.footer-legal-row a,
+.footer-legal-row button {
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+}
+.footer-legal-row a:hover,
+.footer-legal-row button:hover { color: #D4AF37; }
+
+.page-error {
+  min-height: 55vh;
+  padding: 120px 20px 80px;
+  text-align: center;
+}
+.page-error h1 {
+  font-family: var(--ff-display);
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  color: #371801;
+  margin: 0 0 12px;
+}
+.page-error p {
+  max-width: 52ch;
+  margin: 0 auto 24px;
+  line-height: 1.7;
+  color: #5c4d3d;
+}
+.page-error-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.page-error-actions a {
+  display: inline-block;
+  padding: 12px 20px;
+  background: #371801;
+  color: #D4AF37;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+}
+.page-error-actions a.alt { background: transparent; color: #371801; border: 1px solid rgba(55,24,1,0.2); }
+
+.newsletter-strip {
+  background: rgba(0, 0, 0, 0.22);
+  border-top: 1px solid rgba(212, 175, 55, 0.18);
+  padding: 36px 0 32px;
+}
+.newsletter-strip-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: center;
+}
+.newsletter-eyebrow {
+  margin: 0 0 6px;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #D4AF37;
+  font-weight: 700;
+}
+.newsletter-copy h2 {
+  margin: 0 0 8px;
+  font-family: var(--ff-display);
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  color: #fffdf8;
+}
+.newsletter-copy p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.62);
+  line-height: 1.6;
+  max-width: 46ch;
+}
+.newsletter-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  position: relative;
+}
+.newsletter-form input[type="email"] {
+  width: 100%;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  padding: 14px 16px;
+  border-radius: 2px;
+  font-family: var(--ff-body);
+}
+.newsletter-form input[type="email"]::placeholder { color: rgba(255, 255, 255, 0.4); }
+.newsletter-form button {
+  border: none;
+  background: var(--gold-gradient, linear-gradient(135deg, #D4AF37, #c49a2c));
+  color: #371801;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 14px 18px;
+  cursor: pointer;
+  font-family: var(--ff-body);
+}
+.newsletter-form button:disabled { opacity: 0.65; cursor: wait; }
+.newsletter-status {
+  grid-column: 1 / -1;
+  margin: 0;
+  min-height: 1.2em;
+  font-size: 0.85rem;
+  color: #D4AF37;
+}
+
+.home-local-seo {
+  padding: 48px 0 12px;
+}
+.home-local-seo-text {
+  max-width: 68ch;
+  line-height: 1.75;
+  color: #4a3c2e;
+  margin: 0;
+}
+.home-local-seo-text a {
+  color: #371801;
+  font-weight: 600;
+}
+
+@media (max-width: 767px) {
+  .seo-breadcrumbs { padding-top: 12px; }
+  .newsletter-strip-inner { grid-template-columns: 1fr; gap: 18px; }
+  .newsletter-form { grid-template-columns: 1fr; }
+}

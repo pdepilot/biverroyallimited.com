@@ -57,6 +57,12 @@ final class EmailRepository
                 'email_type'        => 'VARCHAR(64) DEFAULT NULL',
                 'related_record_id' => 'INT UNSIGNED DEFAULT NULL',
             ],
+            'newsletter_subscribers' => [
+                'country_code' => 'VARCHAR(8) DEFAULT NULL',
+                'country_name' => 'VARCHAR(120) DEFAULT NULL',
+                'ip_address'   => 'VARCHAR(45) DEFAULT NULL',
+                'timezone'     => 'VARCHAR(64) DEFAULT NULL',
+            ],
         ];
 
         foreach ($alters as $table => $columns) {
@@ -69,6 +75,12 @@ final class EmailRepository
                     }
                 }
             }
+        }
+
+        try {
+            $pdo->exec('ALTER TABLE `newsletter_subscribers` ADD INDEX `idx_subscriber_country` (`country_code`)');
+        } catch (PDOException $e) {
+            // index already exists
         }
 
         require_once __DIR__ . '/AutomatedEmailService.php';
@@ -558,17 +570,30 @@ final class EmailRepository
         return $out;
     }
 
-    /** @return list<array<string, mixed>> */
-    public static function getSubscribers(?string $status = 'active', ?array $ids = null): array
+    /**
+     * @return list<array<string, mixed>>
+     */
+    public static function getSubscribers(?string $status = 'active', ?array $ids = null, ?string $country = null): array
     {
         self::ensureTables();
         $pdo = getDatabaseConnection();
-        $sql = 'SELECT id, email, name, status, source, subscribed_at FROM newsletter_subscribers WHERE 1=1';
+        $sql = 'SELECT id, email, name, status, source, country_code, country_name, ip_address, timezone, subscribed_at
+                FROM newsletter_subscribers WHERE 1=1';
         $params = [];
 
         if ($status !== null && $status !== '') {
             $sql .= ' AND status = ?';
             $params[] = $status;
+        }
+
+        if ($country !== null && $country !== '') {
+            if (strtoupper($country) === 'UNKNOWN') {
+                $sql .= ' AND (country_code IS NULL OR country_code = \'\' OR country_name IS NULL OR country_name = \'\')';
+            } else {
+                $sql .= ' AND (country_code = ? OR country_name = ?)';
+                $params[] = strtoupper($country);
+                $params[] = $country;
+            }
         }
 
         if ($ids !== null && $ids !== []) {
@@ -584,10 +609,10 @@ final class EmailRepository
         $stmt = $pdo->prepare($sql);
         $stmt->execute($params);
 
-        return $stmt->fetchAll();
+        return array_map([self::class, 'formatSubscriber'], $stmt->fetchAll() ?: []);
     }
 
-    /** @return array{total:int,active:int,unsubscribed:int} */
+    /** @return array{total:int,active:int,unsubscribed:int,countries:int} */
     public static function getSubscriberStats(): array
     {
         self::ensureTables();
@@ -595,7 +620,10 @@ final class EmailRepository
         $stmt = $pdo->query(
             "SELECT COUNT(*) AS total,
                     SUM(status = 'active') AS active,
-                    SUM(status = 'unsubscribed') AS unsubscribed
+                    SUM(status = 'unsubscribed') AS unsubscribed,
+                    COUNT(DISTINCT CASE
+                        WHEN country_code IS NOT NULL AND country_code <> '' AND country_code <> 'LO'
+                        THEN country_code END) AS countries
              FROM newsletter_subscribers"
         );
         $row = $stmt ? $stmt->fetch() : [];
@@ -604,24 +632,164 @@ final class EmailRepository
             'total'          => (int) ($row['total'] ?? 0),
             'active'         => (int) ($row['active'] ?? 0),
             'unsubscribed'   => (int) ($row['unsubscribed'] ?? 0),
+            'countries'      => (int) ($row['countries'] ?? 0),
         ];
     }
 
-    public static function addSubscriber(string $email, ?string $name = null, string $source = 'admin'): int
+    /**
+     * @return list<array{country_code:?string,country_name:string,total:int,active:int}>
+     */
+    public static function getSubscriberCountryStats(): array
     {
+        self::ensureTables();
+        $pdo = getDatabaseConnection();
+        $stmt = $pdo->query(
+            "SELECT
+                COALESCE(NULLIF(country_code, ''), 'UNKNOWN') AS country_code,
+                COALESCE(NULLIF(country_name, ''), 'Unknown') AS country_name,
+                COUNT(*) AS total,
+                SUM(status = 'active') AS active
+             FROM newsletter_subscribers
+             GROUP BY COALESCE(NULLIF(country_code, ''), 'UNKNOWN'),
+                      COALESCE(NULLIF(country_name, ''), 'Unknown')
+             ORDER BY total DESC, country_name ASC"
+        );
+
+        $rows = $stmt ? $stmt->fetchAll() : [];
+        $out = [];
+        foreach ($rows as $row) {
+            $out[] = [
+                'country_code' => (string) ($row['country_code'] ?? 'UNKNOWN'),
+                'country_name' => (string) ($row['country_name'] ?? 'Unknown'),
+                'total'        => (int) ($row['total'] ?? 0),
+                'active'       => (int) ($row['active'] ?? 0),
+            ];
+        }
+
+        return $out;
+    }
+
+    /**
+     * @param array<string, mixed> $row
+     * @return array<string, mixed>
+     */
+    private static function formatSubscriber(array $row): array
+    {
+        $code = trim((string) ($row['country_code'] ?? ''));
+        $name = trim((string) ($row['country_name'] ?? ''));
+        $timezone = self::normalizeTimezone($row['timezone'] ?? null);
+        $subscribedAt = (string) ($row['subscribed_at'] ?? '');
+        $times = self::formatSubscriptionTimes($subscribedAt, $timezone);
+
+        return [
+            'id'                     => (int) $row['id'],
+            'email'                  => (string) $row['email'],
+            'name'                   => $row['name'] !== null ? (string) $row['name'] : null,
+            'status'                 => (string) $row['status'],
+            'source'                 => (string) ($row['source'] ?? ''),
+            'country_code'           => $code !== '' ? $code : null,
+            'country_name'           => $name !== '' ? $name : ($code !== '' ? $code : null),
+            'ip_address'             => isset($row['ip_address']) && $row['ip_address'] !== null ? (string) $row['ip_address'] : null,
+            'timezone'               => $timezone,
+            'subscribed_at'          => $subscribedAt,
+            'subscribed_at_label'    => $times['server'],
+            'subscribed_local_label' => $times['local'],
+        ];
+    }
+
+    public static function normalizeTimezone(?string $timezone): ?string
+    {
+        $timezone = $timezone !== null ? trim($timezone) : '';
+        if ($timezone === '' || strlen($timezone) > 64) {
+            return null;
+        }
+        try {
+            new DateTimeZone($timezone);
+
+            return $timezone;
+        } catch (Throwable) {
+            return null;
+        }
+    }
+
+    /**
+     * @return array{server:?string,local:?string}
+     */
+    private static function formatSubscriptionTimes(string $subscribedAt, ?string $timezone): array
+    {
+        $ts = $subscribedAt !== '' ? strtotime($subscribedAt) : false;
+        if ($ts === false) {
+            return ['server' => $subscribedAt !== '' ? $subscribedAt : null, 'local' => null];
+        }
+
+        $serverTz = date_default_timezone_get() ?: 'UTC';
+        $server = date('j M Y, g:i A', $ts) . ' (' . $serverTz . ')';
+        $local = null;
+        if ($timezone !== null && strcasecmp($timezone, $serverTz) !== 0) {
+            try {
+                $dt = new DateTime('@' . $ts);
+                $dt->setTimezone(new DateTimeZone($timezone));
+                $local = $dt->format('j M Y, g:i A T') . ' · ' . $timezone;
+            } catch (Throwable) {
+                $local = null;
+            }
+        }
+
+        return ['server' => $server, 'local' => $local];
+    }
+
+    public static function addSubscriber(
+        string $email,
+        ?string $name = null,
+        string $source = 'admin',
+        ?string $countryCode = null,
+        ?string $countryName = null,
+        ?string $ipAddress = null,
+        ?string $timezone = null
+    ): int {
         self::ensureTables();
         $email = strtolower(trim($email));
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new InvalidArgumentException('Invalid email address.');
         }
 
+        $countryCode = $countryCode !== null ? strtoupper(trim($countryCode)) : null;
+        if ($countryCode === '') {
+            $countryCode = null;
+        }
+        $countryName = $countryName !== null ? trim($countryName) : null;
+        if ($countryName === '') {
+            $countryName = null;
+        }
+        $ipAddress = $ipAddress !== null ? trim($ipAddress) : null;
+        if ($ipAddress === '') {
+            $ipAddress = null;
+        }
+        $timezone = self::normalizeTimezone($timezone);
+
         $pdo = getDatabaseConnection();
         $stmt = $pdo->prepare(
-            'INSERT INTO newsletter_subscribers (email, name, source, status)
-             VALUES (:email, :name, :source, \'active\')
-             ON DUPLICATE KEY UPDATE name = COALESCE(VALUES(name), name), status = \'active\''
+            'INSERT INTO newsletter_subscribers (email, name, source, status, country_code, country_name, ip_address, timezone, subscribed_at)
+             VALUES (:email, :name, :source, \'active\', :country_code, :country_name, :ip_address, :timezone, NOW())
+             ON DUPLICATE KEY UPDATE
+                name = COALESCE(VALUES(name), name),
+                status = \'active\',
+                source = VALUES(source),
+                country_code = COALESCE(VALUES(country_code), country_code),
+                country_name = COALESCE(VALUES(country_name), country_name),
+                ip_address = COALESCE(VALUES(ip_address), ip_address),
+                timezone = COALESCE(VALUES(timezone), timezone),
+                subscribed_at = NOW()'
         );
-        $stmt->execute(['email' => $email, 'name' => $name, 'source' => $source]);
+        $stmt->execute([
+            'email'        => $email,
+            'name'         => $name,
+            'source'       => $source,
+            'country_code' => $countryCode,
+            'country_name' => $countryName,
+            'ip_address'   => $ipAddress,
+            'timezone'     => $timezone,
+        ]);
 
         $idStmt = $pdo->prepare('SELECT id FROM newsletter_subscribers WHERE email = :email LIMIT 1');
         $idStmt->execute(['email' => $email]);

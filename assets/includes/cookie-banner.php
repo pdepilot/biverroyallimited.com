@@ -1,3 +1,7 @@
+<?php
+declare(strict_types=1);
+require_once dirname(__DIR__, 2) . '/includes/site_paths.php';
+?>
 <div class="cookie-banner-backdrop" id="cookieBannerBackdrop" hidden aria-hidden="true"></div>
 
 <aside
@@ -23,8 +27,10 @@
       <p class="cookie-banner-eyebrow">Your Privacy Matters</p>
       <h2 class="cookie-banner-title" id="cookieBannerTitle">We value your experience</h2>
       <p class="cookie-banner-desc" id="cookieBannerDesc">
-        We use cookies to improve browsing, analyse site traffic, and personalise content.
-        Choose what you're comfortable with — you can update preferences anytime.
+        We use cookies to run the site, measure visits, and (if you allow marketing) show Google AdSense ads.
+        Read our <a href="<?= htmlspecialchars(pageUrl('privacy'), ENT_QUOTES, 'UTF-8') ?>">Privacy Policy</a>
+        and <a href="<?= htmlspecialchars(pageUrl('cookie-policy'), ENT_QUOTES, 'UTF-8') ?>">Cookie Policy</a>.
+        You can change this anytime.
       </p>
 
       <div class="cookie-banner-prefs" id="cookieBannerPrefs" hidden>
@@ -36,17 +42,17 @@
           </span>
         </label>
         <label class="cookie-pref">
-          <input type="checkbox" id="cookiePrefAnalytics" checked>
+          <input type="checkbox" id="cookiePrefAnalytics">
           <span class="cookie-pref-copy">
             <strong>Analytics</strong>
             <small>Helps us understand how visitors use our site</small>
           </span>
         </label>
         <label class="cookie-pref">
-          <input type="checkbox" id="cookiePrefMarketing" checked>
+          <input type="checkbox" id="cookiePrefMarketing">
           <span class="cookie-pref-copy">
             <strong>Marketing</strong>
-            <small>Personalised offers and promotional content</small>
+            <small>Google AdSense and personalised advertising</small>
           </span>
         </label>
       </div>

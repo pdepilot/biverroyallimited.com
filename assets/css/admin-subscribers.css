@@ -23,6 +23,23 @@
 .add-subscriber-form .form-field input { padding: 10px 16px; border: 1px solid var(--border-light); border-radius: 40px; width: 100%; font-family: var(--ff-body); }
 .add-subscriber-form label { font-size: 0.82rem; font-weight: 600; color: var(--prussian-blue); display: block; margin-bottom: 6px; }
 
+.country-hint { margin: -8px 0 16px; color: var(--text-muted); font-size: 0.88rem; }
+.country-stats { display: flex; flex-wrap: wrap; gap: 10px; }
+.country-chip {
+  border: 1px solid var(--border-light);
+  background: #faf7f1;
+  border-radius: 14px;
+  padding: 10px 14px;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--ff-body);
+}
+.country-chip strong { display: block; color: var(--prussian-blue); font-size: 0.92rem; }
+.country-chip span { font-size: 0.75rem; color: var(--text-muted); }
+.country-chip:hover { border-color: #D4AF37; }
+.muted { color: var(--text-muted); font-size: 0.9rem; }
+.sub-local-time { display: block; margin-top: 4px; color: var(--text-muted); font-size: 0.78rem; }
+
 @media (max-width: 768px) {
   .add-subscriber-form { grid-template-columns: 1fr; }
   .add-subscriber-form .admin-btn-primary { width: 100%; justify-content: center; }

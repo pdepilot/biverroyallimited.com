@@ -1,23 +1,32 @@
-﻿<?php require_once __DIR__ . '/includes/htaccess_redirect.php'; ?>
+<?php require_once __DIR__ . '/includes/htaccess_redirect.php'; ?>
+<?php
+require_once __DIR__ . '/includes/FaqRepository.php';
+require_once __DIR__ . '/includes/site_helpers.php';
+require_once __DIR__ . '/includes/SeoService.php';
+
+try {
+    FaqRepository::ensureSchema();
+    $contactFaqs = FaqRepository::getPublic();
+} catch (Throwable $e) {
+    $contactFaqs = [];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Contact Biver Royalty Homes - Nigeria's premier real estate company. Reach out for property inquiries, consultations, or partnership opportunities.">
-  <meta name="keywords" content="contact real estate, property consultation Nigeria, Biver Royalty contact, real estate agent Owerri">
-  <meta name="author" content="Biver Royalty Homes Ltd">
-  <title>Contact Us | Biver Royalty Homes - Let's Connect</title>
-  <link rel="shortcut icon" href="./assets/images/biver-logo.png" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/css/site-variables.css">
-  <link rel="stylesheet" href="./assets/css/site-utilities.css">
-  <link rel="stylesheet" href="./assets/css/contact.css">
-  <?php require_once __DIR__ . '/includes/site_paths.php'; ?>
-  <link rel="stylesheet" href="./assets/css/site-header.css">
+<?php
+SeoService::renderHead([
+    'title' => 'Contact Biver Royalty Homes Ltd | Wetheral Road, Owerri',
+    'description' => 'Visit Biver Royalty Homes Ltd at 31 Wetheral Road, Angelina Plaza, Owerri, or call +234 903 685 1168 for buying, renting, and selling property in Imo State.',
+    'keywords' => 'contact Biver Royalty Homes Owerri, real estate Wetheral Road, estate agent Owerri phone, property consultation Imo',
+    'page' => 'contact',
+    'stylesheets' => ['./assets/css/contact.css'],
+    'breadcrumbs' => [
+        ['name' => 'Home', 'url' => pageUrl('index')],
+        ['name' => 'Contact'],
+    ],
+]);
+?>
 </head>
 <body>
 
@@ -39,9 +48,9 @@
           <address>No. 31 Wetheral Road, Angelina Plaza, Owerri, Imo State</address>
         </a>
         <div class="topbar-divider" aria-hidden="true"></div>
-        <a href="tel:+2349033137432" class="topbar-link" aria-label="Call us">
+        <a href="tel:+2349036851168" class="topbar-link" aria-label="Call us">
           <ion-icon name="call-outline"></ion-icon>
-          <span>+234 903 313 7432</span>
+          <span>+234 903 685 1168</span>
         </a>
       </div>
       <div class="topbar-right">
@@ -62,7 +71,7 @@
   </div>
 
   <!-- =============================================
-       SEARCH MODAL — Feature #2
+       SEARCH MODAL � Feature #2
        Fullscreen property search with instant filtering.
        Triggered by the search button in the header/bottom bar.
   ============================================= -->
@@ -117,15 +126,18 @@
                 <li role="none"><a href="<?= pageHref('about') ?>" class="navbar-link" data-nav-link role="menuitem">About</a></li>
                 <li role="none"><a href="<?= pageHref('services') ?>" class="navbar-link" data-nav-link role="menuitem">Services</a></li>
                 <li role="none"><a href="<?= pageHref('property') ?>" class="navbar-link" data-nav-link role="menuitem">Properties</a></li>
+                <li role="none"><a href="<?= pageHref('locations') ?>" class="navbar-link" data-nav-link role="menuitem">Locations</a></li>
+                <li role="none"><a href="<?= pageHref('faqs') ?>" class="navbar-link" data-nav-link role="menuitem">FAQs</a></li>
+                <li role="none"><a href="<?= pageHref('blog') ?>" class="navbar-link" data-nav-link role="menuitem">Blog</a></li>
                 <li role="none"><a href="<?= pageHref('contact') ?>" class="navbar-link" data-nav-link role="menuitem">Contact</a></li>
               </ul>
             </div>
 
             <div class="navbar-footer">
               <p class="navbar-footer-title">Get in Touch</p>
-              <a href="tel:+2349033137432" class="navbar-footer-link">
+              <a href="tel:+2349036851168" class="navbar-footer-link">
                 <ion-icon name="call-outline"></ion-icon>
-                <span>+234 903 313 7432</span>
+                <span>+234 903 685 1168</span>
               </a>
               <a href="mailto:biverroyaltyhomes01@gmail.com" class="navbar-footer-link">
                 <ion-icon name="mail-outline"></ion-icon>
@@ -157,7 +169,7 @@
     <section class="contact-hero">
       <div class="container">
         <h1>Let's <span class="gold-accent">Connect</span></h1>
-        <p>Whether you're looking to buy, sell, rent, or just explore â€” we're here to help you every step of the way.</p>
+        <p>Whether you're looking to buy, sell, rent, or just explore � we're here to help you every step of the way.</p>
       </div>
     </section>
 
@@ -170,8 +182,8 @@
             <div class="info-card">
               <div class="info-icon"><ion-icon name="call-outline"></ion-icon></div>
               <h3>Phone & WhatsApp</h3>
-              <p><a href="tel:+2349033137432">+234 903 313 7432</a></p>
-              <p><a href="tel:+2348123456789">+234 812 345 6789</a></p>
+              <p><a href="tel:+2349036851168">+234 903 685 1168</a></p>
+              <p><a href="https://wa.me/2348142523251" target="_blank" rel="noopener noreferrer"><ion-icon name="logo-whatsapp"></ion-icon> +234 814 252 3251</a></p>
               <p class="info-card-hours">Mon - Sat: 8am - 6pm</p>
             </div>
             
@@ -262,25 +274,23 @@
             <div class="faq-eyebrow-line"></div>
           </div>
           <h2 class="faq-heading">Frequently Asked Questions</h2>
+          <p class="faq-sub"><a href="<?= pageHref('faqs') ?>">View all FAQs</a></p>
         </div>
         
-        <div class="faq-grid">
+        <div class="faq-grid" id="faqGrid">
+          <?php if ($contactFaqs === []): ?>
           <div class="faq-item">
             <div class="faq-question">How can I schedule a property viewing? <ion-icon name="chevron-down-outline"></ion-icon></div>
-            <div class="faq-answer">Simply call us at +234 903 313 7432 or fill out our contact form. Our team will arrange a convenient time for you to visit any property you're interested in.</div>
+            <div class="faq-answer">Call us at <?= siteEscape(siteContactPhone()) ?> or fill out our contact form. Our team will arrange a convenient viewing time.</div>
           </div>
+          <?php else: ?>
+          <?php foreach (array_slice($contactFaqs, 0, 6) as $faq): ?>
           <div class="faq-item">
-            <div class="faq-question">What documents do I need to buy a property? <ion-icon name="chevron-down-outline"></ion-icon></div>
-            <div class="faq-answer">We'll guide you through the entire process. Typically you'll need a valid ID, proof of funds, and we'll handle the title verification and legal documentation.</div>
+            <div class="faq-question"><?= siteEscape((string) $faq['question']) ?> <ion-icon name="chevron-down-outline"></ion-icon></div>
+            <div class="faq-answer"><?= siteEscape((string) $faq['answer']) ?></div>
           </div>
-          <div class="faq-item">
-            <div class="faq-question">Do you offer property management services? <ion-icon name="chevron-down-outline"></ion-icon></div>
-            <div class="faq-answer">Yes! We provide comprehensive property management including tenant sourcing, rent collection, maintenance, and legal compliance.</div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-question">How long does it take to close a deal? <ion-icon name="chevron-down-outline"></ion-icon></div>
-            <div class="faq-answer">The timeline varies, but typically 2-4 weeks for straightforward transactions. We work efficiently to ensure a smooth closing process.</div>
-          </div>
+          <?php endforeach; ?>
+          <?php endif; ?>
         </div>
       </div>
     </section>
@@ -316,9 +326,9 @@
               </a>
             </li>
             <li>
-              <a href="tel:+2349033137432" class="contact-link">
+              <a href="tel:+2349036851168" class="contact-link">
                 <ion-icon name="call-outline"></ion-icon>
-                <span>+234 903 313 7432</span>
+                <span>+234 903 685 1168</span>
               </a>
             </li>
             <li>
@@ -339,33 +349,36 @@
           <ul class="footer-list">
             <li><p class="footer-list-title">Company</p></li>
             <li><a href="<?= pageHref('about') ?>" class="footer-link">About Us</a></li>
-            <li><a href="https://blog.biverroyaltyhomesltd.com/" class="footer-link" target="_blank" rel="noopener noreferrer">Blog</a></li>
+            <li><a href="<?= pageHref('blog') ?>" class="footer-link">Blog</a></li>
             <li><a href="<?= pageHref('property') ?>" class="footer-link">All Properties</a></li>
-            <li><a href="#" class="footer-link">Locations Map</a></li>
-            <li><a href="#" class="footer-link">FAQ</a></li>
+            <li><a href="<?= pageHref('locations') ?>" class="footer-link">Owerri Locations</a></li>
+            <li><a href="<?= pageHref('faqs') ?>" class="footer-link">FAQ</a></li>
             <li><a href="<?= pageHref('contact') ?>" class="footer-link">Contact Us</a></li>
           </ul>
           <ul class="footer-list">
             <li><p class="footer-list-title">Services</p></li>
-            <li><a href="<?= pageHref('addCart') ?>" class="footer-link">Order Tracking</a></li>
-            <li><a href="<?= pageHref('favorites') ?>" class="footer-link">Wish List</a></li>
-            <li><a href="<?= pageHref('login') ?>" class="footer-link">Login</a></li>
-            <li><a href="<?= pageHref('userDashboard') ?>" class="footer-link">My Account</a></li>
-            <li><a href="#" class="footer-link">Terms &amp; Conditions</a></li>
-            <li><a href="<?= pageHref('property') ?>" class="footer-link">Promotions</a></li>
+            <li><a href="<?= pageHref('services') ?>" class="footer-link">Our Services</a></li>
+            <li><a href="<?= pageHref('property') ?>" class="footer-link">Buy a Home</a></li>
+            <li><a href="<?= pageHref('property') ?>" class="footer-link">Rent a Home</a></li>
+            <li><a href="<?= pageHref('list-your-property') ?>" class="footer-link">List Your Property</a></li>
+            <li><a href="<?= pageHref('services') ?>" class="footer-link">Estate Management</a></li>
+            <li><a href="<?= pageHref('contact') ?>" class="footer-link">Property Consultation</a></li>
           </ul>
           <ul class="footer-list">
-            <li><p class="footer-list-title">Customer Care</p></li>
-            <li><a href="<?= pageHref('login') ?>" class="footer-link">Login</a></li>
-            <li><a href="<?= pageHref('userDashboard') ?>" class="footer-link">My Account</a></li>
-            <li><a href="<?= pageHref('favorites') ?>" class="footer-link">Wish List</a></li>
-            <li><a href="<?= pageHref('addCart') ?>" class="footer-link">Order Tracking</a></li>
-            <li><a href="#" class="footer-link">FAQ</a></li>
+            <li><p class="footer-list-title">Explore</p></li>
+            <li><a href="<?= pageHref('property') ?>" class="footer-link">Browse Properties</a></li>
+            <li><a href="<?= pageHref('list-your-property') ?>" class="footer-link">Sell With Us</a></li>
+            <li><a href="<?= pageHref('faqs') ?>" class="footer-link">FAQ</a></li>
+            <li><a href="<?= pageHref('blog') ?>" class="footer-link">Blog</a></li>
             <li><a href="<?= pageHref('contact') ?>" class="footer-link">Contact Us</a></li>
+            <li><a href="<?= pageHref('terms') ?>" class="footer-link">Terms &amp; Conditions</a></li>
+            <li><a href="<?= pageHref('privacy') ?>" class="footer-link">Privacy Policy</a></li>
+            <li><a href="<?= pageHref('cookie-policy') ?>" class="footer-link">Cookie Policy</a></li>
           </ul>
         </div>
       </div>
     </div>
+    <?php require __DIR__ . '/assets/includes/newsletter-strip.php'; ?>
     <div class="footer-bottom">
       <div class="container">
         <p class="copyright">
@@ -441,13 +454,15 @@
         contactForm.reset();
 
       } catch (error) {
-        showToast(error.message || 'Unable to send message. Please call us at +234 903 313 7432.');
+        showToast(error.message || 'Unable to send message. Please call us at +234 903 685 1168.');
       } finally {
         submitBtn.innerHTML = originalText;
         submitBtn.disabled = false;
       }
     });
   </script>
+  <?php require __DIR__ . '/assets/includes/site-end.php'; ?>
+  <?php require __DIR__ . '/assets/includes/whatsapp-float.php'; ?>
   <?php require __DIR__ . '/chatbot/chatbot.php'; ?>
 </body>
 </html>

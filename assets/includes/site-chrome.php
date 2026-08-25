@@ -18,9 +18,9 @@ require_once dirname(__DIR__, 2) . '/includes/site_paths.php';
           <address>No. 31 Wetheral Road, Angelina Plaza, Owerri, Imo State</address>
         </a>
         <div class="topbar-divider" aria-hidden="true"></div>
-        <a href="tel:+2349033137432" class="topbar-link" aria-label="Call us">
+        <a href="tel:+2349036851168" class="topbar-link" aria-label="Call us">
           <ion-icon name="call-outline"></ion-icon>
-          <span>+234 903 313 7432</span>
+          <span>+234 903 685 1168</span>
         </a>
       </div>
       <div class="topbar-right">
@@ -88,15 +88,18 @@ require_once dirname(__DIR__, 2) . '/includes/site_paths.php';
                 <li role="none"><a href="<?= siteEscape(pageUrl('about')) ?>" class="navbar-link" data-nav-link role="menuitem">About</a></li>
                 <li role="none"><a href="<?= siteEscape(pageUrl('services')) ?>" class="navbar-link" data-nav-link role="menuitem">Services</a></li>
                 <li role="none"><a href="<?= siteEscape(pageUrl('property')) ?>" class="navbar-link" data-nav-link role="menuitem">Properties</a></li>
+                <li role="none"><a href="<?= siteEscape(pageUrl('locations')) ?>" class="navbar-link" data-nav-link role="menuitem">Locations</a></li>
+                <li role="none"><a href="<?= siteEscape(pageUrl('faqs')) ?>" class="navbar-link" data-nav-link role="menuitem">FAQs</a></li>
+                <li role="none"><a href="<?= siteEscape(pageUrl('blog')) ?>" class="navbar-link" data-nav-link role="menuitem">Blog</a></li>
                 <li role="none"><a href="<?= siteEscape(pageUrl('contact')) ?>" class="navbar-link" data-nav-link role="menuitem">Contact</a></li>
               </ul>
             </div>
 
             <div class="navbar-footer">
               <p class="navbar-footer-title">Get in Touch</p>
-              <a href="tel:+2349033137432" class="navbar-footer-link">
+              <a href="tel:+2349036851168" class="navbar-footer-link">
                 <ion-icon name="call-outline"></ion-icon>
-                <span>+234 903 313 7432</span>
+                <span>+234 903 685 1168</span>
               </a>
               <a href="mailto:biverroyaltyhomes01@gmail.com" class="navbar-footer-link">
                 <ion-icon name="mail-outline"></ion-icon>

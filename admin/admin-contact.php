@@ -19,8 +19,8 @@ $pageStylesheet = '../assets/css/admin-contact.css';
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <?php require dirname(__DIR__) . '/includes/admin_assets.php'; ?>
 </head>
-<body>
-<div class="dashboard">
+<body class="admin-app">
+<div class="dashboard admin-dashboard">
   <?php require dirname(__DIR__) . '/includes/admin_sidebar.php'; ?>
 
   <div class="main-content">

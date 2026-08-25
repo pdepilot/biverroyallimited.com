@@ -8,6 +8,9 @@ declare(strict_types=1);
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
 
+// Let the email send finish even after the browser gets its response.
+ignore_user_abort(true);
+
 require_once dirname(__DIR__) . '/includes/PropertyRepository.php';
 require_once dirname(__DIR__) . '/includes/PropertyUploadService.php';
 require_once dirname(__DIR__) . '/includes/AutomatedEmailService.php';
@@ -82,23 +85,60 @@ try {
         'galleryUrls' => $media['extraImages'],
     ]);
 
+    // Reply to the browser immediately, then send the confirmation email in the
+    // background so the visitor never waits on the (potentially slow) SMTP call.
+    respondAndContinue([
+        'success'  => true,
+        'message'  => 'Listing sent successfully. Waiting for admin approval.',
+        'property' => $property,
+    ]);
+
     try {
         AutomatedEmailService::onPropertySubmitted($property);
     } catch (Throwable $mailEx) {
         error_log('Property submission auto-email failed: ' . $mailEx->getMessage());
     }
-
-    echo json_encode([
-        'success'  => true,
-        'message'  => 'Listing sent successfully. Waiting for admin approval.',
-        'property' => $property,
-    ]);
+    exit;
 } catch (InvalidArgumentException $e) {
     http_response_code(422);
     echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 } catch (Throwable $e) {
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => $e->getMessage() ?: 'Submission failed. Please try again.']);
+}
+
+/**
+ * Send the JSON response and close the connection so any remaining work
+ * (e.g. sending the confirmation email) runs without keeping the client waiting.
+ *
+ * @param array<string, mixed> $payload
+ */
+function respondAndContinue(array $payload): void
+{
+    $json = json_encode($payload);
+
+    if (!headers_sent()) {
+        header('Content-Type: application/json; charset=utf-8');
+        header('Content-Length: ' . strlen((string) $json));
+        header('Connection: close');
+    }
+
+    echo $json;
+
+    if (function_exists('fastcgi_finish_request')) {
+        fastcgi_finish_request();
+        return;
+    }
+    if (function_exists('litespeed_finish_request')) {
+        litespeed_finish_request();
+        return;
+    }
+
+    // Fallback for servers without a finish-request API.
+    while (ob_get_level() > 0) {
+        ob_end_flush();
+    }
+    flush();
 }
 
 /**

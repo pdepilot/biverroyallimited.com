@@ -15,11 +15,16 @@ final class AdminPermissions
     public const PERM_LOCATIONS   = 'locations.manage';
     public const PERM_LISTINGS    = 'listings.manage';
     public const PERM_CONTACTS    = 'contacts.manage';
+    public const PERM_CUSTOMERS   = 'customers.manage';
+    public const PERM_TRANSACTIONS = 'transactions.manage';
     public const PERM_EMAIL       = 'email.manage';
     public const PERM_SMTP        = 'smtp.manage';
     public const PERM_SUBSCRIBERS = 'subscribers.manage';
     public const PERM_CHATBOT     = 'chatbot.manage';
     public const PERM_PROMO       = 'promo.manage';
+    public const PERM_CONTENT     = 'content.manage';
+    public const PERM_FAQS        = 'faqs.manage';
+    public const PERM_BLOG        = 'blog.manage';
     public const PERM_SETTINGS    = 'settings.manage';
     public const PERM_ADMINS      = 'admins.manage';
 
@@ -34,11 +39,16 @@ final class AdminPermissions
             self::PERM_LOCATIONS    => 'Manage Service Areas',
             self::PERM_LISTINGS     => 'Manage List Submissions',
             self::PERM_CONTACTS     => 'Manage Inquiries',
+            self::PERM_CUSTOMERS    => 'Manage Customers',
+            self::PERM_TRANSACTIONS => 'Receipts & Certificates',
             self::PERM_EMAIL        => 'Email Center',
             self::PERM_SMTP         => 'SMTP Settings',
             self::PERM_SUBSCRIBERS  => 'Manage Subscribers',
             self::PERM_CHATBOT      => 'Live Chat & Leads',
             self::PERM_PROMO        => 'Promo Banner',
+            self::PERM_CONTENT      => 'Homepage & Site Pages',
+            self::PERM_FAQS         => 'FAQs',
+            self::PERM_BLOG         => 'Blog',
             self::PERM_SETTINGS     => 'Site Settings',
             self::PERM_ADMINS       => 'Manage Admin Users',
         ];
@@ -64,17 +74,19 @@ final class AdminPermissions
             'administrator' => [
                 self::PERM_DASHBOARD, self::PERM_PROPERTIES, self::PERM_ANALYTICS,
                 self::PERM_TESTIMONIALS, self::PERM_LOCATIONS, self::PERM_LISTINGS,
-                self::PERM_CONTACTS, self::PERM_EMAIL, self::PERM_SMTP,
+                self::PERM_CONTACTS, self::PERM_CUSTOMERS, self::PERM_TRANSACTIONS, self::PERM_EMAIL, self::PERM_SMTP,
                 self::PERM_SUBSCRIBERS, self::PERM_CHATBOT, self::PERM_PROMO,
+                self::PERM_CONTENT, self::PERM_FAQS, self::PERM_BLOG,
                 self::PERM_SETTINGS,
             ],
             'manager' => [
                 self::PERM_DASHBOARD, self::PERM_PROPERTIES, self::PERM_LISTINGS,
-                self::PERM_CONTACTS, self::PERM_EMAIL, self::PERM_SUBSCRIBERS,
+                self::PERM_CONTACTS, self::PERM_CUSTOMERS, self::PERM_TRANSACTIONS, self::PERM_EMAIL, self::PERM_SUBSCRIBERS,
             ],
             'editor' => [
                 self::PERM_DASHBOARD, self::PERM_TESTIMONIALS,
                 self::PERM_LOCATIONS, self::PERM_PROMO,
+                self::PERM_CONTENT, self::PERM_FAQS, self::PERM_BLOG,
             ],
             'viewer' => [
                 self::PERM_DASHBOARD, self::PERM_ANALYTICS,
@@ -170,11 +182,19 @@ final class AdminPermissions
             'locations'    => self::PERM_LOCATIONS,
             'listings'     => self::PERM_LISTINGS,
             'contacts'     => self::PERM_CONTACTS,
+            'customers'    => self::PERM_CUSTOMERS,
+            'transactions' => self::PERM_TRANSACTIONS,
             'email'        => self::PERM_EMAIL,
             'smtp'         => self::PERM_SMTP,
             'subscribers'  => self::PERM_SUBSCRIBERS,
             'chatbot'      => self::PERM_CHATBOT,
             'promo'        => self::PERM_PROMO,
+            'homepage'     => self::PERM_CONTENT,
+            'about'        => self::PERM_CONTENT,
+            'pages'        => self::PERM_CONTENT,
+            'faqs'         => self::PERM_FAQS,
+            'blog'         => self::PERM_BLOG,
+            'chatbot-content' => self::PERM_CHATBOT,
             'settings'     => self::PERM_SETTINGS,
             'admins'       => self::PERM_ADMINS,
         ];

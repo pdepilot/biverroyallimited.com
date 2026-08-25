@@ -49,10 +49,10 @@ function chatbotSiteConfig(): array
     $defaults = [
         'siteName'      => 'Biver Royalty Homes',
         'contactEmail'  => 'biverroyaltyhomes01@gmail.com',
-        'contactPhone'  => '+234 903 313 7432',
+        'contactPhone'  => '+234 903 685 1168',
         'address'       => 'No. 31 Wetheral Road, Angelina Plaza, Owerri, Imo State',
         'aboutText'     => 'We are a real estate company built on integrity, helping clients find premium homes across Nigeria.',
-        'whatsapp'      => '+2349033137432',
+        'whatsapp'      => '+2348142523251',
         'businessHours' => 'Monday – Saturday: 8:00 AM – 6:00 PM',
     ];
 

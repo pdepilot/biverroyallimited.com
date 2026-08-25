@@ -10,6 +10,7 @@ header('Content-Type: application/json; charset=utf-8');
 
 require_once dirname(__DIR__, 2) . '/includes/admin_api_guard.php';
 require_once dirname(__DIR__, 2) . '/includes/PropertyRepository.php';
+require_once dirname(__DIR__, 2) . '/includes/PropertyUploadService.php';
 require_once dirname(__DIR__, 2) . '/includes/AutomatedEmailService.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
@@ -32,6 +33,12 @@ try {
     }
 
     if ($method === 'POST') {
+        // Multipart form (image uploads) handles both create and update.
+        $contentType = (string) ($_SERVER['CONTENT_TYPE'] ?? '');
+        if (str_contains($contentType, 'multipart/form-data') || !empty($_FILES) || isset($_POST['title'])) {
+            handleFormSave();
+        }
+
         $body = parseJsonBody();
         $title = trim((string) ($body['title'] ?? ''));
         $location = trim((string) ($body['location'] ?? ''));
@@ -125,6 +132,97 @@ try {
     jsonError('Database error.', 500);
 } catch (Throwable $e) {
     jsonError($e->getMessage() ?: 'Request failed.', 400);
+}
+
+/**
+ * Handle create/update submitted as multipart form data (with image uploads).
+ */
+function handleFormSave(): void
+{
+    $id = (int) ($_POST['id'] ?? 0);
+    $title = trim((string) ($_POST['title'] ?? ''));
+    $location = trim((string) ($_POST['location'] ?? ''));
+
+    if ($title === '' || $location === '') {
+        jsonError('Title and location are required.');
+    }
+
+    $keepImagesRaw = $_POST['keepImages'] ?? '[]';
+    if (is_array($keepImagesRaw)) {
+        $keepImages = $keepImagesRaw;
+    } else {
+        $decoded = json_decode((string) $keepImagesRaw, true);
+        $keepImages = is_array($decoded) ? $decoded : [];
+    }
+
+    $fields = [
+        'title'          => $title,
+        'location'       => $location,
+        'price'          => (int) ($_POST['price'] ?? 0),
+        'type'           => (string) ($_POST['type'] ?? 'sale'),
+        'bedrooms'       => (int) ($_POST['bedrooms'] ?? 2),
+        'bathrooms'      => (int) ($_POST['bathrooms'] ?? 2),
+        'area'           => (int) ($_POST['area'] ?? 0),
+        'description'    => trim((string) ($_POST['description'] ?? '')) ?: null,
+        'approvalStatus' => (string) ($_POST['approvalStatus'] ?? 'approved'),
+    ];
+
+    $removeVideo = (string) ($_POST['removeVideo'] ?? '0') === '1';
+
+    if ($id > 0) {
+        $existing = PropertyRepository::getById($id);
+        if ($existing === null) {
+            jsonError('Property not found.', 404);
+        }
+
+        $media = PropertyUploadService::storePropertyMedia(
+            $id,
+            $keepImages,
+            $_FILES,
+            $existing['storedVideo'] ?? null,
+            $removeVideo
+        );
+
+        $oldStatus = (string) ($existing['approvalStatus'] ?? '');
+        $updates = array_merge($fields, [
+            'imageUrl'    => $media['imageUrl'],
+            'galleryUrls' => $media['galleryUrls'],
+            'videoUrl'    => $media['videoUrl'],
+        ]);
+
+        $property = PropertyRepository::update($id, $updates);
+        if ($property === null) {
+            jsonError('Property not found.', 404);
+        }
+
+        $newStatus = (string) $fields['approvalStatus'];
+        if ($newStatus !== $oldStatus) {
+            AutomatedEmailService::onPropertyStatusChange(
+                $property,
+                $oldStatus,
+                $newStatus,
+                (int) ($_SESSION['admin_id'] ?? 0),
+                (string) ($property['adminNotes'] ?? '')
+            );
+        }
+
+        jsonOk(['property' => $property, 'message' => 'Property updated.']);
+    }
+
+    // Create first (to obtain an ID), then attach uploaded media.
+    $property = PropertyRepository::create($fields);
+    $newId = (int) $property['id'];
+
+    $media = PropertyUploadService::storePropertyMedia($newId, [], $_FILES);
+    if ($media['imageUrl'] !== null || $media['videoUrl'] !== null) {
+        $property = PropertyRepository::update($newId, [
+            'imageUrl'    => $media['imageUrl'],
+            'galleryUrls' => $media['galleryUrls'],
+            'videoUrl'    => $media['videoUrl'],
+        ]) ?? $property;
+    }
+
+    jsonOk(['property' => $property, 'message' => 'Property created.']);
 }
 
 /**

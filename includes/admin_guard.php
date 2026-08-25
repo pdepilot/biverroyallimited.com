@@ -12,6 +12,10 @@ require_once __DIR__ . '/AdminPermissions.php';
 AuthSecurity::initSession();
 
 if (!AuthSecurity::isAuthenticated()) {
+    AuthSecurity::attemptRememberLogin();
+}
+
+if (!AuthSecurity::isAuthenticated()) {
     header('Location: admin-login.php');
     exit;
 }

@@ -11,6 +11,6 @@
       "addressRegion": "Imo State",
       "addressCountry": "NG"
     },
-    "telephone": "+2349033137432",
+    "telephone": "+2349036851168",
     "email": "biverroyaltyhomes01@gmail.com"
   }

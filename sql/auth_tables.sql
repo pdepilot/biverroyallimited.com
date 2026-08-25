@@ -100,6 +100,24 @@ CREATE TABLE IF NOT EXISTS `admin_audit_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- -----------------------------------------------------------------------------
+-- Admin password-reset tokens (selector + hashed validator, 1-hour expiry)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `admin_password_resets` (
+    `id`            INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `admin_id`      INT UNSIGNED NOT NULL,
+    `selector`      VARCHAR(32)  NOT NULL,
+    `token_hash`    CHAR(64)     NOT NULL,
+    `expires_at`    DATETIME     NOT NULL,
+    `used_at`       DATETIME     DEFAULT NULL,
+    `requested_ip`  VARCHAR(45)  DEFAULT NULL,
+    `created_at`    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uq_selector` (`selector`),
+    KEY `idx_admin` (`admin_id`),
+    KEY `idx_expires` (`expires_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -----------------------------------------------------------------------------
 -- Seed default administrator (password: Echefu10@321@)
 -- Hash generated with: password_hash('Echefu10@321@', PASSWORD_BCRYPT)
 -- Change password after first login in production.

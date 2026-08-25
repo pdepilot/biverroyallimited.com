@@ -1,23 +1,21 @@
 <?php require_once __DIR__ . '/includes/htaccess_redirect.php'; ?>
+<?php require_once __DIR__ . '/includes/SeoService.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="List your property with Biver Royalty Homes. Submit property details, images, and videos for expert real estate marketing in Nigeria.">
-  <meta name="keywords" content="list property Nigeria, sell property Owerri, property listing, upload property images, upload property video">
-  <meta name="author" content="Biver Royalty Homes Ltd">
-  <title>List Your Property | Biver Royalty Homes</title>
-  <link rel="shortcut icon" href="./assets/images/biver-logo.png" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/css/site-variables.css">
-  <link rel="stylesheet" href="./assets/css/site-utilities.css">
-  <link rel="stylesheet" href="./assets/css/list-your-property.css">
-  <?php require_once __DIR__ . '/includes/site_paths.php'; ?>
-  <link rel="stylesheet" href="./assets/css/site-header.css">
+<?php
+SeoService::renderHead([
+    'title' => 'Sell or List Your Property in Owerri | Biver Royalty Homes',
+    'description' => 'List your home or land for sale or rent in Owerri with Biver Royalty Homes Ltd. Professional marketing from our Wetheral Road office.',
+    'keywords' => 'sell property Owerri, list house for rent Imo, sell land Owerri, Biver Royalty Homes listing',
+    'page' => 'list-your-property',
+    'stylesheets' => ['./assets/css/list-your-property.css'],
+    'breadcrumbs' => [
+        ['name' => 'Home', 'url' => pageUrl('index')],
+        ['name' => 'List your property'],
+    ],
+]);
+?>
 </head>
 <body>
 
@@ -36,9 +34,9 @@
           <address>No. 31 Wetheral Road, Angelina Plaza, Owerri, Imo State</address>
         </a>
         <div class="topbar-divider" aria-hidden="true"></div>
-        <a href="tel:+2349033137432" class="topbar-link" aria-label="Call us">
+        <a href="tel:+2349036851168" class="topbar-link" aria-label="Call us">
           <ion-icon name="call-outline"></ion-icon>
-          <span>+234 903 313 7432</span>
+          <span>+234 903 685 1168</span>
         </a>
       </div>
       <div class="topbar-right">
@@ -106,15 +104,18 @@
                 <li role="none"><a href="<?= pageHref('about') ?>" class="navbar-link" data-nav-link role="menuitem">About</a></li>
                 <li role="none"><a href="<?= pageHref('services') ?>" class="navbar-link" data-nav-link role="menuitem">Services</a></li>
                 <li role="none"><a href="<?= pageHref('property') ?>" class="navbar-link" data-nav-link role="menuitem">Properties</a></li>
+                <li role="none"><a href="<?= pageHref('locations') ?>" class="navbar-link" data-nav-link role="menuitem">Locations</a></li>
+                <li role="none"><a href="<?= pageHref('faqs') ?>" class="navbar-link" data-nav-link role="menuitem">FAQs</a></li>
+                <li role="none"><a href="<?= pageHref('blog') ?>" class="navbar-link" data-nav-link role="menuitem">Blog</a></li>
                 <li role="none"><a href="<?= pageHref('contact') ?>" class="navbar-link" data-nav-link role="menuitem">Contact</a></li>
               </ul>
             </div>
 
             <div class="navbar-footer">
               <p class="navbar-footer-title">Get in Touch</p>
-              <a href="tel:+2349033137432" class="navbar-footer-link">
+              <a href="tel:+2349036851168" class="navbar-footer-link">
                 <ion-icon name="call-outline"></ion-icon>
-                <span>+234 903 313 7432</span>
+                <span>+234 903 685 1168</span>
               </a>
               <a href="mailto:biverroyaltyhomes01@gmail.com" class="navbar-footer-link">
                 <ion-icon name="mail-outline"></ion-icon>
@@ -154,7 +155,7 @@
             <a href="#listingForm" class="hero-btn">
               Start Listing <ion-icon name="arrow-forward-outline"></ion-icon>
             </a>
-            <a href="tel:+2349033137432" class="hero-btn-outline" aria-label="Call Biver Royalty Homes agent at +234 903 313 7432">
+            <a href="tel:+2349036851168" class="hero-btn-outline" aria-label="Call Biver Royalty Homes agent at +234 903 685 1168">
               Speak With an Agent <ion-icon name="call-outline"></ion-icon>
             </a>
           </div>
@@ -225,7 +226,7 @@
             <div class="agent-note">
               <strong>Need help preparing media?</strong>
               <p>Our team can guide you on the best photos, video angles, and documents to make your property listing stronger.</p>
-              <a href="tel:+2349033137432"><ion-icon name="call-outline"></ion-icon> +234 903 313 7432</a>
+              <a href="tel:+2349036851168"><ion-icon name="call-outline"></ion-icon> +234 903 685 1168</a>
             </div>
           </aside>
 
@@ -450,9 +451,9 @@
               </a>
             </li>
             <li>
-              <a href="tel:+2349033137432" class="contact-link">
+              <a href="tel:+2349036851168" class="contact-link">
                 <ion-icon name="call-outline"></ion-icon>
-                <span>+234 903 313 7432</span>
+                <span>+234 903 685 1168</span>
               </a>
             </li>
             <li>
@@ -473,33 +474,36 @@
           <ul class="footer-list">
             <li><p class="footer-list-title">Company</p></li>
             <li><a href="<?= pageHref('about') ?>" class="footer-link">About Us</a></li>
-            <li><a href="https://blog.biverroyaltyhomesltd.com/" class="footer-link" target="_blank" rel="noopener noreferrer">Blog</a></li>
+            <li><a href="<?= pageHref('blog') ?>" class="footer-link">Blog</a></li>
             <li><a href="<?= pageHref('property') ?>" class="footer-link">All Properties</a></li>
-            <li><a href="#" class="footer-link">Locations Map</a></li>
-            <li><a href="#" class="footer-link">FAQ</a></li>
+            <li><a href="<?= pageHref('locations') ?>" class="footer-link">Owerri Locations</a></li>
+            <li><a href="<?= pageHref('faqs') ?>" class="footer-link">FAQ</a></li>
             <li><a href="<?= pageHref('contact') ?>" class="footer-link">Contact Us</a></li>
           </ul>
           <ul class="footer-list">
             <li><p class="footer-list-title">Services</p></li>
-            <li><a href="<?= pageHref('addCart') ?>" class="footer-link">Order Tracking</a></li>
-            <li><a href="<?= pageHref('favorites') ?>" class="footer-link">Wish List</a></li>
-            <li><a href="<?= pageHref('login') ?>" class="footer-link">Login</a></li>
-            <li><a href="<?= pageHref('userDashboard') ?>" class="footer-link">My Account</a></li>
-            <li><a href="#" class="footer-link">Terms &amp; Conditions</a></li>
-            <li><a href="<?= pageHref('property') ?>" class="footer-link">Promotions</a></li>
+            <li><a href="<?= pageHref('services') ?>" class="footer-link">Our Services</a></li>
+            <li><a href="<?= pageHref('property') ?>" class="footer-link">Buy a Home</a></li>
+            <li><a href="<?= pageHref('property') ?>" class="footer-link">Rent a Home</a></li>
+            <li><a href="<?= pageHref('list-your-property') ?>" class="footer-link">List Your Property</a></li>
+            <li><a href="<?= pageHref('services') ?>" class="footer-link">Estate Management</a></li>
+            <li><a href="<?= pageHref('contact') ?>" class="footer-link">Property Consultation</a></li>
           </ul>
           <ul class="footer-list">
-            <li><p class="footer-list-title">Customer Care</p></li>
-            <li><a href="<?= pageHref('login') ?>" class="footer-link">Login</a></li>
-            <li><a href="<?= pageHref('userDashboard') ?>" class="footer-link">My Account</a></li>
-            <li><a href="<?= pageHref('favorites') ?>" class="footer-link">Wish List</a></li>
-            <li><a href="<?= pageHref('addCart') ?>" class="footer-link">Order Tracking</a></li>
-            <li><a href="#" class="footer-link">FAQ</a></li>
+            <li><p class="footer-list-title">Explore</p></li>
+            <li><a href="<?= pageHref('property') ?>" class="footer-link">Browse Properties</a></li>
+            <li><a href="<?= pageHref('list-your-property') ?>" class="footer-link">Sell With Us</a></li>
+            <li><a href="<?= pageHref('faqs') ?>" class="footer-link">FAQ</a></li>
+            <li><a href="<?= pageHref('blog') ?>" class="footer-link">Blog</a></li>
             <li><a href="<?= pageHref('contact') ?>" class="footer-link">Contact Us</a></li>
+            <li><a href="<?= pageHref('terms') ?>" class="footer-link">Terms &amp; Conditions</a></li>
+            <li><a href="<?= pageHref('privacy') ?>" class="footer-link">Privacy Policy</a></li>
+            <li><a href="<?= pageHref('cookie-policy') ?>" class="footer-link">Cookie Policy</a></li>
           </ul>
         </div>
       </div>
     </div>
+    <?php require __DIR__ . '/assets/includes/newsletter-strip.php'; ?>
     <div class="footer-bottom">
       <div class="container">
         <p class="copyright">
@@ -735,6 +739,8 @@
 
     }
   </script>
+  <?php require __DIR__ . '/assets/includes/site-end.php'; ?>
+  <?php require __DIR__ . '/assets/includes/whatsapp-float.php'; ?>
   <?php require __DIR__ . '/chatbot/chatbot.php'; ?>
 </body>
 </html>

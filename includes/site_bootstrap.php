@@ -5,6 +5,9 @@ require_once __DIR__ . '/site_paths.php';
 
 $siteBase = siteRootPath();
 $propertiesApi = siteUrl('api/properties.php');
+$trackVisitApi = siteUrl('api/track-visit.php');
+$newsletterApi = siteUrl('api/newsletter-subscribe.php');
+$visitTrackerJs = siteUrl('assets/js/site-visit-tracker.js');
 ?>
 <script>
 window.BIVER_SITE = {
@@ -13,6 +16,8 @@ window.BIVER_SITE = {
   testimonialsApi: <?= json_encode(siteUrl('api/testimonials.php'), JSON_UNESCAPED_SLASHES) ?>,
   locationsApi: <?= json_encode(siteUrl('api/locations.php'), JSON_UNESCAPED_SLASHES) ?>,
   chatbotApi: <?= json_encode(siteUrl('chatbot/chatbot-api.php'), JSON_UNESCAPED_SLASHES) ?>,
+  trackVisitApi: <?= json_encode($trackVisitApi, JSON_UNESCAPED_SLASHES) ?>,
+  newsletterApi: <?= json_encode($newsletterApi, JSON_UNESCAPED_SLASHES) ?>,
   page(name, params) {
     const base = this.base || '';
     let slug = String(name).replace(/^\//, '').replace(/\.php$/i, '');
@@ -32,3 +37,4 @@ window.BIVER_SITE = {
   }
 };
 </script>
+<script src="<?= htmlspecialchars($visitTrackerJs, ENT_QUOTES, 'UTF-8') ?>" defer></script>

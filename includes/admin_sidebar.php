@@ -16,12 +16,20 @@ $navItems = [
     'analytics'    => ['href' => 'admin-analytics.php', 'icon' => 'people-outline',      'label' => 'Analytics'],
     'testimonials' => ['href' => 'admin-testimonial.php','icon' => 'chatbubbles-outline','label' => 'Testimonials'],
     'locations'    => ['href' => 'admin-locations.php', 'icon' => 'map-outline',         'label' => 'Service Areas'],
+    'homepage'     => ['href' => 'admin-homepage.php', 'icon' => 'images-outline',      'label' => 'Homepage'],
+    'about'        => ['href' => 'admin-about.php',    'icon' => 'people-outline',      'label' => 'About Page'],
+    'pages'        => ['href' => 'admin-pages.php',    'icon' => 'document-text-outline','label' => 'Site Pages'],
+    'faqs'         => ['href' => 'admin-faqs.php',     'icon' => 'help-circle-outline', 'label' => 'FAQs'],
+    'blog'         => ['href' => 'admin-blog.php',     'icon' => 'newspaper-outline',   'label' => 'Blog'],
     'listings'     => ['href' => 'admin-list-your-property.php', 'icon' => 'clipboard-outline', 'label' => 'List Submissions'],
     'contacts'     => ['href' => 'admin-contact.php',   'icon' => 'mail-outline',        'label' => 'Inquiries'],
+    'customers'    => ['href' => 'admin-customers.php', 'icon' => 'person-outline',      'label' => 'Customers'],
+    'transactions' => ['href' => 'admin-transactions.php', 'icon' => 'receipt-outline',  'label' => 'Receipts & Certificates'],
     'email'        => ['href' => 'admin-email-center.php', 'icon' => 'paper-plane-outline', 'label' => 'Email Center'],
     'smtp'         => ['href' => 'admin-smtp-settings.php', 'icon' => 'server-outline', 'label' => 'SMTP Settings'],
     'subscribers'  => ['href' => 'admin-subscribers.php', 'icon' => 'people-circle-outline', 'label' => 'Subscribers'],
     'chatbot'      => ['href' => 'admin-live-chat.php', 'icon' => 'chatbox-ellipses-outline', 'label' => 'Live Chat & Leads'],
+    'chatbot-content' => ['href' => 'admin-chatbot-content.php', 'icon' => 'library-outline', 'label' => 'Chatbot Knowledge'],
     'promo'        => ['href' => 'admin-promo-banner.php', 'icon' => 'megaphone-outline', 'label' => 'Promo Banner'],
     'settings'     => ['href' => 'admin-setting.php',   'icon' => 'settings-outline',    'label' => 'Settings'],
     'admins'       => ['href' => 'admin-users.php',   'icon' => 'shield-checkmark-outline', 'label' => 'Admin Users'],
@@ -58,3 +66,4 @@ function adminNavClass(string $page, string $active): string
   </div>
 </aside>
 <script src="../assets/js/admin-common.js" defer></script>
+<script src="../assets/js/admin-alerts.js" defer></script>

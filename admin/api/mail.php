@@ -69,6 +69,13 @@ try {
             ]);
         }
 
+        if ($action === 'diagnose') {
+            jsonOk([
+                'diagnosis' => MailService::diagnoseSmtp(),
+                'mail'      => MailService::getStatus(),
+            ]);
+        }
+
         jsonError('Unknown action.');
     }
 

@@ -53,6 +53,10 @@ require_once dirname(__DIR__) . '/includes/admin_guard.php';
       <input type="number" id="rating" placeholder="Rating (1-5)" min="1" max="5" step="1" required>
       <textarea id="message" rows="4" placeholder="Share the noble experience..." required></textarea>
       <input type="text" id="avatarInitials" placeholder="Initials (e.g., JD) - optional">
+      <input type="text" id="roleLabel" placeholder="Role label (e.g., Happy Client)" value="Happy Client">
+      <input type="number" id="sortOrder" placeholder="Sort order" value="0" min="0">
+      <input type="text" id="imagePath" placeholder="Image path or URL (optional)">
+      <label class="checkbox-inline"><input type="checkbox" id="isPublished" checked> Published on homepage</label>
       <div class="modal-buttons">
         <button type="button" class="btn-outline" id="closeModalBtn">Cancel</button>
         <button type="submit" class="btn-gold">Save Testimony</button>
@@ -175,6 +179,10 @@ require_once dirname(__DIR__) . '/includes/admin_guard.php';
         document.getElementById('rating').value = t.rating || 5;
         document.getElementById('message').value = t.message || '';
         document.getElementById('avatarInitials').value = t.initials || '';
+        document.getElementById('roleLabel').value = t.roleLabel || 'Happy Client';
+        document.getElementById('sortOrder').value = t.sortOrder ?? 0;
+        document.getElementById('imagePath').value = t.imagePath || '';
+        document.getElementById('isPublished').checked = t.isPublished !== false;
       }
     }
     modal.style.display = 'flex';
@@ -188,7 +196,11 @@ require_once dirname(__DIR__) . '/includes/admin_guard.php';
       name: document.getElementById('clientName').value,
       rating: parseInt(document.getElementById('rating').value, 10),
       message: document.getElementById('message').value,
-      initials: document.getElementById('avatarInitials').value || ''
+      initials: document.getElementById('avatarInitials').value || '',
+      roleLabel: document.getElementById('roleLabel').value || 'Happy Client',
+      sortOrder: parseInt(document.getElementById('sortOrder').value, 10) || 0,
+      imagePath: document.getElementById('imagePath').value || '',
+      isPublished: document.getElementById('isPublished').checked
     };
     if (id) payload.id = Number(id);
     try {

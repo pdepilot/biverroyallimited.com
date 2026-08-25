@@ -243,4 +243,47 @@ class ContactRepository
             'count' => (int) $row['count'],
         ], $stmt->fetchAll());
     }
+
+    /**
+     * Lightweight snapshot for admin dashboard / alert polling.
+     *
+     * @return array{latestId:int,latestNewId:int,newCount:int,latestCreatedAt:string,latestName:string,latestSubject:string}
+     */
+    public static function getAlertSnapshot(): array
+    {
+        $pdo = getDatabaseConnection();
+        $row = $pdo->query(
+            'SELECT
+                COALESCE(MAX(id), 0) AS latest_id,
+                COALESCE(MAX(CASE WHEN status = \'new\' THEN id END), 0) AS latest_new_id,
+                COALESCE(SUM(status = \'new\'), 0) AS new_count
+             FROM contact_inquiries'
+        )->fetch() ?: [];
+
+        $latestNewId = (int) ($row['latest_new_id'] ?? 0);
+        $latestName = '';
+        $latestSubject = '';
+        $latestCreatedAt = '';
+
+        if ($latestNewId > 0) {
+            $stmt = $pdo->prepare(
+                'SELECT full_name, inquiry_type, created_at
+                 FROM contact_inquiries WHERE id = :id LIMIT 1'
+            );
+            $stmt->execute(['id' => $latestNewId]);
+            $detail = $stmt->fetch() ?: [];
+            $latestName = (string) ($detail['full_name'] ?? '');
+            $latestSubject = (string) ($detail['inquiry_type'] ?? 'general');
+            $latestCreatedAt = (string) ($detail['created_at'] ?? '');
+        }
+
+        return [
+            'latestId'        => (int) ($row['latest_id'] ?? 0),
+            'latestNewId'     => $latestNewId,
+            'newCount'        => (int) ($row['new_count'] ?? 0),
+            'latestCreatedAt' => $latestCreatedAt,
+            'latestName'      => $latestName,
+            'latestSubject'   => $latestSubject,
+        ];
+    }
 }

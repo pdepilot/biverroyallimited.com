@@ -1,23 +1,71 @@
-<?php require_once __DIR__ . '/includes/htaccess_redirect.php'; ?>
+<?php
+require_once __DIR__ . '/includes/htaccess_redirect.php';
+require_once __DIR__ . '/includes/site_paths.php';
+require_once __DIR__ . '/includes/SeoService.php';
+require_once __DIR__ . '/includes/PropertyRepository.php';
+
+$propertyId = (int) ($_GET['id'] ?? 0);
+$seoProperty = null;
+try {
+    if ($propertyId > 0) {
+        $seoProperty = PropertyRepository::getPublicById($propertyId);
+    }
+} catch (Throwable $e) {
+    error_log('Property detail SEO load failed: ' . $e->getMessage());
+}
+
+if ($seoProperty === null && $propertyId > 0) {
+    http_response_code(404);
+}
+
+$seoLocation = trim((string) ($seoProperty['location'] ?? 'Owerri'));
+if ($seoLocation === '') {
+    $seoLocation = 'Owerri';
+}
+$seoTitle = $seoProperty
+    ? SeoService::limit((string) $seoProperty['title'] . ' | ' . $seoLocation, 60)
+    : 'Property Details | Biver Royalty Homes Ltd Owerri';
+$seoDesc = $seoProperty
+    ? SeoService::limit(strip_tags((string) ($seoProperty['description'] ?? '')) ?: ('View ' . (string) $seoProperty['title'] . ' in ' . $seoLocation . ' with Biver Royalty Homes Ltd, Owerri.'), 160)
+    : 'View full property details, photos, video tour, and features with Biver Royalty Homes Ltd in Owerri.';
+$seoKeywords = $seoProperty
+    ? SeoService::limit((string) $seoProperty['title'] . ', ' . $seoLocation . ', houses for sale Owerri, real estate agency Owerri, Biver Royalty Homes Ltd', 180)
+    : 'property Owerri, real estate agency Owerri, Biver Royalty Homes Ltd';
+$seoImage = null;
+if ($seoProperty) {
+    $imgs = $seoProperty['images'] ?? [];
+    if (is_array($imgs) && !empty($imgs[0])) {
+        $seoImage = (string) $imgs[0];
+    } elseif (!empty($seoProperty['imageUrl'])) {
+        $seoImage = (string) $seoProperty['imageUrl'];
+    }
+}
+$crumbs = [
+    ['name' => 'Home', 'url' => pageUrl('index')],
+    ['name' => 'Properties', 'url' => pageUrl('property')],
+    ['name' => $seoProperty ? (string) $seoProperty['title'] : 'Property details'],
+];
+?>
 <!DOCTYPE html>
-<?php require_once __DIR__ . '/includes/site_paths.php'; ?>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="View full property details, photos, video tour, and features with Biver Royalty Homes.">
-  <title>Property Details | Biver Royalty Homes</title>
-  <link rel="shortcut icon" href="./assets/images/biver-logo.png" type="image/png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/css/site-variables.css">
-  <link rel="stylesheet" href="./assets/css/site-utilities.css">
-  <link rel="stylesheet" href="./assets/css/property-detail.css">
-  <link rel="stylesheet" href="./assets/css/site-header.css">
-  <?php require __DIR__ . '/includes/site_bootstrap.php'; ?>
-  </head>
-<body>
+<?php
+SeoService::renderHead([
+    'title' => $seoTitle,
+    'description' => $seoDesc,
+    'keywords' => $seoKeywords,
+    'page' => 'property-detail',
+    'query' => $propertyId > 0 ? ['id' => $propertyId] : [],
+    'ogType' => 'article',
+    'ogImage' => $seoImage,
+    'robots' => $seoProperty ? 'index, follow' : 'noindex, follow',
+    'stylesheets' => ['./assets/css/property-detail.css'],
+    'breadcrumbs' => $crumbs,
+    'property' => $seoProperty,
+]);
+?>
+</head>
+<body class="page-property-detail">
 
 <?php require __DIR__ . '/assets/includes/site-chrome.php'; ?>
 
@@ -39,41 +87,7 @@
   </div>
 </main>
 
-<footer class="footer" role="contentinfo">
-  <div class="footer-top">
-    <div class="container">
-      <div class="footer-brand">
-        <a href="<?= siteEscape(pageUrl('index')) ?>" class="logo">
-          <img src="./assets/images/biver-logo.png" alt="Biver Royalty Homes" width="150" height="auto" loading="lazy">
-        </a>
-        <p class="section-text">We are a real estate company built on Integrity. We help our clients bring their dream homes to reality within their budget.</p>
-        <ul class="contact-list">
-          <li><a href="<?= pageHref('contact') ?>" class="contact-link"><ion-icon name="location-outline"></ion-icon><address>No. 31 Wetheral Road, Angelina Plaza, Owerri, Imo State.</address></a></li>
-          <li><a href="tel:+2349033137432" class="contact-link"><ion-icon name="call-outline"></ion-icon><span>+234 903 313 7432</span></a></li>
-          <li><a href="mailto:biverroyaltyhomes01@gmail.com" class="contact-link"><ion-icon name="mail-outline"></ion-icon><span>biverroyaltyhomes01@gmail.com</span></a></li>
-        </ul>
-      </div>
-      <div class="footer-link-box">
-        <ul class="footer-list">
-          <li><p class="footer-list-title">Company</p></li>
-          <li><a href="<?= siteEscape(pageUrl('about')) ?>" class="footer-link">About Us</a></li>
-          <li><a href="<?= siteEscape(pageUrl('property')) ?>" class="footer-link">All Properties</a></li>
-          <li><a href="<?= siteEscape(pageUrl('contact')) ?>" class="footer-link">Contact Us</a></li>
-        </ul>
-        <ul class="footer-list">
-          <li><p class="footer-list-title">Services</p></li>
-          <li><a href="<?= siteEscape(pageUrl('list-your-property')) ?>" class="footer-link">List Your Property</a></li>
-          <li><a href="<?= siteEscape(pageUrl('services')) ?>" class="footer-link">Our Services</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div class="container">
-      <p class="copyright">&copy; 2025 <a href="<?= siteEscape(pageUrl('index')) ?>">Biver Royalty Homes</a>. All Rights Reserved</p>
-    </div>
-  </div>
-</footer>
+<?php require __DIR__ . '/assets/includes/site-footer.php'; ?>
 
 <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Image gallery">
   <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Close gallery">&times;</button>
@@ -118,16 +132,76 @@
 
   function formatDate(value) {
     if (!value) return 'Recently listed';
-    const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return 'Recently listed';
-    return date.toLocaleDateString('en-NG', { year: 'numeric', month: 'long', day: 'numeric' });
+    const raw = String(value).trim();
+    // Parse MySQL datetime as a calendar date (avoid UTC day-shift bugs).
+    const match = raw.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (match) {
+      const date = new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+      if (!Number.isNaN(date.getTime())) {
+        return date.toLocaleDateString('en-NG', { year: 'numeric', month: 'long', day: 'numeric' });
+      }
+    }
+    const fallback = new Date(raw);
+    if (Number.isNaN(fallback.getTime())) return 'Recently listed';
+    return fallback.toLocaleDateString('en-NG', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  function normalizeAddress(value) {
+    return String(value || '')
+      .toLowerCase()
+      .replace(/[^\w\s]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  /** Single display address — prefer admin-managed location over stale street values. */
+  function displayAddress(property) {
+    const location = String(property.location || '').trim();
+    const street = String(property.propertyAddress || '').trim();
+    if (!location) return street;
+    if (!street) return location;
+
+    const locKey = normalizeAddress(location);
+    const streetKey = normalizeAddress(street);
+    if (!streetKey || locKey === streetKey || streetKey.includes(locKey) || locKey.includes(streetKey)) {
+      return location;
+    }
+    // Location is what admins edit; use it as the canonical public address.
+    return location;
+  }
+
+  function isRental(property) {
+    return String(property.type || '').toLowerCase() === 'rent';
   }
 
   function listingLabel(property) {
-    if (property.listingPurpose) {
-      return String(property.listingPurpose).replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+    // Admin "Listing Type" (sale/rent) is the source of truth for public display.
+    return isRental(property) ? 'For Rent' : 'For Sale';
+  }
+
+  function priceNote(property) {
+    return isRental(property)
+      ? 'Monthly rental rate · Verified by Biver Royalty Homes'
+      : 'Asking price · Verified by Biver Royalty Homes';
+  }
+
+  function primaryCtaLabel(property) {
+    return isRental(property) ? 'Schedule Inspection' : 'Schedule Viewing';
+  }
+
+  function trustItems(property) {
+    if (isRental(property)) {
+      return [
+        ['shield-checkmark-outline', 'Verified listing'],
+        ['key-outline', 'Ready to rent'],
+        ['document-text-outline', 'Tenancy support'],
+      ];
     }
-    return property.type === 'rent' ? 'For Rent' : 'For Sale';
+    return [
+      ['shield-checkmark-outline', 'Verified listing'],
+      ['people-outline', 'Expert agents'],
+      ['document-text-outline', 'Title support'],
+    ];
   }
 
   function getAllImages(property) {
@@ -245,11 +319,11 @@
   }
 
   function renderInfoRows(property) {
+    const address = displayAddress(property);
     const rows = [
       ['Property type', property.propertyCategory || 'Residential'],
-      ['Listing purpose', listingLabel(property)],
-      ['Location', property.location],
-      ['Full address', property.propertyAddress],
+      ['Listing type', listingLabel(property)],
+      ['Address', address],
       ['Plot / size', property.propertySize || (property.area ? property.area + ' sqm' : null)],
       ['Ownership', property.ownershipStatus],
       ['Listed on', formatDate(property.createdAt)],
@@ -267,11 +341,21 @@
     const video = property.videoUrl ? resolveMediaUrl(property.videoUrl) : '';
     const features = parseFeatures(property.propertyFeatures);
     const contactUrl = (window.BIVER_SITE?.page || ((n, p) => n + (p ? '?' + new URLSearchParams(p) : '')))('contact', { property: property.title });
-    const whatsappText = encodeURIComponent(`Hello Biver Royalty Homes, I am interested in: ${property.title} (Ref BRH-${property.id})`);
-    const whatsappUrl = 'https://wa.me/2349033137432?text=' + whatsappText;
 
     document.title = `${property.title} | Biver Royalty Homes`;
     document.getElementById('breadcrumbTitle').textContent = property.title;
+
+    const address = displayAddress(property);
+    const listedOn = formatDate(property.createdAt);
+    const label = listingLabel(property);
+    const rental = isRental(property);
+    const whatsappIntent = rental
+      ? `Hello Biver Royalty Homes, I want to rent: ${property.title} (Ref BRH-${property.id})`
+      : `Hello Biver Royalty Homes, I am interested in buying: ${property.title} (Ref BRH-${property.id})`;
+    const whatsappUrl = 'https://wa.me/2348142523251?text=' + encodeURIComponent(whatsappIntent);
+    const trustHtml = trustItems(property).map(([icon, text]) =>
+      `<div class="trust-item"><ion-icon name="${icon}"></ion-icon>${escapeHtml(text)}</div>`
+    ).join('');
 
     document.getElementById('detailContent').innerHTML = `
       ${renderGallery(galleryImages, property)}
@@ -281,9 +365,8 @@
           <div class="title-block">
             <h1>${escapeHtml(property.title)}</h1>
             <div class="title-meta">
-              <span><ion-icon name="location-outline"></ion-icon>${escapeHtml(property.location)}</span>
-              ${property.propertyAddress ? `<span><ion-icon name="navigate-outline"></ion-icon>${escapeHtml(property.propertyAddress)}</span>` : ''}
-              <span><ion-icon name="calendar-outline"></ion-icon>${formatDate(property.createdAt)}</span>
+              ${address ? `<span><ion-icon name="location-outline"></ion-icon>${escapeHtml(address)}</span>` : ''}
+              <span><ion-icon name="calendar-outline"></ion-icon>${escapeHtml(listedOn)}</span>
             </div>
           </div>
 
@@ -323,24 +406,22 @@
 
         <aside class="detail-sidebar">
           <div class="price-card">
-            <p class="price-label">${escapeHtml(listingLabel(property))}</p>
+            <p class="price-label">${escapeHtml(label)}</p>
             <p class="price-value">${formatPrice(property.price, property.type)}</p>
-            <p class="price-note">Verified listing by Biver Royalty Homes</p>
+            <p class="price-note">${escapeHtml(priceNote(property))}</p>
             <div class="price-stats">
               <div class="price-stat"><strong>${property.bedrooms || 0}</strong><span>Beds</span></div>
               <div class="price-stat"><strong>${property.bathrooms || 0}</strong><span>Baths</span></div>
-              <div class="price-stat"><strong>${property.area || '—'}</strong><span>${property.area ? 'Sqm' : 'Size'}</span></div>
+              <div class="price-stat"><strong>${property.area || property.propertySize || '—'}</strong><span>${property.area ? 'Sqm' : 'Size'}</span></div>
             </div>
             <div class="cta-stack">
-              <a href="${contactUrl}" class="cta-btn cta-btn-primary"><ion-icon name="calendar-outline"></ion-icon>Schedule Viewing</a>
-              <a href="${whatsappUrl}" class="cta-btn cta-btn-outline" target="_blank" rel="noopener noreferrer"><ion-icon name="logo-whatsapp"></ion-icon>Chat on WhatsApp</a>
-              <a href="tel:+2349033137432" class="cta-btn cta-btn-ghost"><ion-icon name="call-outline"></ion-icon>+234 903 313 7432</a>
+              <a href="${contactUrl}" class="cta-btn cta-btn-primary"><ion-icon name="calendar-outline"></ion-icon>${escapeHtml(primaryCtaLabel(property))}</a>
+              <a href="${whatsappUrl}" class="cta-btn cta-btn-outline" target="_blank" rel="noopener noreferrer"><ion-icon name="logo-whatsapp"></ion-icon>${rental ? 'Ask about renting' : 'Ask about buying'}</a>
+              <a href="tel:+2349036851168" class="cta-btn cta-btn-ghost"><ion-icon name="call-outline"></ion-icon>+234 903 685 1168</a>
               <button type="button" class="cta-btn cta-btn-ghost" id="shareBtn"><ion-icon name="share-social-outline"></ion-icon>Share Listing</button>
             </div>
             <div class="trust-row">
-              <div class="trust-item"><ion-icon name="shield-checkmark-outline"></ion-icon>Verified listing</div>
-              <div class="trust-item"><ion-icon name="people-outline"></ion-icon>Expert agents</div>
-              <div class="trust-item"><ion-icon name="document-text-outline"></ion-icon>Title support</div>
+              ${trustHtml}
             </div>
           </div>
         </aside>
@@ -425,6 +506,7 @@
   loadProperty();
 })();
 </script>
+  <?php require __DIR__ . '/assets/includes/whatsapp-float.php'; ?>
   <?php require __DIR__ . '/chatbot/chatbot.php'; ?>
 </body>
 </html>

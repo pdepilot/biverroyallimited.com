@@ -15,10 +15,11 @@ final class MailConfigService
     public static function providers(): array
     {
         return [
-            'gmail'    => 'Gmail (Google SMTP)',
-            'sendgrid' => 'SendGrid',
-            'brevo'    => 'Brevo (Sendinblue)',
-            'custom'   => 'Custom SMTP',
+            'gmail'     => 'Gmail (Google SMTP)',
+            'hostinger' => 'Hostinger Email',
+            'sendgrid'  => 'SendGrid',
+            'brevo'     => 'Brevo (Sendinblue)',
+            'custom'    => 'Custom SMTP',
         ];
     }
 
@@ -31,15 +32,34 @@ final class MailConfigService
             'host'              => 'smtp.gmail.com',
             'port'              => 587,
             'encryption'        => 'tls',
-            'username'          => 'biverroyaltyhomes01@gmail.com',
-            'password'          => 'ntsn fqrc ceay xnui',
+            'username'          => '',
+            'password'          => '',
             'timeout'           => 30,
-            'fromEmail'         => 'biverroyaltyhomes01@gmail.com',
+            'fromEmail'         => '',
             'fromName'          => 'Biver Royalty Homes',
-            'replyTo'           => 'biverroyaltyhomes01@gmail.com',
-            'notifyEmail'       => 'biverroyaltyhomes01@gmail.com',
+            'replyTo'           => '',
+            'notifyEmail'       => '',
             'notifyOnContact'   => true,
+            'autoReplyOnContact'=> true,
         ];
+    }
+
+    /**
+     * Normalize SMTP password (Gmail app passwords are often pasted with spaces).
+     */
+    public static function normalizeSmtpPassword(string $password): string
+    {
+        $password = trim($password);
+        if ($password === '') {
+            return '';
+        }
+
+        // Gmail app passwords: 16 chars, sometimes shown as "abcd efgh ijkl mnop"
+        if (preg_match('/^[a-zA-Z0-9]{4}(?:\s+[a-zA-Z0-9]{4}){3}$/', $password)) {
+            return str_replace(' ', '', $password);
+        }
+
+        return $password;
     }
 
     public static function localPath(): string
@@ -62,13 +82,14 @@ final class MailConfigService
             'port'            => (int) self::envOrConst('SMTP_PORT', 'MAIL_SMTP_PORT', '587'),
             'encryption'      => self::envOrConst('SMTP_ENCRYPTION', 'MAIL_SMTP_ENCRYPTION', 'tls'),
             'username'        => self::envOrConst('SMTP_USERNAME', 'MAIL_SMTP_USERNAME', ''),
-            'password'        => self::envOrConst('SMTP_PASSWORD', 'MAIL_SMTP_PASSWORD', ''),
+            'password'        => self::normalizeSmtpPassword(self::envOrConst('SMTP_PASSWORD', 'MAIL_SMTP_PASSWORD', '')),
             'timeout'         => (int) self::envOrConst('SMTP_TIMEOUT', 'MAIL_SMTP_TIMEOUT', '30'),
             'fromEmail'       => self::envOrConst('SMTP_FROM_EMAIL', 'MAIL_FROM_EMAIL', ''),
             'fromName'        => self::envOrConst('SMTP_FROM_NAME', 'MAIL_FROM_NAME', 'Biver Royalty Homes'),
             'replyTo'         => self::envOrConst('SMTP_REPLY_TO', 'MAIL_REPLY_TO', ''),
             'notifyEmail'     => self::envOrConst('SMTP_NOTIFY_EMAIL', 'MAIL_NOTIFY_EMAIL', ''),
             'notifyOnContact' => self::envBool('SMTP_NOTIFY_ON_CONTACT', 'MAIL_NOTIFY_ON_CONTACT', true),
+            'autoReplyOnContact' => self::envBool('SMTP_AUTO_REPLY_ON_CONTACT', 'MAIL_AUTO_REPLY_ON_CONTACT', true),
         ];
     }
 
@@ -97,7 +118,9 @@ final class MailConfigService
             'replyTo'           => $config['replyTo'],
             'notifyEmail'       => $config['notifyEmail'],
             'notifyOnContact'   => (bool) $config['notifyOnContact'],
+            'autoReplyOnContact'=> (bool) ($config['autoReplyOnContact'] ?? true),
             'passwordSet'       => ($config['password'] ?? '') !== '',
+            'mailLocalExists'   => is_readable(self::localPath()),
             'composerInstalled' => is_readable(dirname(__DIR__) . '/vendor/autoload.php'),
             'isReady'           => self::isReady(),
         ];
@@ -134,12 +157,13 @@ final class MailConfigService
             'replyTo'         => trim((string) ($input['replyTo'] ?? '')),
             'notifyEmail'     => trim((string) ($input['notifyEmail'] ?? '')),
             'notifyOnContact' => filter_var($input['notifyOnContact'] ?? true, FILTER_VALIDATE_BOOLEAN),
+            'autoReplyOnContact' => filter_var($input['autoReplyOnContact'] ?? true, FILTER_VALIDATE_BOOLEAN),
             'timeout'         => max(5, min(120, (int) ($input['timeout'] ?? 30))),
         ]);
 
         $newPassword = trim((string) ($input['password'] ?? ''));
         if ($newPassword !== '') {
-            $config['password'] = $newPassword;
+            $config['password'] = self::normalizeSmtpPassword($newPassword);
         } else {
             $config['password'] = (string) ($current['password'] ?? '');
         }
@@ -177,6 +201,11 @@ final class MailConfigService
         $presets = [
             'gmail' => [
                 'host'       => 'smtp.gmail.com',
+                'port'       => 587,
+                'encryption' => 'tls',
+            ],
+            'hostinger' => [
+                'host'       => 'smtp.hostinger.com',
                 'port'       => 587,
                 'encryption' => 'tls',
             ],
@@ -223,7 +252,8 @@ final class MailConfigService
             . "define('MAIL_FROM_NAME', " . var_export((string) $config['fromName'], true) . ");\n"
             . "define('MAIL_REPLY_TO', " . var_export((string) $config['replyTo'], true) . ");\n"
             . "define('MAIL_NOTIFY_EMAIL', " . var_export((string) $config['notifyEmail'], true) . ");\n"
-            . "define('MAIL_NOTIFY_ON_CONTACT', " . $bool((bool) $config['notifyOnContact']) . ");\n";
+            . "define('MAIL_NOTIFY_ON_CONTACT', " . $bool((bool) $config['notifyOnContact']) . ");\n"
+            . "define('MAIL_AUTO_REPLY_ON_CONTACT', " . $bool((bool) ($config['autoReplyOnContact'] ?? true)) . ");\n";
     }
 
     private static function sanitizeProvider(string $provider): string

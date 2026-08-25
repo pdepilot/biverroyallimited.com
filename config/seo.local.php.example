@@ -1,0 +1,18 @@
+<?php
+/**
+ * Copy to seo.local.php and fill in production tracking IDs.
+ * seo.local.php is gitignored.
+ */
+
+declare(strict_types=1);
+
+return [
+    'siteUrl' => 'https://biverroyaltyhomesltd.com',
+    'ga4MeasurementId' => 'G-XXXXXXXXXX',
+    'googleSiteVerification' => '',
+    // 'adsenseSlots' => [
+    //     'top' => '1234567890',
+    //     'in_content' => '1234567890',
+    //     'article_end' => '1234567890',
+    // ],
+];

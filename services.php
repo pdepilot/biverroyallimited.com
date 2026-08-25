@@ -1,23 +1,30 @@
-﻿<?php require_once __DIR__ . '/includes/htaccess_redirect.php'; ?>
+<?php require_once __DIR__ . '/includes/htaccess_redirect.php'; ?>
+<?php
+require_once __DIR__ . '/includes/PageContentService.php';
+require_once __DIR__ . '/includes/site_helpers.php';
+require_once __DIR__ . '/includes/SeoService.php';
+$servicesPage = PageContentService::getPage('services');
+$svcHero = $servicesPage['hero'] ?? [];
+$svcShowcase = $servicesPage['showcase'] ?? [];
+$svcCards = $servicesPage['cards'] ?? [];
+$svcCta = $servicesPage['cta'] ?? [];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Biver Royalty Homes - Premium real estate services in Nigeria. Property sales, rentals, estate management, development, and consulting.">
-  <meta name="keywords" content="real estate services Nigeria, property management, estate development, property sales, property rental, Biver Royalty">
-  <meta name="author" content="Biver Royalty Homes Ltd">
-  <title>Our Services | Biver Royalty Homes - Premium Real Estate Services</title>
-  <link rel="shortcut icon" href="./assets/images/biver-logo.png" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/css/site-variables.css">
-  <link rel="stylesheet" href="./assets/css/site-utilities.css">
-  <link rel="stylesheet" href="./assets/css/services.css">
-  <?php require_once __DIR__ . '/includes/site_paths.php'; ?>
-  <link rel="stylesheet" href="./assets/css/site-header.css">
+<?php
+SeoService::renderHead([
+    'title' => 'Property Sales, Rentals & Management in Owerri | Biver Royalty',
+    'description' => 'Buy, rent, or manage property in Owerri with Biver Royalty Homes Ltd. Sales, rentals, estate management, and consultation across Imo State.',
+    'keywords' => 'property sales Owerri, house rentals Imo State, estate management Owerri, real estate services Nigeria, Biver Royalty Homes',
+    'page' => 'services',
+    'stylesheets' => ['./assets/css/services.css'],
+    'breadcrumbs' => [
+        ['name' => 'Home', 'url' => pageUrl('index')],
+        ['name' => 'Services'],
+    ],
+]);
+?>
 </head>
 <body>
 
@@ -39,9 +46,9 @@
           <address>No. 31 Wetheral Road, Angelina Plaza, Owerri, Imo State</address>
         </a>
         <div class="topbar-divider" aria-hidden="true"></div>
-        <a href="tel:+2349033137432" class="topbar-link" aria-label="Call us">
+        <a href="tel:+2349036851168" class="topbar-link" aria-label="Call us">
           <ion-icon name="call-outline"></ion-icon>
-          <span>+234 903 313 7432</span>
+          <span>+234 903 685 1168</span>
         </a>
       </div>
       <div class="topbar-right">
@@ -62,7 +69,7 @@
   </div>
 
   <!-- =============================================
-       SEARCH MODAL — Feature #2
+       SEARCH MODAL � Feature #2
        Fullscreen property search with instant filtering.
        Triggered by the search button in the header/bottom bar.
   ============================================= -->
@@ -117,15 +124,18 @@
                 <li role="none"><a href="<?= pageHref('about') ?>" class="navbar-link" data-nav-link role="menuitem">About</a></li>
                 <li role="none"><a href="<?= pageHref('services') ?>" class="navbar-link" data-nav-link role="menuitem">Services</a></li>
                 <li role="none"><a href="<?= pageHref('property') ?>" class="navbar-link" data-nav-link role="menuitem">Properties</a></li>
+                <li role="none"><a href="<?= pageHref('locations') ?>" class="navbar-link" data-nav-link role="menuitem">Locations</a></li>
+                <li role="none"><a href="<?= pageHref('faqs') ?>" class="navbar-link" data-nav-link role="menuitem">FAQs</a></li>
+                <li role="none"><a href="<?= pageHref('blog') ?>" class="navbar-link" data-nav-link role="menuitem">Blog</a></li>
                 <li role="none"><a href="<?= pageHref('contact') ?>" class="navbar-link" data-nav-link role="menuitem">Contact</a></li>
               </ul>
             </div>
 
             <div class="navbar-footer">
               <p class="navbar-footer-title">Get in Touch</p>
-              <a href="tel:+2349033137432" class="navbar-footer-link">
+              <a href="tel:+2349036851168" class="navbar-footer-link">
                 <ion-icon name="call-outline"></ion-icon>
-                <span>+234 903 313 7432</span>
+                <span>+234 903 685 1168</span>
               </a>
               <a href="mailto:biverroyaltyhomes01@gmail.com" class="navbar-footer-link">
                 <ion-icon name="mail-outline"></ion-icon>
@@ -157,13 +167,13 @@
     <section class="services-hero">
       <div class="hero-shape"></div>
       <div class="container">
-        <div class="hero-badge"><div class="line"></div><span>Premium Services</span></div>
-        <h1>Comprehensive <span class="gold-accent">Real Estate</span> Solutions</h1>
-        <p class="hero-description">From property acquisition to estate management, we deliver excellence at every step. Your dream property journey starts here.</p>
+        <div class="hero-badge"><div class="line"></div><span><?= siteEscape((string) ($svcHero['badge'] ?? 'Premium Services')) ?></span></div>
+        <h1><?= $svcHero['title'] ?? 'Comprehensive <span class="gold-accent">Real Estate</span> Solutions' ?></h1>
+        <p class="hero-description"><?= siteEscape((string) ($svcHero['description'] ?? '')) ?></p>
         <div class="hero-stats">
-          <div class="hero-stat"><div class="number">500+</div><div class="label">Properties Sold</div></div>
-          <div class="hero-stat"><div class="number">1,200+</div><div class="label">Happy Clients</div></div>
-          <div class="hero-stat"><div class="number">98%</div><div class="label">Satisfaction Rate</div></div>
+          <?php foreach (($svcHero['stats'] ?? []) as $stat): ?>
+          <div class="hero-stat"><div class="number"><?= siteEscape((string) ($stat['num'] ?? '')) ?></div><div class="label"><?= siteEscape((string) ($stat['label'] ?? '')) ?></div></div>
+          <?php endforeach; ?>
         </div>
       </div>
     </section>
@@ -171,93 +181,31 @@
     <!-- Services Grid -->
     <section class="services-showcase">
       <div class="container">
-        <div class="section-eyebrow reveal"><div class="line"></div><span>What We Offer</span><div class="line"></div></div>
-        <h2 class="section-title reveal reveal-delay-1">Tailored Services for Every Need</h2>
+        <div class="section-eyebrow reveal"><div class="line"></div><span><?= siteEscape((string) ($svcShowcase['eyebrow'] ?? 'What We Offer')) ?></span><div class="line"></div></div>
+        <h2 class="section-title reveal reveal-delay-1"><?= siteEscape((string) ($svcShowcase['title'] ?? 'Tailored Services for Every Need')) ?></h2>
         <div class="service-grid">
-          <!-- Service 1 -->
-          <div class="service-card-premium reveal reveal-left">
-            <div class="service-icon-wrapper"><div class="service-icon"><ion-icon name="home-outline"></ion-icon></div></div>
+          <?php foreach ($svcCards as $i => $card): ?>
+          <?php
+            $revealClass = 'reveal';
+            if ($i % 3 === 0) $revealClass .= ' reveal-left';
+            elseif ($i % 3 === 1) $revealClass .= ' reveal-up';
+            else $revealClass .= ' reveal-right';
+            if ($i > 2) $revealClass .= ' reveal-delay-1';
+          ?>
+          <div class="service-card-premium <?= $revealClass ?>">
+            <div class="service-icon-wrapper"><div class="service-icon"><ion-icon name="<?= siteEscape((string) ($card['icon'] ?? 'home-outline')) ?>"></ion-icon></div></div>
             <div class="service-content">
-              <h3 class="service-title">Property Sales</h3>
-              <p class="service-description">Find your perfect home or investment property with our expert guidance and extensive network.</p>
+              <h3 class="service-title"><?= siteEscape((string) ($card['title'] ?? '')) ?></h3>
+              <p class="service-description"><?= siteEscape((string) ($card['description'] ?? '')) ?></p>
               <ul class="service-features">
-                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Verified Listings</li>
-                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Market Valuation</li>
-                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Legal Documentation</li>
+                <?php foreach (($card['features'] ?? []) as $feature): ?>
+                <li><ion-icon name="checkmark-circle-outline"></ion-icon> <?= siteEscape((string) $feature) ?></li>
+                <?php endforeach; ?>
               </ul>
-              <a href="<?= pageHref('property') ?>" class="service-link">Explore Properties <ion-icon name="arrow-forward-outline"></ion-icon></a>
+              <a href="<?= pageHref((string) ($card['linkPage'] ?? 'contact')) ?>" class="service-link"><?= siteEscape((string) ($card['linkLabel'] ?? 'Learn More')) ?> <ion-icon name="arrow-forward-outline"></ion-icon></a>
             </div>
           </div>
-          <!-- Service 2 -->
-          <div class="service-card-premium reveal reveal-up">
-            <div class="service-icon-wrapper"><div class="service-icon"><ion-icon name="key-outline"></ion-icon></div></div>
-            <div class="service-content">
-              <h3 class="service-title">Property Rentals</h3>
-              <p class="service-description">Flexible rental solutions for residential and commercial spaces with transparent terms.</p>
-              <ul class="service-features">
-                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Wide Selection</li>
-                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Lease Negotiation</li>
-                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Property Inspection</li>
-              </ul>
-              <a href="<?= pageHref('property') ?>" class="service-link">Find Rentals <ion-icon name="arrow-forward-outline"></ion-icon></a>
-            </div>
-          </div>
-          <!-- Service 3 -->
-          <div class="service-card-premium reveal reveal-right">
-            <div class="service-icon-wrapper"><div class="service-icon"><ion-icon name="construct-outline"></ion-icon></div></div>
-            <div class="service-content">
-              <h3 class="service-title">Estate Management</h3>
-              <p class="service-description">Professional management services to maintain and enhance your property's value.</p>
-              <ul class="service-features">
-                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Tenant Management</li>
-                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Maintenance Services</li>
-                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Rent Collection</li>
-              </ul>
-              <a href="<?= pageHref('contact') ?>" class="service-link">Learn More <ion-icon name="arrow-forward-outline"></ion-icon></a>
-            </div>
-          </div>
-          <!-- Service 4 -->
-          <div class="service-card-premium reveal reveal-left reveal-delay-1">
-            <div class="service-icon-wrapper"><div class="service-icon"><ion-icon name="business-outline"></ion-icon></div></div>
-            <div class="service-content">
-              <h3 class="service-title">Property Development</h3>
-              <p class="service-description">End-to-end development services from land acquisition to project completion.</p>
-              <ul class="service-features">
-                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Land Acquisition</li>
-                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Project Management</li>
-                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Quality Construction</li>
-              </ul>
-              <a href="<?= pageHref('contact') ?>" class="service-link">Start a Project <ion-icon name="arrow-forward-outline"></ion-icon></a>
-            </div>
-          </div>
-          <!-- Service 5 -->
-          <div class="service-card-premium reveal reveal-up reveal-delay-1">
-            <div class="service-icon-wrapper"><div class="service-icon"><ion-icon name="document-text-outline"></ion-icon></div></div>
-            <div class="service-content">
-              <h3 class="service-title">Legal & Documentation</h3>
-              <p class="service-description">Complete legal support for all real estate transactions with certified professionals.</p>
-              <ul class="service-features">
-                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Title Verification</li>
-                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Contract Drafting</li>
-                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Due Diligence</li>
-              </ul>
-              <a href="<?= pageHref('contact') ?>" class="service-link">Get Consultation <ion-icon name="arrow-forward-outline"></ion-icon></a>
-            </div>
-          </div>
-          <!-- Service 6 -->
-          <div class="service-card-premium reveal reveal-right reveal-delay-1">
-            <div class="service-icon-wrapper"><div class="service-icon"><ion-icon name="map-outline"></ion-icon></div></div>
-            <div class="service-content">
-              <h3 class="service-title">Survey & Land Services</h3>
-              <p class="service-description">Professional survey plans and land documentation for secure property ownership.</p>
-              <ul class="service-features">
-                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Survey Plans</li>
-                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Land Verification</li>
-                <li><ion-icon name="checkmark-circle-outline"></ion-icon> Site Planning</li>
-              </ul>
-              <a href="<?= pageHref('contact') ?>" class="service-link">Request Survey <ion-icon name="arrow-forward-outline"></ion-icon></a>
-            </div>
-          </div>
+          <?php endforeach; ?>
         </div>
       </div>
     </section>
@@ -321,9 +269,9 @@
               </a>
             </li>
             <li>
-              <a href="tel:+2349033137432" class="contact-link">
+              <a href="tel:+2349036851168" class="contact-link">
                 <ion-icon name="call-outline"></ion-icon>
-                <span>+234 903 313 7432</span>
+                <span>+234 903 685 1168</span>
               </a>
             </li>
             <li>
@@ -344,33 +292,36 @@
           <ul class="footer-list">
             <li><p class="footer-list-title">Company</p></li>
             <li><a href="<?= pageHref('about') ?>" class="footer-link">About Us</a></li>
-            <li><a href="https://blog.biverroyaltyhomesltd.com/" class="footer-link" target="_blank" rel="noopener noreferrer">Blog</a></li>
+            <li><a href="<?= pageHref('blog') ?>" class="footer-link">Blog</a></li>
             <li><a href="<?= pageHref('property') ?>" class="footer-link">All Properties</a></li>
-            <li><a href="#" class="footer-link">Locations Map</a></li>
-            <li><a href="#" class="footer-link">FAQ</a></li>
+            <li><a href="<?= pageHref('locations') ?>" class="footer-link">Owerri Locations</a></li>
+            <li><a href="<?= pageHref('faqs') ?>" class="footer-link">FAQ</a></li>
             <li><a href="<?= pageHref('contact') ?>" class="footer-link">Contact Us</a></li>
           </ul>
           <ul class="footer-list">
             <li><p class="footer-list-title">Services</p></li>
-            <li><a href="<?= pageHref('addCart') ?>" class="footer-link">Order Tracking</a></li>
-            <li><a href="<?= pageHref('favorites') ?>" class="footer-link">Wish List</a></li>
-            <li><a href="<?= pageHref('login') ?>" class="footer-link">Login</a></li>
-            <li><a href="<?= pageHref('userDashboard') ?>" class="footer-link">My Account</a></li>
-            <li><a href="#" class="footer-link">Terms &amp; Conditions</a></li>
-            <li><a href="<?= pageHref('property') ?>" class="footer-link">Promotions</a></li>
+            <li><a href="<?= pageHref('services') ?>" class="footer-link">Our Services</a></li>
+            <li><a href="<?= pageHref('property') ?>" class="footer-link">Buy a Home</a></li>
+            <li><a href="<?= pageHref('property') ?>" class="footer-link">Rent a Home</a></li>
+            <li><a href="<?= pageHref('list-your-property') ?>" class="footer-link">List Your Property</a></li>
+            <li><a href="<?= pageHref('services') ?>" class="footer-link">Estate Management</a></li>
+            <li><a href="<?= pageHref('contact') ?>" class="footer-link">Property Consultation</a></li>
           </ul>
           <ul class="footer-list">
-            <li><p class="footer-list-title">Customer Care</p></li>
-            <li><a href="<?= pageHref('login') ?>" class="footer-link">Login</a></li>
-            <li><a href="<?= pageHref('userDashboard') ?>" class="footer-link">My Account</a></li>
-            <li><a href="<?= pageHref('favorites') ?>" class="footer-link">Wish List</a></li>
-            <li><a href="<?= pageHref('addCart') ?>" class="footer-link">Order Tracking</a></li>
-            <li><a href="#" class="footer-link">FAQ</a></li>
+            <li><p class="footer-list-title">Explore</p></li>
+            <li><a href="<?= pageHref('property') ?>" class="footer-link">Browse Properties</a></li>
+            <li><a href="<?= pageHref('list-your-property') ?>" class="footer-link">Sell With Us</a></li>
+            <li><a href="<?= pageHref('faqs') ?>" class="footer-link">FAQ</a></li>
+            <li><a href="<?= pageHref('blog') ?>" class="footer-link">Blog</a></li>
             <li><a href="<?= pageHref('contact') ?>" class="footer-link">Contact Us</a></li>
+            <li><a href="<?= pageHref('terms') ?>" class="footer-link">Terms &amp; Conditions</a></li>
+            <li><a href="<?= pageHref('privacy') ?>" class="footer-link">Privacy Policy</a></li>
+            <li><a href="<?= pageHref('cookie-policy') ?>" class="footer-link">Cookie Policy</a></li>
           </ul>
         </div>
       </div>
     </div>
+    <?php require __DIR__ . '/assets/includes/newsletter-strip.php'; ?>
     <div class="footer-bottom">
       <div class="container">
         <p class="copyright">
@@ -394,6 +345,8 @@
     const delays = { 'reveal-delay-1': 100, 'reveal-delay-2': 200, 'reveal-delay-3': 300 };
     Object.keys(delays).forEach(cls => { document.querySelectorAll(`.${cls}`).forEach((el, i) => el.style.transitionDelay = `${delays[cls] + i * 50}ms`); });
   </script>
+  <?php require __DIR__ . '/assets/includes/site-end.php'; ?>
+  <?php require __DIR__ . '/assets/includes/whatsapp-float.php'; ?>
   <?php require __DIR__ . '/chatbot/chatbot.php'; ?>
 </body>
 </html>

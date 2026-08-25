@@ -1,6 +1,6 @@
 /**
  * Promotional banner + cookie consent — Biver Royalty Homes
- * Flow: preloader → promo spotlight → cookie banner
+ * Flow: promo spotlight → cookie banner
  */
 (function () {
   'use strict';
@@ -90,15 +90,7 @@
       scheduleCookieBanner();
     });
 
-    const startPromo = () => openPromoSpotlight(section);
-
-    const preloader = document.getElementById('preloader');
-    if (!preloader || preloader.classList.contains('hidden')) {
-      startPromo();
-    } else {
-      window.addEventListener('biver:preloader-done', startPromo, { once: true });
-      setTimeout(startPromo, 4500);
-    }
+    openPromoSpotlight(section);
   }
 
   function hideCookieBanner(banner, backdrop) {
@@ -161,6 +153,12 @@
     const finalize = (consent) => {
       saveCookieConsent(consent);
       hideCookieBanner(banner, backdrop);
+      try {
+        window.BiverVisitTracker?.onConsent?.(consent);
+      } catch (_) { /* ignore */ }
+      try {
+        window.dispatchEvent(new CustomEvent('biver:consent', { detail: consent }));
+      } catch (_) { /* ignore */ }
     };
 
     btnManage?.addEventListener('click', () => {

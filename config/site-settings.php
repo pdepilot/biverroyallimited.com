@@ -5,9 +5,14 @@ declare(strict_types=1);
 return array (
   'siteName' => 'Biver Royalty Homes',
   'contactEmail' => 'biverroyaltyhomes01@gmail.com',
-  'contactPhone' => '+234 903 313 7432',
+  'contactPhone' => '+234 903 685 1168',
   'address' => 'No. 31 Wetheral Road, Angelina Plaza, Owerri, Imo State',
   'aboutText' => 'We are a real estate company built on integrity, helping clients find premium homes across Nigeria.',
   'adminPhone' => '',
-  'updatedAt' => '2026-06-01T22:37:46+02:00',
+  'socialFacebook' => 'https://www.facebook.com/share/1B8mwpRi5L/',
+  'socialInstagram' => 'https://www.instagram.com/biverroyaltyhomes.ng',
+  'socialTiktok' => 'https://www.tiktok.com/@biverroyaltyhomesltd',
+  'socialTwitter' => '',
+  'businessHours' => 'Mon – Sat: 9:00 AM – 6:00 PM',
+  'updatedAt' => '2026-07-07T23:48:42+02:00',
 );

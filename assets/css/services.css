@@ -1,6 +1,8 @@
 /* Extracted from services.php */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: var(--ff-body); background: var(--white); overflow-x: hidden; color: var(--dark-jungle-green); }
+    html { overflow-x: clip; max-width: 100%; }
+    body { font-family: var(--ff-body); background: var(--white); overflow-x: clip; color: var(--dark-jungle-green); width: 100%; max-width: 100%; }
+    main { overflow-x: clip; max-width: 100%; }
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: var(--prussian-blue); }
     ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
@@ -367,18 +369,44 @@
     /* Reveal Animations */
     .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s, transform 0.8s; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-up { transform: translateY(40px); }
+    .reveal-up.visible { transform: translateY(0); }
     .reveal-left { transform: translateX(-40px); }
     .reveal-left.visible { transform: translateX(0); }
     .reveal-right { transform: translateX(40px); }
     .reveal-right.visible { transform: translateX(0); }
 
     @media (max-width: 992px) {
+      .reveal-left,
+      .reveal-right {
+        transform: translateY(32px);
+      }
+      .reveal-left.visible,
+      .reveal-right.visible {
+        transform: translateY(0);
+      }
       .service-grid { grid-template-columns: repeat(2, 1fr); }
       .benefits-grid { grid-template-columns: repeat(2, 1fr); }
       .process-steps { flex-direction: column; }
     }
     @media (max-width: 768px) {
+      .services-hero {
+        min-height: auto;
+        padding-block: 100px 60px;
+      }
       .service-grid { grid-template-columns: 1fr; }
       .benefits-grid { grid-template-columns: 1fr; }
       .container { padding-inline: 20px; }
+      .hero-stats { gap: 24px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal,
+      .reveal-left,
+      .reveal-right,
+      .reveal-up {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
     }

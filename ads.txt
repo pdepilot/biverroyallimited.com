@@ -1,0 +1,4 @@
+# ads.txt — Biver Royalty Homes Ltd
+# Authorized seller for Google AdSense
+# https://biverroyaltyhomesltd.com/ads.txt
+google.com, pub-4828740366189357, DIRECT, f08c47fec0942fa0

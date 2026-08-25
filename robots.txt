@@ -1,0 +1,17 @@
+# Biver Royalty Homes — crawler rules
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /sql/
+Disallow: /tools/
+Disallow: /config/
+Disallow: /includes/
+Disallow: /vendor/
+Disallow: /chatbot/chatbot-admin.php
+Disallow: /chatbot/includes/
+
+User-agent: Mediapartners-Google
+Allow: /
+
+Sitemap: https://biverroyaltyhomesltd.com/sitemap.xml

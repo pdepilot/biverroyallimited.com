@@ -1,3 +1,5 @@
 /vendor/
 /config/mail.local.php
+/config/database.local.php
+/config/seo.local.php
 composer.phar

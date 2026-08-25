@@ -1,23 +1,37 @@
-﻿<?php require_once __DIR__ . '/includes/htaccess_redirect.php'; ?>
+<?php require_once __DIR__ . '/includes/htaccess_redirect.php'; ?>
+<?php
+require_once __DIR__ . '/includes/PageContentService.php';
+require_once __DIR__ . '/includes/site_helpers.php';
+require_once __DIR__ . '/includes/SeoService.php';
+$aboutPage = PageContentService::getPage('about');
+$aboutHero = $aboutPage['hero'] ?? [];
+$aboutNarrative = $aboutPage['narrative'] ?? [];
+$aboutPhilosophy = $aboutPage['philosophy']['items'] ?? [];
+$aboutJourney = $aboutPage['journey'] ?? [];
+$aboutJourneyItems = $aboutJourney['items'] ?? [];
+$aboutValues = $aboutPage['values'] ?? [];
+$aboutValueItems = $aboutValues['items'] ?? [];
+$aboutTeam = $aboutPage['team'] ?? [];
+$aboutTeamMembers = $aboutTeam['members'] ?? [];
+$aboutCta = $aboutPage['cta'] ?? [];
+$ctaLink = pageHref((string) ($aboutCta['link'] ?? 'contact'));
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Biver Royalty Homes - The untold story of integrity, vision, and architectural excellence in Nigerian real estate.">
-  <meta name="keywords" content="about Biver Royalty, real estate story, Nigerian real estate, Owerri property, luxury homes">
-  <meta name="author" content="Biver Royalty Homes Ltd">
-  <title>About Us | The Biver Royalty Story</title>
-  <link rel="shortcut icon" href="./assets/images/biver-logo.png" type="image/png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/css/site-variables.css">
-  <link rel="stylesheet" href="./assets/css/site-utilities.css">
-  <link rel="stylesheet" href="./assets/css/about.css">
-  <?php require_once __DIR__ . '/includes/site_paths.php'; ?>
-  <link rel="stylesheet" href="./assets/css/site-header.css">
+<?php
+SeoService::renderHead([
+    'title' => 'About Biver Royalty Homes Ltd | Real Estate Agency in Owerri',
+    'description' => 'Meet Biver Royalty Homes Ltd — Owerri’s integrity-first real estate agency on Wetheral Road, helping families buy, rent, and sell homes across Imo State.',
+    'keywords' => 'about Biver Royalty Homes Ltd, real estate agency Owerri, estate agent Imo State, Wetheral Road Owerri',
+    'page' => 'about',
+    'stylesheets' => ['./assets/css/about.css'],
+    'breadcrumbs' => [
+        ['name' => 'Home', 'url' => pageUrl('index')],
+        ['name' => 'About Us'],
+    ],
+]);
+?>
 </head>
 <body>
 
@@ -39,9 +53,9 @@
           <address>No. 31 Wetheral Road, Angelina Plaza, Owerri, Imo State</address>
         </a>
         <div class="topbar-divider" aria-hidden="true"></div>
-        <a href="tel:+2349033137432" class="topbar-link" aria-label="Call us">
+        <a href="tel:+2349036851168" class="topbar-link" aria-label="Call us">
           <ion-icon name="call-outline"></ion-icon>
-          <span>+234 903 313 7432</span>
+          <span>+234 903 685 1168</span>
         </a>
       </div>
       <div class="topbar-right">
@@ -62,7 +76,7 @@
   </div>
 
   <!-- =============================================
-       SEARCH MODAL — Feature #2
+       SEARCH MODAL � Feature #2
        Fullscreen property search with instant filtering.
        Triggered by the search button in the header/bottom bar.
   ============================================= -->
@@ -117,15 +131,18 @@
                 <li role="none"><a href="<?= pageHref('about') ?>" class="navbar-link" data-nav-link role="menuitem">About</a></li>
                 <li role="none"><a href="<?= pageHref('services') ?>" class="navbar-link" data-nav-link role="menuitem">Services</a></li>
                 <li role="none"><a href="<?= pageHref('property') ?>" class="navbar-link" data-nav-link role="menuitem">Properties</a></li>
+                <li role="none"><a href="<?= pageHref('locations') ?>" class="navbar-link" data-nav-link role="menuitem">Locations</a></li>
+                <li role="none"><a href="<?= pageHref('faqs') ?>" class="navbar-link" data-nav-link role="menuitem">FAQs</a></li>
+                <li role="none"><a href="<?= pageHref('blog') ?>" class="navbar-link" data-nav-link role="menuitem">Blog</a></li>
                 <li role="none"><a href="<?= pageHref('contact') ?>" class="navbar-link" data-nav-link role="menuitem">Contact</a></li>
               </ul>
             </div>
 
             <div class="navbar-footer">
               <p class="navbar-footer-title">Get in Touch</p>
-              <a href="tel:+2349033137432" class="navbar-footer-link">
+              <a href="tel:+2349036851168" class="navbar-footer-link">
                 <ion-icon name="call-outline"></ion-icon>
-                <span>+234 903 313 7432</span>
+                <span>+234 903 685 1168</span>
               </a>
               <a href="mailto:biverroyaltyhomes01@gmail.com" class="navbar-footer-link">
                 <ion-icon name="mail-outline"></ion-icon>
@@ -160,14 +177,13 @@
       <div class="hero-bg-pattern"></div>
       <div class="hero-glow"></div>
       <div class="container">
-        <div class="hero-subtitle">EST. 2015</div>
-        <h1 class="hero-title">Architects of <span class="gold-accent">Dreams</span>,<br>Builders of Trust</h1>
-        <p class="hero-description">Biver Royalty Homes wasn't built on transactions â€” it was built on relationships. In a world of empty promises, we chose integrity as our foundation.</p>
+        <div class="hero-subtitle"><?= siteEscape((string) ($aboutHero['subtitle'] ?? 'EST. 2015')) ?></div>
+        <h1 class="hero-title"><?= $aboutHero['title'] ?? 'Architects of <span class="gold-accent">Dreams</span>,<br>Builders of Trust' ?></h1>
+        <p class="hero-description"><?= siteEscape((string) ($aboutHero['description'] ?? '')) ?></p>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-number">1,200+</div><div class="stat-label">Families Served</div></div>
-          <div class="stat-card"><div class="stat-number">500+</div><div class="stat-label">Properties Sold</div></div>
-          <div class="stat-card"><div class="stat-number">100%</div><div class="stat-label">Client Trust</div></div>
-          <div class="stat-card"><div class="stat-number">10+</div><div class="stat-label">Years of Excellence</div></div>
+          <?php foreach (($aboutHero['stats'] ?? []) as $stat): ?>
+          <div class="stat-card"><div class="stat-number"><?= siteEscape((string) ($stat['num'] ?? '')) ?></div><div class="stat-label"><?= siteEscape((string) ($stat['label'] ?? '')) ?></div></div>
+          <?php endforeach; ?>
         </div>
       </div>
     </section>
@@ -179,93 +195,97 @@
       <div class="container">
         <div class="narrative-grid">
           <div class="narrative-content reveal reveal-left">
-            <div class="narrative-badge"><div class="line"></div><span>The Untold Story</span></div>
-            <h2 class="narrative-title">From a Bold Vision to Nigeria's Most Trusted Real Estate Name</h2>
-            <p class="narrative-text">In 2015, Oliva Guiffo saw a gap in Nigeria's real estate market â€” not a gap in properties, but a gap in integrity. While others prioritized commissions over clients, he envisioned something radical: a real estate company where transparency wasn't a buzzword, but a sacred promise.</p>
-            <p class="narrative-text">What started as a one-man mission in Owerri has blossomed into a movement. Today, Biver Royalty Homes stands as a testament to what happens when you put people before profit, relationships before revenue, and dreams before documents.</p>
-            <div class="narrative-quote">We don't sell houses. We hand over the keys to futures. Every client who walks through our doors becomes family â€” and family deserves nothing less than excellence.</div>
-            <div class="signature">Mr” Oliva Guiffo, Founder</div>
+            <div class="narrative-badge"><div class="line"></div><span><?= siteEscape((string) ($aboutNarrative['badge'] ?? 'The Untold Story')) ?></span></div>
+            <h2 class="narrative-title"><?= siteEscape((string) ($aboutNarrative['title'] ?? '')) ?></h2>
+            <p class="narrative-text"><?= siteEscape((string) ($aboutNarrative['paragraph1'] ?? '')) ?></p>
+            <p class="narrative-text"><?= siteEscape((string) ($aboutNarrative['paragraph2'] ?? '')) ?></p>
+            <div class="narrative-quote"><?= siteEscape((string) ($aboutNarrative['quote'] ?? '')) ?></div>
+            <div class="signature"><?= siteEscape((string) ($aboutNarrative['signature'] ?? '')) ?></div>
           </div>
           <div class="visual-story reveal reveal-right">
-            <img src="./assets/images/engineer1.png" alt="Founder at work" class="main-image" loading="lazy">
-            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=500&auto=format&fit=crop&q=80" alt="Early days" class="floating-image" loading="lazy">
-            <div class="image-caption">The Journey Begins in Owerri, 2015</div>
+            <img src="<?= siteEscape((string) ($aboutNarrative['mainImage'] ?? './assets/images/engineer1.png')) ?>" alt="Founder at work" class="main-image" loading="lazy">
+            <img src="<?= siteEscape((string) ($aboutNarrative['floatImage'] ?? 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=500&auto=format&fit=crop&q=80')) ?>" alt="Early days" class="floating-image" loading="lazy">
+            <div class="image-caption"><?= siteEscape((string) ($aboutNarrative['caption'] ?? 'The Journey Begins in Owerri, 2015')) ?></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- =============================================
-         PHILOSOPHY - Three Pillars
-    ============================================= -->
     <section class="philosophy">
       <div class="container">
         <div class="philosophy-grid">
-          <div class="pillar-card reveal"><div class="pillar-icon"><ion-icon name="shield-checkmark-outline"></ion-icon></div><h3 class="pillar-title">Radical Integrity</h3><p class="pillar-text">We speak truth even when it costs us a sale. No hidden fees, no misleading listings, no fine print surprises. Just honest guidance.</p></div>
-          <div class="pillar-card reveal reveal-delay-1"><div class="pillar-icon"><ion-icon name="heart-outline"></ion-icon></div><h3 class="pillar-title">Obsessive Care</h3><p class="pillar-text">Your dream becomes our mission. We lose sleep so you can rest easy, handling every detail with white-glove precision.</p></div>
-          <div class="pillar-card reveal reveal-delay-2"><div class="pillar-icon"><ion-icon name="star-outline"></ion-icon></div><h3 class="pillar-title">Unwavering Excellence</h3><p class="pillar-text">From property sourcing to legal documentation, we obsess over quality. Mediocrity has no place in our vocabulary.</p></div>
+          <?php foreach ($aboutPhilosophy as $i => $pillar): ?>
+          <div class="pillar-card reveal<?= $i > 0 ? ' reveal-delay-' . min($i, 2) : '' ?>">
+            <div class="pillar-icon"><ion-icon name="<?= siteEscape((string) ($pillar['icon'] ?? 'star-outline')) ?>"></ion-icon></div>
+            <h3 class="pillar-title"><?= siteEscape((string) ($pillar['title'] ?? '')) ?></h3>
+            <p class="pillar-text"><?= siteEscape((string) ($pillar['text'] ?? '')) ?></p>
+          </div>
+          <?php endforeach; ?>
         </div>
       </div>
     </section>
 
-    <!-- =============================================
-         JOURNEY - Timeline
-    ============================================= -->
     <section class="journey">
       <div class="container">
-        <div class="section-eyebrow reveal"><div class="line"></div><span>Our Journey</span><div class="line"></div></div>
-        <h2 class="section-title reveal reveal-delay-1">The Road to Redefining Real Estate</h2>
+        <div class="section-eyebrow reveal"><div class="line"></div><span><?= siteEscape((string) ($aboutJourney['eyebrow'] ?? 'Our Journey')) ?></span><div class="line"></div></div>
+        <h2 class="section-title reveal reveal-delay-1"><?= siteEscape((string) ($aboutJourney['title'] ?? '')) ?></h2>
         <div class="timeline">
-          <div class="timeline-item reveal reveal-left"><div class="timeline-year">2015</div><div class="timeline-content"><div class="timeline-dot"></div><h4 class="timeline-title">The Seed is Planted</h4><p class="timeline-text">Biver Royalty Homes opens its doors in a small office on Wetheral Road, Owerri. First property sold within 3 months.</p></div></div>
-          <div class="timeline-item reveal reveal-right"><div class="timeline-year">2017</div><div class="timeline-content"><div class="timeline-dot"></div><h4 class="timeline-title">Expansion & Recognition</h4><p class="timeline-text">Named "Most Trusted Real Estate Agency" in Imo State. Team grows to 12 dedicated agents.</p></div></div>
-          <div class="timeline-item reveal reveal-left"><div class="timeline-year">2019</div><div class="timeline-content"><div class="timeline-dot"></div><h4 class="timeline-title">Digital Transformation</h4><p class="timeline-text">Launch of comprehensive online platform, making property search accessible to thousands across Nigeria.</p></div></div>
-          <div class="timeline-item reveal reveal-right"><div class="timeline-year">2022</div><div class="timeline-content"><div class="timeline-dot"></div><h4 class="timeline-title">1,000+ Families</h4><p class="timeline-text">Milestone achievement: 1,000 happy families find their dream homes through Biver Royalty.</p></div></div>
-          <div class="timeline-item reveal reveal-left"><div class="timeline-year">2024</div><div class="timeline-content"><div class="timeline-dot"></div><h4 class="timeline-title">Industry Leadership</h4><p class="timeline-text">Recognized as a leading force in Nigerian real estate, setting new standards for integrity and client care.</p></div></div>
+          <?php foreach ($aboutJourneyItems as $i => $item): ?>
+          <div class="timeline-item reveal <?= $i % 2 === 0 ? 'reveal-left' : 'reveal-right' ?>">
+            <div class="timeline-year"><?= siteEscape((string) ($item['year'] ?? '')) ?></div>
+            <div class="timeline-content">
+              <div class="timeline-dot"></div>
+              <h4 class="timeline-title"><?= siteEscape((string) ($item['title'] ?? '')) ?></h4>
+              <p class="timeline-text"><?= siteEscape((string) ($item['text'] ?? '')) ?></p>
+            </div>
+          </div>
+          <?php endforeach; ?>
         </div>
       </div>
     </section>
 
-    <!-- =============================================
-         VALUES - Core Values Deep Dive
-    ============================================= -->
     <section class="values">
       <div class="container">
         <div class="values-grid">
           <div class="values-list">
-            <div class="value-item reveal reveal-left"><div class="value-icon"><ion-icon name="people-outline"></ion-icon></div><div class="value-text"><h4>People First, Always</h4><p>Behind every transaction is a family, a dream, a future. We never forget that.</p></div></div>
-            <div class="value-item reveal reveal-left reveal-delay-1"><div class="value-icon"><ion-icon name="eye-outline"></ion-icon></div><div class="value-text"><h4>Radical Transparency</h4><p>Every document shared, every fee explained, every process visible. No secrets. Ever.</p></div></div>
-            <div class="value-item reveal reveal-left reveal-delay-2"><div class="value-icon"><ion-icon name="infinite-outline"></ion-icon></div><div class="value-text"><h4>Lifelong Relationships</h4><p>We don't close doors â€” we open them. Many clients return for their second, third, and fourth homes.</p></div></div>
-            <div class="value-item reveal reveal-left reveal-delay-3"><div class="value-icon"><ion-icon name="cube-outline"></ion-icon></div><div class="value-text"><h4>Community Builders</h4><p>We're not just selling properties; we're shaping neighborhoods, strengthening communities.</p></div></div>
+            <?php foreach ($aboutValueItems as $i => $value): ?>
+            <div class="value-item reveal reveal-left<?= $i > 0 ? ' reveal-delay-' . min($i, 3) : '' ?>">
+              <div class="value-icon"><ion-icon name="<?= siteEscape((string) ($value['icon'] ?? 'people-outline')) ?>"></ion-icon></div>
+              <div class="value-text">
+                <h4><?= siteEscape((string) ($value['title'] ?? '')) ?></h4>
+                <p><?= siteEscape((string) ($value['text'] ?? '')) ?></p>
+              </div>
+            </div>
+            <?php endforeach; ?>
           </div>
-          <div class="values-image reveal reveal-right"><img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&auto=format&fit=crop&q=80" alt="Building community" class="values-main-img" loading="lazy"></div>
+          <div class="values-image reveal reveal-right">
+            <img src="<?= siteEscape((string) ($aboutValues['image'] ?? 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&auto=format&fit=crop&q=80')) ?>" alt="Building community" class="values-main-img" loading="lazy">
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- =============================================
-         TEAM PREVIEW
-    ============================================= -->
     <section class="team-preview">
       <div class="container">
-        <div class="section-eyebrow reveal"><div class="line"></div><span>The Heart Behind the Brand</span><div class="line"></div></div>
-        <h2 class="section-title reveal reveal-delay-1">Meet the Dream Weavers</h2>
+        <div class="section-eyebrow reveal"><div class="line"></div><span><?= siteEscape((string) ($aboutTeam['eyebrow'] ?? 'The Heart Behind the Brand')) ?></span><div class="line"></div></div>
+        <h2 class="section-title reveal reveal-delay-1"><?= siteEscape((string) ($aboutTeam['title'] ?? '')) ?></h2>
         <div class="team-grid">
-          <div class="team-card reveal"><img src="./assets/images/engineer1.png" alt="Founder" class="team-image" loading="lazy"><h3 class="team-name">Oliva Guiffo</h3><p class="team-role">Founder & CEO</p></div>
-          <div class="team-card reveal reveal-delay-1"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=80" alt="Operations Director" class="team-image" loading="lazy"><h3 class="team-name">Amara Okafor</h3><p class="team-role">Operations Director</p></div>
-          <div class="team-card reveal reveal-delay-2"><img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&auto=format&fit=crop&q=80" alt="Head of Sales" class="team-image" loading="lazy"><h3 class="team-name">Emeka Obi</h3><p class="team-role">Head of Sales</p></div>
-          <div class="team-card reveal reveal-delay-3"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&auto=format&fit=crop&q=80" alt="Client Relations" class="team-image" loading="lazy"><h3 class="team-name">Chioma Eze</h3><p class="team-role">Client Relations</p></div>
+          <?php foreach ($aboutTeamMembers as $i => $member): ?>
+          <div class="team-card reveal<?= $i > 0 ? ' reveal-delay-' . min($i, 3) : '' ?>">
+            <img src="<?= siteEscape((string) ($member['image'] ?? '')) ?>" alt="<?= siteEscape((string) ($member['name'] ?? 'Team member')) ?>" class="team-image" loading="lazy">
+            <h3 class="team-name"><?= siteEscape((string) ($member['name'] ?? '')) ?></h3>
+            <p class="team-role"><?= siteEscape((string) ($member['role'] ?? '')) ?></p>
+          </div>
+          <?php endforeach; ?>
         </div>
       </div>
     </section>
 
-    <!-- =============================================
-         CTA SECTION
-    ============================================= -->
     <section class="about-cta">
       <div class="container">
-        <h2 class="reveal">Ready to Write Your Story With Us?</h2>
-        <p class="reveal reveal-delay-1">Every great home begins with a conversation. Let's start yours.</p>
-        <a href="<?= pageHref('contact') ?>" class="cta-btn reveal reveal-delay-2"><ion-icon name="chatbubble-outline"></ion-icon>Start Your Journey</a>
+        <h2 class="reveal"><?= siteEscape((string) ($aboutCta['title'] ?? 'Ready to Write Your Story With Us?')) ?></h2>
+        <p class="reveal reveal-delay-1"><?= siteEscape((string) ($aboutCta['text'] ?? '')) ?></p>
+        <a href="<?= $ctaLink ?>" class="cta-btn reveal reveal-delay-2"><ion-icon name="chatbubble-outline"></ion-icon><?= siteEscape((string) ($aboutCta['label'] ?? 'Start Your Journey')) ?></a>
       </div>
     </section>
   </main>
@@ -291,9 +311,9 @@
               </a>
             </li>
             <li>
-              <a href="tel:+2349033137432" class="contact-link">
+              <a href="tel:+2349036851168" class="contact-link">
                 <ion-icon name="call-outline"></ion-icon>
-                <span>+234 903 313 7432</span>
+                <span>+234 903 685 1168</span>
               </a>
             </li>
             <li>
@@ -314,33 +334,36 @@
           <ul class="footer-list">
             <li><p class="footer-list-title">Company</p></li>
             <li><a href="<?= pageHref('about') ?>" class="footer-link">About Us</a></li>
-            <li><a href="https://blog.biverroyaltyhomesltd.com/" class="footer-link" target="_blank" rel="noopener noreferrer">Blog</a></li>
+            <li><a href="<?= pageHref('blog') ?>" class="footer-link">Blog</a></li>
             <li><a href="<?= pageHref('property') ?>" class="footer-link">All Properties</a></li>
-            <li><a href="#" class="footer-link">Locations Map</a></li>
-            <li><a href="#" class="footer-link">FAQ</a></li>
+            <li><a href="<?= pageHref('locations') ?>" class="footer-link">Owerri Locations</a></li>
+            <li><a href="<?= pageHref('faqs') ?>" class="footer-link">FAQ</a></li>
             <li><a href="<?= pageHref('contact') ?>" class="footer-link">Contact Us</a></li>
           </ul>
           <ul class="footer-list">
             <li><p class="footer-list-title">Services</p></li>
-            <li><a href="<?= pageHref('addCart') ?>" class="footer-link">Order Tracking</a></li>
-            <li><a href="<?= pageHref('favorites') ?>" class="footer-link">Wish List</a></li>
-            <li><a href="<?= pageHref('login') ?>" class="footer-link">Login</a></li>
-            <li><a href="<?= pageHref('userDashboard') ?>" class="footer-link">My Account</a></li>
-            <li><a href="#" class="footer-link">Terms &amp; Conditions</a></li>
-            <li><a href="<?= pageHref('property') ?>" class="footer-link">Promotions</a></li>
+            <li><a href="<?= pageHref('services') ?>" class="footer-link">Our Services</a></li>
+            <li><a href="<?= pageHref('property') ?>" class="footer-link">Buy a Home</a></li>
+            <li><a href="<?= pageHref('property') ?>" class="footer-link">Rent a Home</a></li>
+            <li><a href="<?= pageHref('list-your-property') ?>" class="footer-link">List Your Property</a></li>
+            <li><a href="<?= pageHref('services') ?>" class="footer-link">Estate Management</a></li>
+            <li><a href="<?= pageHref('contact') ?>" class="footer-link">Property Consultation</a></li>
           </ul>
           <ul class="footer-list">
-            <li><p class="footer-list-title">Customer Care</p></li>
-            <li><a href="<?= pageHref('login') ?>" class="footer-link">Login</a></li>
-            <li><a href="<?= pageHref('userDashboard') ?>" class="footer-link">My Account</a></li>
-            <li><a href="<?= pageHref('favorites') ?>" class="footer-link">Wish List</a></li>
-            <li><a href="<?= pageHref('addCart') ?>" class="footer-link">Order Tracking</a></li>
-            <li><a href="#" class="footer-link">FAQ</a></li>
+            <li><p class="footer-list-title">Explore</p></li>
+            <li><a href="<?= pageHref('property') ?>" class="footer-link">Browse Properties</a></li>
+            <li><a href="<?= pageHref('list-your-property') ?>" class="footer-link">Sell With Us</a></li>
+            <li><a href="<?= pageHref('faqs') ?>" class="footer-link">FAQ</a></li>
+            <li><a href="<?= pageHref('blog') ?>" class="footer-link">Blog</a></li>
             <li><a href="<?= pageHref('contact') ?>" class="footer-link">Contact Us</a></li>
+            <li><a href="<?= pageHref('terms') ?>" class="footer-link">Terms &amp; Conditions</a></li>
+            <li><a href="<?= pageHref('privacy') ?>" class="footer-link">Privacy Policy</a></li>
+            <li><a href="<?= pageHref('cookie-policy') ?>" class="footer-link">Cookie Policy</a></li>
           </ul>
         </div>
       </div>
     </div>
+    <?php require __DIR__ . '/assets/includes/newsletter-strip.php'; ?>
     <div class="footer-bottom">
       <div class="container">
         <p class="copyright">
@@ -390,12 +413,29 @@
     }
     animateStats();
 
-    // Parallax effect on hero
-    window.addEventListener('scroll', () => {
+    // Parallax effect on hero (desktop only � transform on the hero caused mobile layout issues)
+    function resetHeroParallax() {
       const hero = document.querySelector('.about-hero');
-      if (hero) { hero.style.transform = `translateY(${window.scrollY * 0.3}px)`; hero.style.opacity = 1 - window.scrollY / 800; }
-    });
+      if (!hero) return;
+      if (window.innerWidth < 992) {
+        hero.style.transform = '';
+        hero.style.opacity = '';
+      }
+    }
+    window.addEventListener('resize', resetHeroParallax, { passive: true });
+    resetHeroParallax();
+
+    window.addEventListener('scroll', () => {
+      if (window.innerWidth < 992) return;
+      const hero = document.querySelector('.about-hero');
+      if (hero) {
+        hero.style.transform = `translateY(${window.scrollY * 0.3}px)`;
+        hero.style.opacity = String(1 - window.scrollY / 800);
+      }
+    }, { passive: true });
   </script>
+  <?php require __DIR__ . '/assets/includes/site-end.php'; ?>
+  <?php require __DIR__ . '/assets/includes/whatsapp-float.php'; ?>
   <?php require __DIR__ . '/chatbot/chatbot.php'; ?>
 </body>
 </html>

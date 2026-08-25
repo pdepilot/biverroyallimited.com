@@ -4,6 +4,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/PropertyRepository.php';
 require_once __DIR__ . '/ContactRepository.php';
 require_once __DIR__ . '/TestimonialRepository.php';
+require_once __DIR__ . '/SiteVisitRepository.php';
 
 final class AdminAnalyticsService
 {
@@ -14,6 +15,7 @@ final class AdminAnalyticsService
         $submissions  = PropertyRepository::getPublicSubmissionStats();
         $contacts     = ContactRepository::getStats();
         $testimonials = TestimonialRepository::getStats();
+        $visits       = SiteVisitRepository::getStats();
 
         return [
             'kpis' => [
@@ -22,6 +24,7 @@ final class AdminAnalyticsService
                 'testimonials' => (int) ($testimonials['published'] ?? 0),
                 'inquiries'    => (int) ($contacts['total'] ?? 0),
             ],
+            'visits' => $visits,
             'trends' => [
                 'properties'   => self::monthOverMonthTrend('properties'),
                 'submissions'  => self::monthOverMonthTrend('properties', "source = 'public'"),

@@ -22,8 +22,51 @@ const LOCKOUT_DURATION_LEVEL_1 = 72 * 3600;
 /** Second lockout duration: 30 days in seconds. */
 const LOCKOUT_DURATION_LEVEL_2 = 30 * 24 * 3600;
 
+/** Remember-me cookie lifetime (30 days). */
+const ADMIN_REMEMBER_DURATION = 30 * 24 * 3600;
+
+/** Remember-me cookie name. */
+const ADMIN_REMEMBER_COOKIE = 'BRE_ADMIN_REMEMBER';
+
+/** Password-reset token lifetime (1 hour). */
+const ADMIN_PASSWORD_RESET_DURATION = 3600;
+
+/** Max forgot-password requests per IP per hour. */
+const ADMIN_PASSWORD_RESET_MAX_PER_HOUR = 5;
+
 class AuthSecurity
 {
+    public static function isHttps(): bool
+    {
+        if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') {
+            return true;
+        }
+
+        $forwardedProto = strtolower((string) ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? ''));
+        if ($forwardedProto === 'https') {
+            return true;
+        }
+
+        $forwardedSsl = strtolower((string) ($_SERVER['HTTP_X_FORWARDED_SSL'] ?? ''));
+
+        return $forwardedSsl === 'on';
+    }
+
+    /**
+     * Shared cookie path for all admin pages and admin API routes.
+     */
+    public static function adminCookiePath(): string
+    {
+        $script = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '/admin/');
+        $pos = strpos($script, '/admin/');
+
+        if ($pos !== false) {
+            return substr($script, 0, $pos + 7);
+        }
+
+        return '/';
+    }
+
     /**
      * Start a hardened PHP session with hijacking-resistant settings.
      */
@@ -35,15 +78,210 @@ class AuthSecurity
 
         ini_set('session.use_strict_mode', '1');
         ini_set('session.use_only_cookies', '1');
-        ini_set('session.cookie_httponly', '1');
-        ini_set('session.cookie_samesite', 'Strict');
 
-        if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') {
-            ini_set('session.cookie_secure', '1');
-        }
+        session_set_cookie_params([
+            'lifetime' => 0,
+            'path'     => self::adminCookiePath(),
+            'domain'   => '',
+            'secure'   => self::isHttps(),
+            'httponly' => true,
+            'samesite' => 'Lax',
+        ]);
 
         session_name('BRE_ADMIN_SID');
         session_start();
+    }
+
+    /**
+     * Create remember-me table if missing.
+     */
+    public static function ensureRememberSchema(): void
+    {
+        static $done = false;
+        if ($done) {
+            return;
+        }
+
+        $pdo = getDatabaseConnection();
+        $pdo->exec(
+            'CREATE TABLE IF NOT EXISTS admin_remember_tokens (
+                id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                admin_id INT UNSIGNED NOT NULL,
+                selector VARCHAR(32) NOT NULL,
+                token_hash CHAR(64) NOT NULL,
+                expires_at DATETIME NOT NULL,
+                created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE KEY uq_selector (selector),
+                KEY idx_admin (admin_id),
+                KEY idx_expires (expires_at)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci'
+        );
+
+        $done = true;
+    }
+
+    /**
+     * Cookie path scoped to the admin directory.
+     */
+    private static function rememberCookiePath(): string
+    {
+        return self::adminCookiePath();
+    }
+
+    /** @param array<string, mixed> $options */
+    private static function setRememberCookie(string $value, int $expires): void
+    {
+        setcookie(ADMIN_REMEMBER_COOKIE, $value, [
+            'expires'  => $expires,
+            'path'     => self::adminCookiePath(),
+            'secure'   => self::isHttps(),
+            'httponly' => true,
+            'samesite' => 'Lax',
+        ]);
+    }
+
+    /**
+     * Issue a persistent login token when "Remember me" is checked.
+     */
+    public static function issueRememberToken(int $adminId): void
+    {
+        self::ensureRememberSchema();
+
+        $pdo = getDatabaseConnection();
+        $pdo->prepare('DELETE FROM admin_remember_tokens WHERE admin_id = :admin_id')
+            ->execute(['admin_id' => $adminId]);
+
+        $selector = bin2hex(random_bytes(16));
+        $validator = bin2hex(random_bytes(32));
+        $expiresAt = date('Y-m-d H:i:s', time() + ADMIN_REMEMBER_DURATION);
+
+        $pdo = getDatabaseConnection();
+        $pdo->prepare(
+            'INSERT INTO admin_remember_tokens (admin_id, selector, token_hash, expires_at)
+             VALUES (:admin_id, :selector, :token_hash, :expires_at)'
+        )->execute([
+            'admin_id'   => $adminId,
+            'selector'   => $selector,
+            'token_hash' => hash('sha256', $validator),
+            'expires_at' => $expiresAt,
+        ]);
+
+        self::setRememberCookie($selector . ':' . $validator, time() + ADMIN_REMEMBER_DURATION);
+        self::purgeExpiredRememberTokens();
+    }
+
+    /**
+     * Restore session from remember-me cookie when valid.
+     */
+    public static function attemptRememberLogin(): bool
+    {
+        if (!empty($_SESSION['admin_logged_in'])) {
+            return true;
+        }
+
+        $raw = $_COOKIE[ADMIN_REMEMBER_COOKIE] ?? '';
+        if ($raw === '' || !str_contains($raw, ':')) {
+            return false;
+        }
+
+        [$selector, $validator] = explode(':', $raw, 2);
+        if ($selector === '' || $validator === '' || strlen($selector) !== 32 || strlen($validator) !== 64) {
+            self::clearRememberCookie();
+            return false;
+        }
+
+        self::ensureRememberSchema();
+        $pdo = getDatabaseConnection();
+        $stmt = $pdo->prepare(
+            'SELECT t.id AS token_id, t.token_hash, t.expires_at, u.id, u.email, u.full_name, u.role, u.permissions_json, u.is_active
+             FROM admin_remember_tokens t
+             INNER JOIN admin_users u ON u.id = t.admin_id
+             WHERE t.selector = :selector
+             LIMIT 1'
+        );
+        $stmt->execute(['selector' => $selector]);
+        $row = $stmt->fetch();
+
+        if (!$row || !(int) $row['is_active']) {
+            self::clearRememberCookie();
+            return false;
+        }
+
+        if (strtotime((string) $row['expires_at']) <= time()) {
+            self::revokeRememberTokenById((int) $row['token_id']);
+            self::clearRememberCookie();
+            return false;
+        }
+
+        if (!hash_equals((string) $row['token_hash'], hash('sha256', $validator))) {
+            self::revokeRememberTokenById((int) $row['token_id']);
+            self::clearRememberCookie();
+            self::auditLog('remember_token_invalid', (int) $row['id'], 'Invalid remember-me token rejected');
+            return false;
+        }
+
+        self::createAdminSession([
+            'id'        => (int) $row['id'],
+            'email'     => (string) $row['email'],
+            'full_name' => (string) $row['full_name'],
+            'role'      => (string) $row['role'],
+        ]);
+        $_SESSION['remember_me'] = true;
+        self::auditLog('remember_login', (int) $row['id'], 'Session restored via remember-me cookie');
+
+        return true;
+    }
+
+    public static function clearRememberCookie(): void
+    {
+        if (!isset($_COOKIE[ADMIN_REMEMBER_COOKIE])) {
+            return;
+        }
+
+        self::setRememberCookie('', time() - 3600);
+        unset($_COOKIE[ADMIN_REMEMBER_COOKIE]);
+    }
+
+    /**
+     * Remove remember token from DB and clear cookie.
+     */
+    public static function clearRememberToken(?string $rawCookie = null): void
+    {
+        $raw = $rawCookie ?? ($_COOKIE[ADMIN_REMEMBER_COOKIE] ?? '');
+        if ($raw !== '' && str_contains($raw, ':')) {
+            [$selector] = explode(':', $raw, 2);
+            if ($selector !== '') {
+                self::ensureRememberSchema();
+                $pdo = getDatabaseConnection();
+                $pdo->prepare('DELETE FROM admin_remember_tokens WHERE selector = :selector')
+                    ->execute(['selector' => $selector]);
+            }
+        }
+
+        self::clearRememberCookie();
+    }
+
+    public static function revokeRememberTokensForAdmin(int $adminId): void
+    {
+        self::ensureRememberSchema();
+        $pdo = getDatabaseConnection();
+        $pdo->prepare('DELETE FROM admin_remember_tokens WHERE admin_id = :admin_id')
+            ->execute(['admin_id' => $adminId]);
+    }
+
+    private static function revokeRememberTokenById(int $tokenId): void
+    {
+        self::ensureRememberSchema();
+        $pdo = getDatabaseConnection();
+        $pdo->prepare('DELETE FROM admin_remember_tokens WHERE id = :id')
+            ->execute(['id' => $tokenId]);
+    }
+
+    public static function purgeExpiredRememberTokens(): void
+    {
+        self::ensureRememberSchema();
+        $pdo = getDatabaseConnection();
+        $pdo->exec('DELETE FROM admin_remember_tokens WHERE expires_at <= NOW()');
     }
 
     /**
@@ -113,17 +351,33 @@ class AuthSecurity
         self::initSession();
 
         if (empty($_SESSION['admin_logged_in']) || empty($_SESSION['admin_id'])) {
+            if (self::attemptRememberLogin()) {
+                return true;
+            }
+
             return false;
         }
 
         if (!self::validateSessionFingerprint()) {
-            self::destroySession();
+            self::destroySession(false);
+            if (self::attemptRememberLogin()) {
+                return true;
+            }
+
             return false;
         }
 
         if (self::isSessionExpired()) {
-            self::auditLog('session_expired', (int) $_SESSION['admin_id'], 'Session timed out after inactivity');
-            self::destroySession();
+            $expiredAdminId = (int) ($_SESSION['admin_id'] ?? 0);
+            self::destroySession(false);
+            if (self::attemptRememberLogin()) {
+                return true;
+            }
+
+            if ($expiredAdminId > 0) {
+                self::auditLog('session_expired', $expiredAdminId, 'Session timed out after inactivity');
+            }
+
             return false;
         }
 
@@ -136,6 +390,10 @@ class AuthSecurity
      */
     public static function isSessionExpired(): bool
     {
+        if (!empty($_SESSION['remember_me'])) {
+            return false;
+        }
+
         $last = $_SESSION['last_activity'] ?? $_SESSION['login_time'] ?? 0;
         return (time() - (int) $last) > ADMIN_SESSION_TIMEOUT;
     }
@@ -178,9 +436,15 @@ class AuthSecurity
 
     /**
      * Fully destroy session data and cookie.
+     *
+     * @param bool $clearRemember When true, also revoke remember-me token (logout).
      */
-    public static function destroySession(): void
+    public static function destroySession(bool $clearRemember = true): void
     {
+        if ($clearRemember) {
+            self::clearRememberToken();
+        }
+
         self::initSession();
 
         $_SESSION = [];
@@ -614,6 +878,8 @@ class AuthSecurity
         $upd = $pdo->prepare('UPDATE admin_users SET password_hash = :hash WHERE id = :id');
         $upd->execute(['hash' => $hash, 'id' => $adminId]);
 
+        self::revokeRememberTokensForAdmin($adminId);
+        self::clearRememberCookie();
         self::auditLog('password_changed', $adminId, 'Admin password updated');
     }
 
@@ -627,7 +893,263 @@ class AuthSecurity
 
         $stmt = $pdo->prepare('UPDATE admin_users SET is_active = 0 WHERE id = :id');
         $stmt->execute(['id' => $adminId]);
+        self::revokeRememberTokensForAdmin($adminId);
         self::auditLog('logout', $adminId, 'Admin account deactivated by user');
         self::destroySession();
+    }
+
+    /**
+     * Ensure password-reset token table exists.
+     */
+    public static function ensurePasswordResetSchema(): void
+    {
+        static $done = false;
+        if ($done) {
+            return;
+        }
+
+        $pdo = getDatabaseConnection();
+        $pdo->exec(
+            'CREATE TABLE IF NOT EXISTS admin_password_resets (
+                id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                admin_id INT UNSIGNED NOT NULL,
+                selector VARCHAR(32) NOT NULL,
+                token_hash CHAR(64) NOT NULL,
+                expires_at DATETIME NOT NULL,
+                used_at DATETIME DEFAULT NULL,
+                requested_ip VARCHAR(45) DEFAULT NULL,
+                created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE KEY uq_selector (selector),
+                KEY idx_admin (admin_id),
+                KEY idx_expires (expires_at)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci'
+        );
+
+        $done = true;
+    }
+
+    /**
+     * Absolute URL helper for admin reset emails.
+     */
+    public static function absoluteAdminUrl(string $relativePath, array $query = []): string
+    {
+        require_once __DIR__ . '/site_paths.php';
+
+        $path = siteUrl(ltrim($relativePath, '/'));
+        if ($query !== []) {
+            $path .= (str_contains($path, '?') ? '&' : '?') . http_build_query($query);
+        }
+
+        $scheme = self::isHttps() ? 'https' : 'http';
+        $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+
+        return $scheme . '://' . $host . $path;
+    }
+
+    /**
+     * Request a password reset. Always returns a generic success payload
+     * so callers do not leak whether an account exists.
+     *
+     * @return array{ok:bool,message:string,rate_limited?:bool}
+     */
+    public static function requestPasswordReset(string $email): array
+    {
+        self::ensurePasswordResetSchema();
+
+        $generic = 'If an account exists for that email, a password reset link has been sent. Check your inbox and spam folder.';
+        $email = mb_strtolower(trim($email));
+        $ip = self::getClientIp();
+
+        if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return ['ok' => false, 'message' => 'Please enter a valid email address.'];
+        }
+
+        $pdo = getDatabaseConnection();
+        $rate = $pdo->prepare(
+            'SELECT COUNT(*) FROM admin_password_resets
+             WHERE requested_ip = :ip AND created_at >= (NOW() - INTERVAL 1 HOUR)'
+        );
+        $rate->execute(['ip' => $ip]);
+        if ((int) $rate->fetchColumn() >= ADMIN_PASSWORD_RESET_MAX_PER_HOUR) {
+            self::auditLog('password_reset_rate_limited', null, 'Too many reset requests from ' . $ip, $ip);
+            return [
+                'ok'           => false,
+                'message'      => 'Too many reset requests from this network. Please try again later.',
+                'rate_limited' => true,
+            ];
+        }
+
+        require_once __DIR__ . '/AdminUserRepository.php';
+        AdminUserRepository::ensureSchema();
+
+        $stmt = $pdo->prepare(
+            'SELECT id, email, full_name, is_active
+             FROM admin_users
+             WHERE email = :email
+             LIMIT 1'
+        );
+        $stmt->execute(['email' => $email]);
+        $admin = $stmt->fetch();
+
+        // Always acknowledge the same way for valid-looking requests.
+        if (!$admin || !(int) $admin['is_active']) {
+            self::auditLog(
+                'password_reset_request',
+                null,
+                'Reset requested for unknown/inactive email: ' . $email,
+                $ip
+            );
+            return ['ok' => true, 'message' => $generic];
+        }
+
+        $adminId = (int) $admin['id'];
+        $pdo->prepare(
+            'UPDATE admin_password_resets SET used_at = NOW()
+             WHERE admin_id = :id AND used_at IS NULL'
+        )->execute(['id' => $adminId]);
+
+        $pdo->prepare('DELETE FROM admin_password_resets WHERE expires_at < (NOW() - INTERVAL 7 DAY)')
+            ->execute();
+
+        $selector  = bin2hex(random_bytes(16));
+        $validator = bin2hex(random_bytes(32));
+        $expiresAt = date('Y-m-d H:i:s', time() + ADMIN_PASSWORD_RESET_DURATION);
+
+        $pdo->prepare(
+            'INSERT INTO admin_password_resets (admin_id, selector, token_hash, expires_at, requested_ip)
+             VALUES (:admin_id, :selector, :token_hash, :expires_at, :ip)'
+        )->execute([
+            'admin_id'   => $adminId,
+            'selector'   => $selector,
+            'token_hash' => hash('sha256', $validator),
+            'expires_at' => $expiresAt,
+            'ip'         => $ip,
+        ]);
+
+        $resetLink = self::absoluteAdminUrl('admin/admin-reset-password.php', [
+            'token' => $selector . ':' . $validator,
+        ]);
+
+        $name = trim((string) ($admin['full_name'] ?? '')) ?: 'Administrator';
+
+        try {
+            require_once __DIR__ . '/AutomatedEmailService.php';
+            AutomatedEmailService::onPasswordResetRequested(
+                (string) $admin['email'],
+                $name,
+                $resetLink
+            );
+        } catch (Throwable $e) {
+            error_log('Admin password reset email failed: ' . $e->getMessage());
+        }
+
+        self::auditLog('password_reset_request', $adminId, 'Password reset link issued', $ip);
+
+        return ['ok' => true, 'message' => $generic];
+    }
+
+    /**
+     * Validate a reset token from the email link.
+     *
+     * @return array{id:int,admin_id:int,email:string,full_name:string}|null
+     */
+    public static function validatePasswordResetToken(string $token): ?array
+    {
+        self::ensurePasswordResetSchema();
+
+        if ($token === '' || !str_contains($token, ':')) {
+            return null;
+        }
+
+        [$selector, $validator] = explode(':', $token, 2);
+        if (
+            $selector === ''
+            || $validator === ''
+            || strlen($selector) !== 32
+            || strlen($validator) !== 64
+        ) {
+            return null;
+        }
+
+        $pdo = getDatabaseConnection();
+        $stmt = $pdo->prepare(
+            'SELECT r.id, r.token_hash, r.expires_at, r.used_at, r.admin_id,
+                    u.email, u.full_name, u.is_active
+             FROM admin_password_resets r
+             INNER JOIN admin_users u ON u.id = r.admin_id
+             WHERE r.selector = :selector
+             LIMIT 1'
+        );
+        $stmt->execute(['selector' => $selector]);
+        $row = $stmt->fetch();
+
+        if (
+            !$row
+            || $row['used_at'] !== null
+            || !(int) $row['is_active']
+            || strtotime((string) $row['expires_at']) < time()
+        ) {
+            return null;
+        }
+
+        if (!hash_equals((string) $row['token_hash'], hash('sha256', $validator))) {
+            return null;
+        }
+
+        return [
+            'id'        => (int) $row['id'],
+            'admin_id'  => (int) $row['admin_id'],
+            'email'     => (string) $row['email'],
+            'full_name' => (string) ($row['full_name'] ?? 'Administrator'),
+        ];
+    }
+
+    /**
+     * Consume a valid reset token and set a new password.
+     */
+    public static function resetPasswordWithToken(string $token, string $newPassword): void
+    {
+        if (strlen($newPassword) < 8) {
+            throw new InvalidArgumentException('New password must be at least 8 characters.');
+        }
+
+        $payload = self::validatePasswordResetToken($token);
+        if ($payload === null) {
+            throw new RuntimeException('This reset link is invalid or has expired. Please request a new one.');
+        }
+
+        $pdo = getDatabaseConnection();
+        $hash = password_hash($newPassword, PASSWORD_DEFAULT);
+
+        $pdo->beginTransaction();
+        try {
+            $pdo->prepare('UPDATE admin_users SET password_hash = :hash WHERE id = :id')
+                ->execute(['hash' => $hash, 'id' => $payload['admin_id']]);
+
+            $pdo->prepare('UPDATE admin_password_resets SET used_at = NOW() WHERE id = :id')
+                ->execute(['id' => $payload['id']]);
+
+            $pdo->prepare('DELETE FROM admin_password_resets WHERE admin_id = :admin_id AND id != :id')
+                ->execute(['admin_id' => $payload['admin_id'], 'id' => $payload['id']]);
+
+            $pdo->commit();
+        } catch (Throwable $e) {
+            if ($pdo->inTransaction()) {
+                $pdo->rollBack();
+            }
+            throw $e;
+        }
+
+        self::revokeRememberTokensForAdmin($payload['admin_id']);
+        self::clearRememberCookie();
+        self::auditLog(
+            'password_reset_completed',
+            $payload['admin_id'],
+            'Password reset completed via email link for ' . $payload['email']
+        );
     }
 }

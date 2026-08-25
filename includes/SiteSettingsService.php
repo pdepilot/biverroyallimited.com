@@ -11,13 +11,18 @@ final class SiteSettingsService
     public static function defaults(): array
     {
         return [
-            'siteName'     => 'Biver Royalty Homes',
-            'contactEmail' => 'biverroyaltyhomes01@gmail.com',
-            'contactPhone' => '+234 903 313 7432',
-            'address'      => 'No. 31 Wetheral Road, Angelina Plaza, Owerri, Imo State',
-            'aboutText'    => 'We are a real estate company built on integrity, helping clients find premium homes across Nigeria.',
-            'adminPhone'   => '',
-            'updatedAt'    => null,
+            'siteName'        => 'Biver Royalty Homes',
+            'contactEmail'    => 'biverroyaltyhomes01@gmail.com',
+            'contactPhone'    => '+234 903 685 1168',
+            'address'         => 'No. 31 Wetheral Road, Angelina Plaza, Owerri, Imo State',
+            'aboutText'       => 'We are a real estate company built on integrity, helping clients find premium homes across Nigeria.',
+            'adminPhone'      => '',
+            'socialFacebook'  => 'https://www.facebook.com/share/1B8mwpRi5L/',
+            'socialInstagram' => 'https://www.instagram.com/biverroyaltyhomes.ng',
+            'socialTiktok'    => 'https://www.tiktok.com/@biverroyaltyhomesltd',
+            'socialTwitter'   => '',
+            'businessHours'   => 'Mon – Sat: 9:00 AM – 6:00 PM',
+            'updatedAt'       => null,
         ];
     }
 
@@ -42,13 +47,18 @@ final class SiteSettingsService
     public static function save(array $input): bool
     {
         $config = [
-            'siteName'     => self::clip((string) ($input['siteName'] ?? ''), 120),
-            'contactEmail' => self::clip((string) ($input['contactEmail'] ?? ''), 180),
-            'contactPhone' => self::clip((string) ($input['contactPhone'] ?? ''), 40),
-            'address'      => self::clip((string) ($input['address'] ?? ''), 500),
-            'aboutText'    => self::clip((string) ($input['aboutText'] ?? ''), 2000),
-            'adminPhone'   => self::clip((string) ($input['adminPhone'] ?? ''), 40),
-            'updatedAt'    => date('c'),
+            'siteName'        => self::clip((string) ($input['siteName'] ?? ''), 120),
+            'contactEmail'    => self::clip((string) ($input['contactEmail'] ?? ''), 180),
+            'contactPhone'    => self::clip((string) ($input['contactPhone'] ?? ''), 40),
+            'address'         => self::clip((string) ($input['address'] ?? ''), 500),
+            'aboutText'       => self::clip((string) ($input['aboutText'] ?? ''), 2000),
+            'adminPhone'      => self::clip((string) ($input['adminPhone'] ?? ''), 40),
+            'socialFacebook'  => self::clip((string) ($input['socialFacebook'] ?? ''), 255),
+            'socialInstagram' => self::clip((string) ($input['socialInstagram'] ?? ''), 255),
+            'socialTiktok'    => self::clip((string) ($input['socialTiktok'] ?? ''), 255),
+            'socialTwitter'   => self::clip((string) ($input['socialTwitter'] ?? ''), 255),
+            'businessHours'   => self::clip((string) ($input['businessHours'] ?? ''), 200),
+            'updatedAt'       => date('c'),
         ];
 
         if ($config['contactEmail'] !== '' && !filter_var($config['contactEmail'], FILTER_VALIDATE_EMAIL)) {

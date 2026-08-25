@@ -9,6 +9,7 @@ require_once __DIR__ . '/HtmlSanitizer.php';
 require_once __DIR__ . '/MailService.php';
 require_once __DIR__ . '/MailConfigService.php';
 require_once __DIR__ . '/site_paths.php';
+require_once __DIR__ . '/site_helpers.php';
 
 final class AutomatedEmailService
 {
@@ -31,16 +32,17 @@ final class AutomatedEmailService
             self::EVENT_CONTACT_RECEIVED => [
                 'name'        => 'Contact Enquiry Received',
                 'description' => 'Auto-response when visitor submits contact form',
-                'subject'     => 'We Have Received Your Enquiry',
+                'subject'     => 'We received your enquiry — Biver Royalty Homes',
                 'body_html'   => '<p>Hello {{customer_name}},</p>
-<p>Thank you for contacting <strong>biverroyaltyhomesltd</strong>.</p>
+<p>Thank you for contacting <strong>Biver Royalty Homes</strong>.</p>
 <p>We have successfully received your enquiry regarding:</p>
 <p><strong>"{{enquiry_subject}}"</strong></p>
-<p>Our team has been notified and one of our representatives will review your message and get back to you as soon as possible.</p>
+<p>Our team has been notified. One of our representatives will review your message and get back to you as soon as possible — usually within 24 hours.</p>
 <p><strong>Reference Number:</strong> {{ticket_id}}<br>
 <strong>Submission Date:</strong> {{submission_date}}</p>
-<p>We appreciate your interest in biverroyaltyhomesltd and look forward to assisting you.</p>
-<p>Best Regards,<br><strong>biverroyaltyhomesltd</strong></p>',
+<p>If your matter is urgent, call us on <strong>+234 903 685 1168</strong> or reply to this email.</p>
+<p>We appreciate your interest and look forward to assisting you.</p>
+<p>Best regards,<br><strong>Biver Royalty Homes</strong><br>Mannavilla Limited</p>',
             ],
             self::EVENT_CONTACT_ADMIN => [
                 'name'        => 'Contact Enquiry Admin Notification',
@@ -137,11 +139,11 @@ final class AutomatedEmailService
             self::EVENT_PASSWORD_RESET => [
                 'name'        => 'Password Reset',
                 'description' => 'Sent when a password reset is requested',
-                'subject'     => 'Reset Your Password — biverroyaltyhomesltd',
+                'subject'     => 'Reset Your Admin Password — biverroyaltyhomesltd',
                 'body_html'   => '<p>Hello {{customer_name}},</p>
-<p>We received a request to reset your password.</p>
+<p>We received a request to reset your Biver Royalty Homes admin password.</p>
 <p><a href="{{reset_link}}" style="display:inline-block;background:#D4AF37;color:#371801;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:bold;">Reset Password</a></p>
-<p>If you did not request this, please ignore this email.</p>
+<p>This link expires in 1 hour. If you did not request this, please ignore this email.</p>
 <p>Best Regards,<br><strong>biverroyaltyhomesltd</strong></p>',
             ],
             self::EVENT_USER_REGISTRATION => [
@@ -249,9 +251,13 @@ final class AutomatedEmailService
             'message'          => nl2br(htmlspecialchars($message, ENT_QUOTES, 'UTF-8')),
         ];
 
-        self::send(self::EVENT_CONTACT_RECEIVED, $email, $name, $vars, $id);
+        EmailRepository::ensureSchema();
 
         $config = MailConfigService::get();
+        if (!empty($config['autoReplyOnContact'])) {
+            self::send(self::EVENT_CONTACT_RECEIVED, $email, $name, $vars, $id);
+        }
+
         if (!empty($config['notifyOnContact'])) {
             $notifyEmail = trim((string) ($config['notifyEmail'] ?? ''));
             if ($notifyEmail !== '' && filter_var($notifyEmail, FILTER_VALIDATE_EMAIL)) {
@@ -384,21 +390,105 @@ final class AutomatedEmailService
 
     public static function wrapBranded(string $innerHtml): string
     {
+        $siteName = htmlspecialchars(siteName(), ENT_QUOTES, 'UTF-8');
+        $contactEmail = htmlspecialchars(siteContactEmail(), ENT_QUOTES, 'UTF-8');
+        $contactPhone = htmlspecialchars(siteContactPhone(), ENT_QUOTES, 'UTF-8');
+        $address = htmlspecialchars(siteAddress(), ENT_QUOTES, 'UTF-8');
+        $year = date('Y');
+
+        $logoPath = publicAssetUrl('assets/images/biver-logo.png') ?? siteUrl('assets/images/biver-logo.png');
+        $logoUrl = htmlspecialchars(self::absoluteUrl($logoPath), ENT_QUOTES, 'UTF-8');
+        $websiteUrl = htmlspecialchars(self::absoluteUrl(siteUrl('')), ENT_QUOTES, 'UTF-8');
+        $mailtoUrl = 'mailto:' . rawurlencode(siteContactEmail());
+        $telDigits = preg_replace('/[^\d+]/', '', siteContactPhone()) ?? '';
+        $telUrl = $telDigits !== '' ? 'tel:' . $telDigits : '';
+
+        $socialLinks = self::brandedSocialLinksHtml();
+
         return <<<HTML
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"></head>
-<body style="font-family:Arial,sans-serif;background:#f9f7f2;padding:24px;color:#2c2418;">
-  <div style="max-width:620px;margin:0 auto;background:#fff;border-radius:12px;padding:32px;border:1px solid #e9e5dc;">
-    <h2 style="color:#371801;font-family:Georgia,serif;margin:0 0 16px;">biverroyaltyhomesltd</h2>
-    {$innerHtml}
-    <p style="margin-top:24px;font-size:13px;color:#6c5e4e;">
-      Mannavilla Limited / Biver Royalty Homes Ltd<br>
-      No. 31 Wetheral Road, Owerri, Imo State<br>
-      +234 903 313 7432
-    </p>
-  </div>
-</body></html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{$siteName}</title>
+</head>
+<body style="margin:0;padding:0;background-color:#f4f0e8;font-family:Arial,Helvetica,sans-serif;color:#2c2418;-webkit-text-size-adjust:100%;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f4f0e8;">
+    <tr>
+      <td align="center" style="padding:28px 16px;">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;border-collapse:collapse;">
+          <tr>
+            <td align="center" style="background-color:#371801;padding:28px 32px 24px;border-radius:14px 14px 0 0;">
+              <a href="{$websiteUrl}" style="text-decoration:none;display:inline-block;">
+                <img src="{$logoUrl}" alt="{$siteName}" width="168" style="display:block;margin:0 auto;max-width:168px;width:168px;height:auto;border:0;outline:none;">
+              </a>
+              <p style="margin:14px 0 0;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#D4AF37;font-weight:600;">Official Communication</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="height:4px;background-color:#D4AF37;font-size:0;line-height:0;">&nbsp;</td>
+          </tr>
+          <tr>
+            <td style="background-color:#ffffff;padding:36px 36px 32px;font-size:15px;line-height:1.75;color:#2c2418;">
+              {$innerHtml}
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color:#faf8f4;padding:28px 32px;border-top:1px solid #e9e5dc;border-radius:0 0 14px 14px;text-align:center;">
+              <p style="margin:0 0 6px;font-family:Georgia,'Times New Roman',serif;font-size:17px;font-weight:700;color:#371801;">{$siteName}</p>
+              <p style="margin:0 0 14px;font-size:12px;color:#8a7b6a;letter-spacing:0.5px;">Mannavilla Limited &middot; Biver Royalty Homes Ltd</p>
+              <p style="margin:0 0 6px;font-size:13px;color:#6c5e4e;line-height:1.6;">{$address}</p>
+              <p style="margin:0 0 6px;font-size:13px;color:#6c5e4e;">
+                <a href="{$mailtoUrl}" style="color:#371801;text-decoration:none;font-weight:600;">{$contactEmail}</a>
+                &nbsp;&middot;&nbsp;
+                <a href="{$telUrl}" style="color:#371801;text-decoration:none;font-weight:600;">{$contactPhone}</a>
+              </p>
+              <p style="margin:12px 0 0;font-size:13px;">
+                <a href="{$websiteUrl}" style="color:#B8860B;text-decoration:none;font-weight:600;">Visit our website</a>
+              </p>
+              {$socialLinks}
+              <p style="margin:20px 0 0;font-size:11px;color:#9a8b7a;line-height:1.6;">
+                &copy; {$year} {$siteName}. This is an official message from our team.<br>
+                If you did not expect this email, please contact us at {$contactEmail}.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
 HTML;
+    }
+
+    private static function brandedSocialLinksHtml(): string
+    {
+        $links = [];
+        $networks = [
+            'facebook'  => 'Facebook',
+            'instagram' => 'Instagram',
+            'tiktok'    => 'TikTok',
+            'twitter'   => 'Twitter',
+        ];
+
+        foreach ($networks as $key => $label) {
+            $url = trim(siteSocial($key));
+            if ($url === '' || !preg_match('#^https?://#i', $url)) {
+                continue;
+            }
+            $safeUrl = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
+            $safeLabel = htmlspecialchars($label, ENT_QUOTES, 'UTF-8');
+            $links[] = '<a href="' . $safeUrl . '" style="color:#B8860B;text-decoration:none;margin:0 8px;font-size:12px;font-weight:600;">' . $safeLabel . '</a>';
+        }
+
+        if ($links === []) {
+            return '';
+        }
+
+        return '<p style="margin:14px 0 0;font-size:12px;">' . implode('', $links) . '</p>';
     }
 
     /** @param array<string, string> $vars */

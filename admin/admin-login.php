@@ -9,6 +9,10 @@ require_once dirname(__DIR__) . '/includes/AuthSecurity.php';
 
 AuthSecurity::initSession();
 
+if (!AuthSecurity::isAuthenticated()) {
+    AuthSecurity::attemptRememberLogin();
+}
+
 if (AuthSecurity::isAuthenticated()) {
     header('Location: admin-dashboard.php');
     exit;
@@ -20,10 +24,12 @@ AuthSecurity::purgeExpiredLockouts();
 $lockout = AuthSecurity::getActiveLockout($ip);
 
 $errorMessage   = AuthSecurity::getFlash('error', '');
+$successMessage = AuthSecurity::getFlash('success', '');
 $showWarning    = (bool) AuthSecurity::getFlash('warning', false);
 $lockoutMessage = AuthSecurity::getFlash('lockout', '');
 $isManualReview = (bool) AuthSecurity::getFlash('lockout_manual', false);
 $loggedOut      = isset($_GET['logged_out']);
+$sessionExpired = isset($_GET['session_expired']);
 
 if ($lockout !== null && $lockoutMessage === '') {
     if ((int) $lockout['requires_manual_review'] === 1) {
@@ -65,6 +71,14 @@ $csrfToken = AuthSecurity::generateCsrfToken();
                 <div class="alert alert-success">You have been logged out securely.</div>
             <?php endif; ?>
 
+            <?php if ($successMessage !== ''): ?>
+                <div class="alert alert-success"><?= htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8') ?></div>
+            <?php endif; ?>
+
+            <?php if ($sessionExpired): ?>
+                <div class="alert alert-error" role="alert">Your session expired. Please log in again to continue.</div>
+            <?php endif; ?>
+
             <?php if ($lockoutMessage !== ''): ?>
                 <div class="alert alert-lockout" role="alert">
                     <strong>Access Restricted</strong><br>
@@ -97,15 +111,35 @@ $csrfToken = AuthSecurity::generateCsrfToken();
                            value="<?= htmlspecialchars($_POST['email'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
                     <label for="email">Email Address</label>
                 </div>
-                <div class="input-group">
-                    <input type="password" id="password" name="password" placeholder=" "
-                           required <?= $formDisabled ? 'disabled' : '' ?>>
+                <div class="input-group input-group--password">
+                    <div class="password-field">
+                        <input type="password" id="password" name="password" placeholder=" "
+                               required <?= $formDisabled ? 'disabled' : '' ?>>
+                        <button type="button" class="password-toggle" id="passwordToggle"
+                                aria-label="Show password" aria-pressed="false"
+                                <?= $formDisabled ? 'disabled' : '' ?>>
+                            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
                     <label for="password">Password</label>
                 </div>
+                <label class="remember-row" for="rememberMe">
+                    <input type="checkbox" id="rememberMe" name="remember_me" value="1"
+                           <?= $formDisabled ? 'disabled' : '' ?>
+                           <?= !empty($_POST['remember_me']) ? 'checked' : '' ?>>
+                    <span>Remember me for 30 days</span>
+                </label>
                 <button type="submit" class="login-btn" id="loginBtn" <?= $formDisabled ? 'disabled' : '' ?>>
                     <?= $formDisabled ? 'Access Restricted' : 'Unlock Vault' ?>
                 </button>
             </form>
+
+            <p class="auth-links">
+                <a href="admin-forgot-password.php">Forgot password?</a>
+            </p>
         </div>
         <p class="footer-note">SECURE GATEWAY · PHP SESSION AUTHENTICATION</p>
     </div>
@@ -200,6 +234,20 @@ $csrfToken = AuthSecurity::generateCsrfToken();
                 btn.textContent = 'Authenticating...';
             }
         });
+
+        (function initPasswordToggle() {
+            const input = document.getElementById('password');
+            const toggle = document.getElementById('passwordToggle');
+            if (!input || !toggle) return;
+
+            toggle.addEventListener('click', function () {
+                const revealing = input.type === 'password';
+                input.type = revealing ? 'text' : 'password';
+                toggle.classList.toggle('is-revealed', revealing);
+                toggle.setAttribute('aria-pressed', revealing ? 'true' : 'false');
+                toggle.setAttribute('aria-label', revealing ? 'Hide password' : 'Show password');
+            });
+        })();
     </script>
 </body>
 </html>

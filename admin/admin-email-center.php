@@ -21,8 +21,8 @@ $csrfToken = AuthSecurity::generateCsrfToken();
   <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
   <?php require dirname(__DIR__) . '/includes/admin_assets.php'; ?>
 </head>
-<body>
-<div class="dashboard">
+<body class="admin-app">
+<div class="dashboard admin-dashboard">
   <?php require dirname(__DIR__) . '/includes/admin_sidebar.php'; ?>
 
   <div class="main-content">
@@ -58,16 +58,23 @@ $csrfToken = AuthSecurity::generateCsrfToken();
               <div class="form-field">
                 <label for="recipientType">Recipient Type</label>
                 <select id="recipientType" required>
+                  <option value="single" selected>Single Email Address</option>
+                  <option value="multiple">Multiple Email Addresses</option>
                   <option value="owners">Property Owners</option>
                   <option value="subscribers">Newsletter Subscribers</option>
-                  <option value="single">Single Email Address</option>
-                  <option value="multiple">Multiple Email Addresses</option>
                 </select>
               </div>
 
-              <div class="form-field u-hidden" id="singleEmailField">
-                <label for="singleEmail">Email Address</label>
-                <input type="email" id="singleEmail" placeholder="example@gmail.com">
+              <div class="recipient-panel" id="singleRecipientPanel">
+                <p class="recipient-panel-title">Send to one person</p>
+                <div class="form-field">
+                  <label for="singleRecipientName">Recipient Name</label>
+                  <input type="text" id="singleRecipientName" placeholder="John Doe">
+                </div>
+                <div class="form-field">
+                  <label for="singleEmail">Email Address <span class="field-required">*</span></label>
+                  <input type="email" id="singleEmail" placeholder="example@gmail.com" required>
+                </div>
               </div>
 
               <div class="form-field u-hidden" id="multipleEmailField">
@@ -118,8 +125,9 @@ $csrfToken = AuthSecurity::generateCsrfToken();
 
           <div class="email-preview" id="emailPreview">
             <h4>Email Preview</h4>
+            <p class="preview-note">Shows the official branded template recipients will receive.</p>
             <div class="preview-subject" id="previewSubject">Subject will appear here</div>
-            <div class="preview-body" id="previewBody"><p class="admin-text-muted">Compose a message to see preview.</p></div>
+            <iframe id="previewFrame" class="preview-frame" title="Branded email preview" sandbox="allow-same-origin"></iframe>
           </div>
         </div>
       </div>
@@ -201,7 +209,7 @@ $csrfToken = AuthSecurity::generateCsrfToken();
 <script>
 (function() {
   const API = 'api/email-center.php';
-  const csrf = document.getElementById('csrfToken').value;
+  let csrf = document.getElementById('csrfToken').value;
   let templates = [];
   let emailEvents = {};
   let quill = null;
@@ -215,6 +223,13 @@ $csrfToken = AuthSecurity::generateCsrfToken();
     }
     const res = await fetch(url, opts);
     const data = await res.json().catch(() => ({}));
+
+    if (res.status === 401) {
+      toast('Session expired. Please log in again.', true);
+      setTimeout(() => { window.location.href = 'admin-login.php?session_expired=1'; }, 1200);
+      throw new Error(data.message || 'Unauthorized');
+    }
+
     if (!res.ok || data.success === false) throw new Error(data.message || 'Request failed');
     return data;
   }
@@ -239,6 +254,9 @@ $csrfToken = AuthSecurity::generateCsrfToken();
     return new Date(d).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
   }
 
+  let previewTimer = null;
+  let previewRequest = 0;
+
   function initEditor() {
     quill = new Quill('#editorContainer', {
       theme: 'snow',
@@ -259,12 +277,40 @@ $csrfToken = AuthSecurity::generateCsrfToken();
 
   function updatePreview() {
     document.getElementById('previewSubject').textContent = document.getElementById('emailSubject').value || 'Subject will appear here';
-    document.getElementById('previewBody').innerHTML = getBodyHtml() || '<p class="admin-text-muted">Compose a message to see preview.</p>';
+    clearTimeout(previewTimer);
+    previewTimer = setTimeout(fetchBrandedPreview, 350);
+  }
+
+  async function fetchBrandedPreview() {
+    const requestId = ++previewRequest;
+    const body = getBodyHtml();
+    const frame = document.getElementById('previewFrame');
+    const empty = !body || body === '<p><br></p>';
+
+    if (empty) {
+      frame.srcdoc = '<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;padding:20px;color:#9a8b7a;margin:0;">Compose a message to see the official branded preview.</body></html>';
+      return;
+    }
+
+    try {
+      const res = await api('POST', API, {
+        action: 'preview',
+        body_html: body,
+        recipient_name: document.getElementById('singleRecipientName')?.value.trim() || 'Valued Customer'
+      });
+      if (requestId !== previewRequest) return;
+      frame.srcdoc = res.preview_html || '';
+    } catch (e) {
+      if (requestId !== previewRequest) return;
+      frame.srcdoc = '<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;padding:20px;color:#dc3545;margin:0;">Preview unavailable. Save your message and try again.</body></html>';
+    }
   }
 
   function toggleRecipientPanels() {
     const type = document.getElementById('recipientType').value;
-    document.getElementById('singleEmailField').classList.toggle('u-hidden', type !== 'single');
+    const isSingle = type === 'single';
+    document.getElementById('singleRecipientPanel').classList.toggle('u-hidden', !isSingle);
+    document.getElementById('singleEmail').required = isSingle;
     document.getElementById('multipleEmailField').classList.toggle('u-hidden', type !== 'multiple');
     document.getElementById('ownersPanel').classList.toggle('u-hidden', type !== 'owners');
     document.getElementById('subscribersPanel').classList.toggle('u-hidden', type !== 'subscribers');
@@ -281,6 +327,7 @@ $csrfToken = AuthSecurity::generateCsrfToken();
 
     if (type === 'single') {
       payload.email = document.getElementById('singleEmail').value.trim();
+      payload.name = document.getElementById('singleRecipientName').value.trim() || 'Valued Customer';
     } else if (type === 'multiple') {
       payload.emails = document.getElementById('multipleEmails').value.trim();
     } else if (type === 'owners') {
@@ -338,6 +385,10 @@ $csrfToken = AuthSecurity::generateCsrfToken();
 
   async function loadMeta() {
     const data = await api('GET', API);
+    if (data.csrf_token) {
+      csrf = data.csrf_token;
+      document.getElementById('csrfToken').value = csrf;
+    }
     templates = data.templates || [];
     emailEvents = data.email_events || {};
     renderEventSelects();
@@ -532,6 +583,15 @@ $csrfToken = AuthSecurity::generateCsrfToken();
 
   document.getElementById('sendBtn').addEventListener('click', async () => {
     const btn = document.getElementById('sendBtn');
+    const type = document.getElementById('recipientType').value;
+    if (type === 'single') {
+      const email = document.getElementById('singleEmail').value.trim();
+      if (!email) {
+        toast('Enter the recipient email address.', true);
+        document.getElementById('singleEmail').focus();
+        return;
+      }
+    }
     btn.disabled = true;
     try {
       const result = await api('POST', API, buildSendPayload());
@@ -593,10 +653,25 @@ $csrfToken = AuthSecurity::generateCsrfToken();
   });
 
   document.getElementById('previewTemplateBtn').addEventListener('click', async () => {
-    const inner = document.getElementById('tplBody').value;
+    const inner = document.getElementById('tplBody').value.trim();
     const box = document.getElementById('tplPreviewBox');
-    box.innerHTML = '<h4>Preview</h4><div class="preview-body">' + inner.replace(/\{\{customer_name\}\}/g, 'Sample Customer') + '</div>';
-    box.classList.remove('u-hidden');
+    if (!inner) {
+      box.innerHTML = '<p class="admin-text-muted">Enter template body to preview.</p>';
+      box.classList.remove('u-hidden');
+      return;
+    }
+    try {
+      const res = await api('POST', API, {
+        action: 'preview',
+        body_html: inner.replace(/\{\{customer_name\}\}/g, 'Sample Customer').replace(/\{\{name\}\}/g, 'Sample Customer'),
+        recipient_name: 'Sample Customer'
+      });
+      box.innerHTML = '<h4>Branded Preview</h4><iframe class="preview-frame preview-frame--modal" title="Template preview" sandbox="allow-same-origin"></iframe>';
+      box.querySelector('iframe').srcdoc = res.preview_html || '';
+      box.classList.remove('u-hidden');
+    } catch (e) {
+      toast(e.message, true);
+    }
   });
 
   document.getElementById('closeTemplateModal').addEventListener('click', () => document.getElementById('templateModal').classList.remove('open'));
@@ -605,10 +680,19 @@ $csrfToken = AuthSecurity::generateCsrfToken();
     if (e.target.id === 'templateModal') document.getElementById('templateModal').classList.remove('open');
   });
 
+  document.getElementById('emailSubject').addEventListener('input', updatePreview);
+  document.getElementById('singleRecipientName')?.addEventListener('input', updatePreview);
+
   initEditor();
   toggleRecipientPanels();
   bindRecipientToggles();
-  loadMeta();
+  loadMeta()
+    .then(() => fetchBrandedPreview())
+    .catch((err) => {
+      if (!String(err.message || '').includes('Unauthorized')) {
+        toast(err.message || 'Failed to load Email Center.', true);
+      }
+    });
   loadRecipients();
 })();
 </script>

@@ -106,6 +106,16 @@ try {
             jsonOk($result);
         }
 
+        if ($action === 'preview') {
+            $bodyHtml = HtmlSanitizer::sanitizeEmailHtml((string) ($body['body_html'] ?? ''));
+            $name = trim((string) ($body['recipient_name'] ?? 'Valued Customer'));
+            $inner = AdminEmailService::personalize(
+                $bodyHtml !== '' ? $bodyHtml : '<p style="color:#6c5e4e;">Compose a message to see preview.</p>',
+                $name
+            );
+            jsonOk(['preview_html' => AutomatedEmailService::wrapBranded($inner)]);
+        }
+
         if ($action === 'save_draft') {
             $subject = trim((string) ($body['subject'] ?? ''));
             $bodyHtml = HtmlSanitizer::sanitizeEmailHtml((string) ($body['body_html'] ?? ''));

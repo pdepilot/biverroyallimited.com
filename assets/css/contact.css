@@ -193,6 +193,14 @@
       font-size: clamp(1.8rem, 3vw, 2.5rem);
       color: var(--prussian-blue);
     }
+    .faq-sub { margin-top: 10px; }
+    .faq-sub a {
+      color: var(--gold-dark);
+      font-weight: 500;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .faq-sub a:hover { color: var(--prussian-blue); text-decoration: underline; }
     .faq-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);

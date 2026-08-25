@@ -79,7 +79,7 @@ try {
 
     echo json_encode([
         'success' => true,
-        'message' => 'Thank you! Your message has been received. We will get back to you within 24 hours.',
+        'message' => 'Thank you! Your message has been received. A confirmation email is on its way, and we will get back to you within 24 hours.',
         'id'      => $id,
     ]);
 } catch (Throwable $e) {

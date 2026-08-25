@@ -150,11 +150,139 @@
             transform-origin: left top;
         }
         .input-group input:focus + label,
-        .input-group input:not(:placeholder-shown) + label {
+        .input-group input:not(:placeholder-shown) + label,
+        .input-group--password .password-field:focus-within + label,
+        .input-group--password:has(input:not(:placeholder-shown)) > label {
             transform: translateY(-28px) scale(0.85);
             color: var(--gold);
         }
         .input-group input::placeholder { color: transparent; }
+
+        .password-field {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            background: rgba(0,0,0,0.25);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .password-field:focus-within {
+            border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+        }
+        .input-group--password:has(input:disabled) .password-field {
+            opacity: 0.5;
+        }
+        .input-group--password input {
+            flex: 1;
+            min-width: 0;
+            width: 100%;
+            border: 0;
+            background: transparent;
+            box-shadow: none;
+            padding: 16px 44px 16px 16px;
+            border-radius: 12px;
+        }
+        .input-group--password input:focus {
+            border: 0;
+            box-shadow: none;
+        }
+        .input-group--password input:disabled {
+            opacity: 1;
+            cursor: not-allowed;
+        }
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 8px;
+            z-index: 2;
+            display: grid;
+            place-items: center;
+            width: 32px;
+            height: 32px;
+            margin: 0;
+            padding: 0;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transform: translateY(-50%);
+            transition: color 0.2s, background 0.2s;
+        }
+        .password-toggle:hover:not(:disabled),
+        .password-toggle.is-revealed {
+            color: var(--gold);
+            background: rgba(212, 175, 55, 0.1);
+        }
+        .password-toggle:disabled {
+            cursor: not-allowed;
+        }
+        .password-toggle svg {
+            display: block;
+            pointer-events: none;
+        }
+        .password-toggle.is-revealed::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            margin: auto;
+            width: 1.5px;
+            height: 18px;
+            background: currentColor;
+            border-radius: 1px;
+            transform: rotate(45deg);
+            pointer-events: none;
+        }
+
+        .remember-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: -8px 0 20px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            user-select: none;
+        }
+        .remember-row input {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--gold);
+            cursor: pointer;
+        }
+        .remember-row span { line-height: 1.4; }
+
+        .auth-links {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        .auth-links a {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .auth-links a:hover { color: var(--gold-light); }
+        .auth-sep {
+            margin: 0 8px;
+            color: var(--text-muted);
+        }
+        .auth-hint {
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+        .auth-hint strong {
+            color: var(--gold-light);
+            font-weight: 600;
+        }
 
         .login-btn {
             width: 100%;

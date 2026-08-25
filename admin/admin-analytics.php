@@ -41,6 +41,28 @@ require_once dirname(__DIR__) . '/includes/admin_guard.php';
       <div class="stat-card"><div class="stat-title">Inquiries</div><div class="stat-number" id="totalInq">—</div><div class="stat-change" id="inqTrend"></div></div>
     </div>
 
+    <!-- Site traffic -->
+    <div class="stats-grid" id="visitStatsGrid" style="margin-top:18px;">
+      <div class="stat-card"><div class="stat-title">Visitors Today</div><div class="stat-number" id="visitorsToday">—</div><div class="stat-change">unique people</div></div>
+      <div class="stat-card"><div class="stat-title">Pageviews Today</div><div class="stat-number" id="pageviewsToday">—</div><div class="stat-change">all page loads</div></div>
+      <div class="stat-card"><div class="stat-title">Visitors (7 days)</div><div class="stat-number" id="visitors7d">—</div><div class="stat-change">unique people</div></div>
+      <div class="stat-card"><div class="stat-title">Total Visitors</div><div class="stat-number" id="visitorsTotal">—</div><div class="stat-change" id="pageviewsTotalLabel">— pageviews all time</div></div>
+    </div>
+
+    <div class="charts-row">
+      <div class="chart-card">
+        <div class="chart-header"><i class="fas fa-users"></i> Site Traffic (Last 14 days)</div>
+        <canvas id="visitsChart" width="400" height="250"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header"><i class="fas fa-file-alt"></i> Top Pages</div>
+        <table id="topPagesTable" style="width:100%;border-collapse:collapse;font-size:0.9rem;">
+          <thead><tr><th align="left">Page</th><th align="right">Views</th><th align="right">Visitors</th></tr></thead>
+          <tbody><tr><td colspan="3">Loading...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
     <!-- Charts -->
     <div class="charts-row">
       <div class="chart-card">
@@ -63,7 +85,14 @@ require_once dirname(__DIR__) . '/includes/admin_guard.php';
       </div>
     </div>
 
-    <!-- Recent Activity -->
+    <div class="recent-table">
+      <h3><i class="fas fa-eye"></i> Recent Site Visits</h3>
+      <table id="recentVisitsTable">
+        <thead><tr><th>Page</th><th>Title</th><th>Visitor</th><th>When</th></tr></thead>
+        <tbody><tr><td colspan="4">Loading...</td></tr></tbody>
+      </table>
+    </div>
+
     <div class="recent-table">
       <h3><i class="fas fa-history"></i> Recent Properties Added</h3>
       <table id="recentPropsTable">
@@ -76,7 +105,7 @@ require_once dirname(__DIR__) . '/includes/admin_guard.php';
 
 <script>
   const API = 'api/analytics.php';
-  let monthlyChart, typeChart, inquiriesChart, ratingChart;
+  let monthlyChart, typeChart, inquiriesChart, ratingChart, visitsChart;
 
   function trendHtml(trend) {
     if (!trend) return '';
@@ -97,6 +126,7 @@ require_once dirname(__DIR__) . '/includes/admin_guard.php';
       const report = data.report || {};
       const kpis = report.kpis || {};
       const trends = report.trends || {};
+      const visits = report.visits || {};
 
       document.getElementById('totalProps').innerText = kpis.properties ?? 0;
       document.getElementById('totalSubmissions').innerText = kpis.submissions ?? 0;
@@ -108,7 +138,15 @@ require_once dirname(__DIR__) . '/includes/admin_guard.php';
       document.getElementById('testTrend').innerHTML = trendHtml(trends.testimonials);
       document.getElementById('inqTrend').innerHTML = trendHtml(trends.inquiries);
 
+      document.getElementById('visitorsToday').innerText = visits.visitorsToday ?? 0;
+      document.getElementById('pageviewsToday').innerText = visits.pageviewsToday ?? 0;
+      document.getElementById('visitors7d').innerText = visits.visitors7d ?? 0;
+      document.getElementById('visitorsTotal').innerText = visits.visitors ?? 0;
+      document.getElementById('pageviewsTotalLabel').innerText = `${visits.pageviews ?? 0} pageviews all time`;
+
       updateCharts(report);
+      renderTopPages(visits.topPages || []);
+      renderRecentVisits(visits.recent || []);
       renderRecentProperties(report.recentProperties || []);
     } catch (err) {
       showToast('Failed to load analytics data', true);
@@ -124,11 +162,41 @@ require_once dirname(__DIR__) . '/includes/admin_guard.php';
     const inquiryCounts = monthlyInquiries.map((row) => row.count);
     const types = report.propertyTypes || { sale: 0, rent: 0 };
     const ratings = report.ratingDistribution || [0, 0, 0, 0, 0];
+    const daily = (report.visits && report.visits.daily) || [];
 
     if (monthlyChart) monthlyChart.destroy();
     if (typeChart) typeChart.destroy();
     if (inquiriesChart) inquiriesChart.destroy();
     if (ratingChart) ratingChart.destroy();
+    if (visitsChart) visitsChart.destroy();
+
+    visitsChart = new Chart(document.getElementById('visitsChart').getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: daily.map((d) => d.label),
+        datasets: [
+          {
+            label: 'Unique Visitors',
+            data: daily.map((d) => d.visitors),
+            borderColor: '#D4AF37',
+            backgroundColor: 'rgba(212,175,55,0.12)',
+            tension: 0.3,
+            fill: true,
+            pointBackgroundColor: '#D4AF37'
+          },
+          {
+            label: 'Pageviews',
+            data: daily.map((d) => d.pageviews),
+            borderColor: '#9e7a2c',
+            backgroundColor: 'transparent',
+            tension: 0.3,
+            fill: false,
+            pointBackgroundColor: '#9e7a2c'
+          }
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: true }
+    });
 
     monthlyChart = new Chart(document.getElementById('monthlyChart').getContext('2d'), {
       type: 'line',
@@ -189,6 +257,39 @@ require_once dirname(__DIR__) . '/includes/admin_guard.php';
     });
   }
 
+  function renderTopPages(items) {
+    const tbody = document.querySelector('#topPagesTable tbody');
+    if (!tbody) return;
+    if (!items.length) {
+      tbody.innerHTML = '<tr><td colspan="3">No visits recorded yet. Counts start after visitors accept analytics cookies.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = items.map((p) => `
+      <tr>
+        <td>${escapeHtml(p.path)}</td>
+        <td align="right">${Number(p.pageviews || 0).toLocaleString()}</td>
+        <td align="right">${Number(p.visitors || 0).toLocaleString()}</td>
+      </tr>
+    `).join('');
+  }
+
+  function renderRecentVisits(items) {
+    const tbody = document.querySelector('#recentVisitsTable tbody');
+    if (!tbody) return;
+    if (!items.length) {
+      tbody.innerHTML = '<tr><td colspan="4">No recent visits yet</td></tr>';
+      return;
+    }
+    tbody.innerHTML = items.map((v) => `
+      <tr>
+        <td>${escapeHtml(v.path)}</td>
+        <td>${escapeHtml(v.title || '—')}</td>
+        <td>${escapeHtml(v.visitorKey || '—')}</td>
+        <td>${v.createdAt ? new Date(v.createdAt).toLocaleString() : 'N/A'}</td>
+      </tr>
+    `).join('');
+  }
+
   function renderRecentProperties(items) {
     const tbody = document.querySelector('#recentPropsTable tbody');
     if (!tbody) return;
@@ -226,7 +327,6 @@ require_once dirname(__DIR__) . '/includes/admin_guard.php';
     loadAllData();
     showToast('Analytics refreshed');
   });
-
 
   loadAllData();
 </script>

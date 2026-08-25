@@ -62,6 +62,16 @@ if ($admin !== null) {
     require_once dirname(__DIR__) . '/includes/AdminUserRepository.php';
     AdminUserRepository::recordLogin((int) $admin['id']);
     AuthSecurity::createAdminSession($admin);
+
+    $rememberMe = filter_var($_POST['remember_me'] ?? false, FILTER_VALIDATE_BOOLEAN);
+    if ($rememberMe) {
+        $_SESSION['remember_me'] = true;
+        AuthSecurity::issueRememberToken((int) $admin['id']);
+    } else {
+        unset($_SESSION['remember_me']);
+        AuthSecurity::clearRememberToken();
+    }
+
     AuthSecurity::auditLog(
         'login_success',
         (int) $admin['id'],

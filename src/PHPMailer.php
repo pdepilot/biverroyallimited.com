@@ -430,7 +430,7 @@ class PHPMailer
      *
      * @see SMTP::$Debugoutput
      *
-     * @var string|callable|\Psr\Log\LoggerInterface
+     * @var string|callable|object
      */
     public $Debugoutput = 'echo';
 
@@ -915,7 +915,10 @@ class PHPMailer
             return;
         }
         //Is this a PSR-3 logger?
-        if ($this->Debugoutput instanceof \Psr\Log\LoggerInterface) {
+        if (
+            is_object($this->Debugoutput)
+            && in_array('Psr\\Log\\LoggerInterface', class_implements($this->Debugoutput) ?: [], true)
+        ) {
             $this->Debugoutput->debug(rtrim($str, "\r\n"));
 
             return;
@@ -2575,19 +2578,19 @@ class PHPMailer
             $langcodes[] = $matches['lang'];
 
             //Try and find a readable language file for the requested language.
-            $foundFile = false;
+            $resolvedLangFile = null;
             foreach ($langcodes as $code) {
                 $lang_file = $lang_path . 'phpmailer.lang-' . $code . '.php';
                 if (static::fileIsAccessible($lang_file)) {
-                    $foundFile = true;
+                    $resolvedLangFile = $lang_file;
                     break;
                 }
             }
 
-            if ($foundFile === false) {
+            if ($resolvedLangFile === null) {
                 $foundlang = false;
             } else {
-                $lines = file($lang_file);
+                $lines = file($resolvedLangFile);
                 foreach ($lines as $line) {
                     //Translation file lines look like this:
                     //$PHPMAILER_LANG['authenticate'] = 'SMTP-Fehler: Authentifizierung fehlgeschlagen.';

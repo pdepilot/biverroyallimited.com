@@ -1,0 +1,146 @@
+/* Terms & Conditions — Biver Royalty Homes */
+*, *::before, *::after { box-sizing: border-box; }
+
+body.page-terms {
+  margin: 0;
+  font-family: var(--ff-body);
+  color: var(--dark-jungle-green);
+  background: linear-gradient(180deg, #faf7f1 0%, #fff 40%, #f7f2e9 100%);
+  overflow-x: clip;
+}
+
+.container {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-inline: clamp(16px, 4vw, 32px);
+}
+
+.terms-hero {
+  position: relative;
+  padding: clamp(120px, 16vh, 150px) 0 56px;
+  color: #f7f0e4;
+  overflow: hidden;
+}
+.terms-hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(800px 400px at 80% 20%, rgba(212,175,55,0.18), transparent 60%),
+    linear-gradient(135deg, #2a1505 0%, #371801 55%, #1a0c02 100%);
+}
+.terms-hero-inner { position: relative; z-index: 1; max-width: 720px; }
+.terms-brand {
+  font-family: var(--ff-display);
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+.terms-eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.terms-hero h1 {
+  font-family: var(--ff-display);
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 600;
+  margin: 0 0 14px;
+  line-height: 1.15;
+}
+.terms-lead {
+  margin: 0 0 16px;
+  max-width: 42ch;
+  line-height: 1.7;
+  color: rgba(255,247,232,0.75);
+  font-weight: 300;
+}
+.terms-updated {
+  margin: 0;
+  font-size: 0.85rem;
+  color: rgba(212,175,55,0.9);
+}
+
+.terms-body { padding: clamp(40px, 7vw, 72px) 0 80px; }
+.terms-layout {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 40px;
+  align-items: start;
+}
+
+.terms-toc {
+  position: sticky;
+  top: 100px;
+  padding: 20px;
+  background: rgba(255,255,255,0.85);
+  border: 1px solid rgba(55,24,1,0.08);
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(55,24,1,0.05);
+}
+.terms-toc-title {
+  margin: 0 0 12px;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  font-weight: 600;
+}
+.terms-toc ol {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 8px;
+}
+.terms-toc a {
+  color: var(--prussian-blue);
+  text-decoration: none;
+  font-size: 0.86rem;
+  line-height: 1.4;
+}
+.terms-toc a:hover { color: var(--gold-dark); }
+
+.terms-intro {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: #5a5246;
+  margin: 0 0 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(55,24,1,0.08);
+}
+
+.terms-section {
+  margin-bottom: 28px;
+  padding: 22px 24px;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(55,24,1,0.07);
+  border-radius: 16px;
+  scroll-margin-top: 100px;
+}
+.terms-section h2 {
+  font-family: var(--ff-display);
+  font-size: 1.45rem;
+  color: var(--prussian-blue);
+  margin: 0 0 12px;
+}
+.terms-section-body {
+  font-size: 0.98rem;
+  line-height: 1.8;
+  color: #5a5246;
+}
+
+.terms-footer-note {
+  margin-top: 28px;
+  padding: 22px 24px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #2a1505, #371801);
+  color: rgba(255,247,232,0.85);
+}
+.terms-footer-note a { color: var(--gold-light); }
+
+@media (max-width: 900px) {
+  .terms-layout { grid-template-columns: 1fr; }
+  .terms-toc { position: static; }
+}

@@ -1,23 +1,21 @@
-﻿<?php require_once __DIR__ . '/includes/htaccess_redirect.php'; ?>
+<?php require_once __DIR__ . '/includes/htaccess_redirect.php'; ?>
+<?php require_once __DIR__ . '/includes/SeoService.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Browse stunning properties for sale and rent in Owerri, Imo State. Find your dream home with Biver Royalty Homes - Nigeria's trusted real estate partner.">
-  <meta name="keywords" content="properties for sale, properties for rent, real estate Nigeria, Owerri properties, luxury homes, buy property, rent property">
-  <meta name="author" content="Biver Royalty Homes Ltd">
-  <title>Properties | Biver Royalty Homes - Find Your Dream Property</title>
-  <link rel="shortcut icon" href="./assets/images/biver-logo.png" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/css/site-variables.css">
-  <link rel="stylesheet" href="./assets/css/site-utilities.css">
-  <link rel="stylesheet" href="./assets/css/property.css">
-  <?php require __DIR__ . '/includes/site_bootstrap.php'; ?>
-  <link rel="stylesheet" href="./assets/css/site-header.css">
+<?php
+SeoService::renderHead([
+    'title' => 'Houses for Sale & Rent in Owerri, Imo State | Biver Royalty',
+    'description' => 'Browse verified houses, apartments, and land for sale or rent in Owerri with Biver Royalty Homes Ltd. Filter by type, price, and neighbourhood.',
+    'keywords' => 'houses for sale Owerri, houses for rent Owerri, properties Imo State, apartments Owerri, Biver Royalty Homes listings',
+    'page' => 'property',
+    'stylesheets' => ['./assets/css/property.css'],
+    'breadcrumbs' => [
+        ['name' => 'Home', 'url' => pageUrl('index')],
+        ['name' => 'Properties'],
+    ],
+]);
+?>
 </head>
 <body>
 
@@ -26,8 +24,8 @@
   <main id="main-content">
     <section class="properties-hero">
       <div class="container">
-        <h1>Discover Your <span class="gold-accent">Dream Property</span></h1>
-        <p>Explore our curated collection of premium homes, apartments, and lands in Owerri and across Imo State</p>
+        <h1>Houses for Sale &amp; Rent in <span class="gold-accent">Owerri</span></h1>
+        <p>Explore verified homes, apartments, and land across Owerri, Imo State — listed by Biver Royalty Homes Ltd</p>
       </div>
     </section>
 
@@ -94,9 +92,9 @@
               </a>
             </li>
             <li>
-              <a href="tel:+2349033137432" class="contact-link">
+              <a href="tel:+2349036851168" class="contact-link">
                 <ion-icon name="call-outline"></ion-icon>
-                <span>+234 903 313 7432</span>
+                <span>+234 903 685 1168</span>
               </a>
             </li>
             <li>
@@ -117,33 +115,36 @@
           <ul class="footer-list">
             <li><p class="footer-list-title">Company</p></li>
             <li><a href="<?= pageHref('about') ?>" class="footer-link">About Us</a></li>
-            <li><a href="https://blog.biverroyaltyhomesltd.com/" class="footer-link" target="_blank" rel="noopener noreferrer">Blog</a></li>
+            <li><a href="<?= pageHref('blog') ?>" class="footer-link">Blog</a></li>
             <li><a href="<?= pageHref('property') ?>" class="footer-link">All Properties</a></li>
-            <li><a href="#" class="footer-link">Locations Map</a></li>
-            <li><a href="#" class="footer-link">FAQ</a></li>
+            <li><a href="<?= pageHref('locations') ?>" class="footer-link">Owerri Locations</a></li>
+            <li><a href="<?= pageHref('faqs') ?>" class="footer-link">FAQ</a></li>
             <li><a href="<?= pageHref('contact') ?>" class="footer-link">Contact Us</a></li>
           </ul>
           <ul class="footer-list">
             <li><p class="footer-list-title">Services</p></li>
-            <li><a href="<?= pageHref('addCart') ?>" class="footer-link">Order Tracking</a></li>
-            <li><a href="<?= pageHref('favorites') ?>" class="footer-link">Wish List</a></li>
-            <li><a href="<?= pageHref('login') ?>" class="footer-link">Login</a></li>
-            <li><a href="<?= pageHref('userDashboard') ?>" class="footer-link">My Account</a></li>
-            <li><a href="#" class="footer-link">Terms &amp; Conditions</a></li>
-            <li><a href="<?= pageHref('property') ?>" class="footer-link">Promotions</a></li>
+            <li><a href="<?= pageHref('services') ?>" class="footer-link">Our Services</a></li>
+            <li><a href="<?= pageHref('property') ?>" class="footer-link">Buy a Home</a></li>
+            <li><a href="<?= pageHref('property') ?>" class="footer-link">Rent a Home</a></li>
+            <li><a href="<?= pageHref('list-your-property') ?>" class="footer-link">List Your Property</a></li>
+            <li><a href="<?= pageHref('services') ?>" class="footer-link">Estate Management</a></li>
+            <li><a href="<?= pageHref('contact') ?>" class="footer-link">Property Consultation</a></li>
           </ul>
           <ul class="footer-list">
-            <li><p class="footer-list-title">Customer Care</p></li>
-            <li><a href="<?= pageHref('login') ?>" class="footer-link">Login</a></li>
-            <li><a href="<?= pageHref('userDashboard') ?>" class="footer-link">My Account</a></li>
-            <li><a href="<?= pageHref('favorites') ?>" class="footer-link">Wish List</a></li>
-            <li><a href="<?= pageHref('addCart') ?>" class="footer-link">Order Tracking</a></li>
-            <li><a href="#" class="footer-link">FAQ</a></li>
+            <li><p class="footer-list-title">Explore</p></li>
+            <li><a href="<?= pageHref('property') ?>" class="footer-link">Browse Properties</a></li>
+            <li><a href="<?= pageHref('list-your-property') ?>" class="footer-link">Sell With Us</a></li>
+            <li><a href="<?= pageHref('faqs') ?>" class="footer-link">FAQ</a></li>
+            <li><a href="<?= pageHref('blog') ?>" class="footer-link">Blog</a></li>
             <li><a href="<?= pageHref('contact') ?>" class="footer-link">Contact Us</a></li>
+            <li><a href="<?= pageHref('terms') ?>" class="footer-link">Terms &amp; Conditions</a></li>
+            <li><a href="<?= pageHref('privacy') ?>" class="footer-link">Privacy Policy</a></li>
+            <li><a href="<?= pageHref('cookie-policy') ?>" class="footer-link">Cookie Policy</a></li>
           </ul>
         </div>
       </div>
     </div>
+    <?php require __DIR__ . '/assets/includes/newsletter-strip.php'; ?>
     <div class="footer-bottom">
       <div class="container">
         <p class="copyright">
@@ -161,6 +162,7 @@
   <script>
     const PROPERTIES_API = window.BIVER_SITE?.propertiesApi || 'api/properties.php';
     let allProperties = [];
+    let propertiesLoadFailed = false;
     let currentPage = 1;
     let itemsPerPage = 3;
     let currentView = 'grid';
@@ -257,10 +259,21 @@
       const errorState = document.getElementById('errorState');
       const resultsCount = document.getElementById('resultsCount');
       
+      if (propertiesLoadFailed) {
+        hideEl(skeleton);
+        hideEl(grid);
+        showEl(errorState);
+        errorState.innerHTML = '<ion-icon name="alert-circle-outline"></ion-icon><h3>Unable to Load Properties</h3><p>We\'re having trouble connecting to our property database. Please check your connection and try again.</p><button class="retry-btn" onclick="location.reload()">Try Again</button>';
+        resultsCount.textContent = '0 properties';
+        document.getElementById('pagination').innerHTML = '';
+        return;
+      }
+
       if (!allProperties.length) {
         hideEl(skeleton);
         hideEl(grid);
         showEl(errorState);
+        errorState.innerHTML = '<ion-icon name="home-outline"></ion-icon><h3>No Properties Available</h3><p>There are currently no approved listings. Please check back soon or contact us for assistance.</p><a href="' + (window.BIVER_SITE?.page ? window.BIVER_SITE.page('contact') : 'contact') + '" class="retry-btn">Contact Us</a>';
         resultsCount.textContent = '0 properties';
         document.getElementById('pagination').innerHTML = '';
         return;
@@ -339,9 +352,11 @@
         }
 
         allProperties = data.properties || [];
+        propertiesLoadFailed = false;
       } catch (error) {
         console.error('Property load failed:', error.message);
         allProperties = [];
+        propertiesLoadFailed = true;
       }
 
       currentPage = 1;
@@ -361,9 +376,18 @@
     document.getElementById('propertyFilterInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') { currentPage = 1; renderProperties(); } });
     document.getElementById('typeFilter').addEventListener('change', () => { currentPage = 1; renderProperties(); });
     document.getElementById('sortFilter').addEventListener('change', () => { renderProperties(); });
+
+    (function applySearchFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const q = (params.get('search') || params.get('q') || '').trim();
+      const input = document.getElementById('propertyFilterInput');
+      if (q && input) input.value = q;
+    })();
     
     loadProperties();
   </script>
+  <?php require __DIR__ . '/assets/includes/site-end.php'; ?>
+  <?php require __DIR__ . '/assets/includes/whatsapp-float.php'; ?>
   <?php require __DIR__ . '/chatbot/chatbot.php'; ?>
 </body>
 </html>

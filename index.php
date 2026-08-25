@@ -1,76 +1,28 @@
 <?php require_once __DIR__ . '/includes/htaccess_redirect.php'; ?>
+<?php
+require_once __DIR__ . '/includes/HomepageContentService.php';
+require_once __DIR__ . '/includes/site_helpers.php';
+require_once __DIR__ . '/includes/SeoService.php';
+$homepageContent = HomepageContentService::get();
+$heroSlidesData = $homepageContent['slides'] ?? [];
+$heroStatsData = $homepageContent['stats'] ?? [];
+$homeSections = $homepageContent['sections'] ?? [];
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-NG">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Biver Royalty Homes - Your trusted real estate partner in Nigeria. Find your dream home with our extensive property listings in Owerri, Imo State.">
-  <meta name="keywords" content="real estate, Nigeria, Owerri, property, homes, rent, buy, Biver Royalty">
-  <meta name="author" content="Biver Royalty Homes Ltd">
-  <meta name="robots" content="index, follow">
-  <meta property="og:title" content="Biver Royalty Homes - Find Your Dream House">
-  <meta property="og:description" content="Leading real estate marketplace in Nigeria. Buy, rent, or sell properties with integrity.">
-  <meta property="og:image" content="./assets/images/biver-logo.png">
-  <meta property="og:url" content="https://biverroyaltyhomesltd.com">
-  <meta property="og:type" content="website">
-  <title>Biver Royalty Homes - Find Your Dream House | Real Estate Nigeria</title>
-  <link rel="shortcut icon" href="./assets/images/biver-logo.png" type="image/png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/css/site-variables.css">
-  <link rel="stylesheet" href="./assets/css/site-utilities.css">
-  <link rel="stylesheet" href="./assets/css/index.css">
-  <?php require __DIR__ . '/includes/site_bootstrap.php'; ?>
-  <link rel="stylesheet" href="./assets/css/site-header.css">
-  <link rel="stylesheet" href="./assets/css/site-banners.css">
+<?php
+SeoService::renderHead([
+    'title' => 'Real Estate Agency in Owerri | Biver Royalty Homes Ltd',
+    'description' => 'Biver Royalty Homes Ltd is a trusted real estate agency in Owerri, Imo State. Buy, rent, or sell verified homes from Wetheral Road, Angelina Plaza.',
+    'keywords' => 'real estate agency Owerri, Biver Royalty Homes Ltd, houses for sale Owerri, rent apartment Imo State, property Wetheral Road, estate agent Owerri',
+    'page' => 'index',
+    'stylesheets' => ['./assets/css/index.css', './assets/css/site-banners.css'],
+]);
+?>
 </head>
 
 <body>
-
-  <!-- =============================================
-       PRELOADER
-  ============================================= -->
-  <div id="preloader" role="dialog" aria-modal="true" aria-label="Loading Biver Royalty Homes" aria-busy="true">
-    <div class="preloader-grid" aria-hidden="true"></div>
-    <div class="preloader-glow" aria-hidden="true"></div>
-    <div class="preloader-particles" id="preloaderParticles" aria-hidden="true"></div>
-
-    <div class="preloader-logo-wrap">
-      <div class="preloader-crest" aria-hidden="true">
-        <svg class="crest-svg" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path class="crest-corner" d="M 18 18 L 18 34 M 18 18 L 34 18"/>
-          <path class="crest-corner" d="M 72 18 L 56 18 M 72 18 L 72 34"/>
-          <path class="crest-corner" d="M 72 72 L 72 56 M 72 72 L 56 72"/>
-          <path class="crest-corner" d="M 18 72 L 18 56 M 18 72 L 34 72"/>
-          <circle class="crest-ring-outer" cx="45" cy="45" r="42"/>
-          <circle class="crest-ring-inner" cx="45" cy="45" r="32"/>
-          <polygon class="crest-diamond" points="45,22 58,45 45,68 32,45"/>
-          <text class="crest-letter" x="45" y="52" text-anchor="middle">B</text>
-        </svg>
-      </div>
-      <div class="preloader-brand">
-        <p class="preloader-brand-name">Biver <span class="gold">Royalty</span> Homes</p>
-        <p class="preloader-brand-sub">Luxury Real Estate · Nigeria</p>
-      </div>
-      <div class="preloader-line" aria-hidden="true"></div>
-    </div>
-
-    <div class="preloader-progress-wrap">
-      <div class="preloader-progress-label">
-        <span>Loading Experience</span>
-        <span id="preloaderPercent">0%</span>
-      </div>
-      <div class="preloader-progress-track">
-        <div class="preloader-progress-bar" id="preloaderBar">
-          <div class="preloader-scan" aria-hidden="true"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="preloader-curtain" aria-hidden="true"></div>
-  </div>
 
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
@@ -85,14 +37,14 @@
           <span>biverroyaltyhomes01@gmail.com</span>
         </a>
         <div class="topbar-divider" aria-hidden="true"></div>
-        <a href="#" class="topbar-link" aria-label="Our location">
+        <a href="<?= pageHref('locations') ?>" class="topbar-link" aria-label="Our location in Owerri">
           <ion-icon name="location-outline"></ion-icon>
           <address>No. 31 Wetheral Road, Angelina Plaza, Owerri, Imo State</address>
         </a>
         <div class="topbar-divider" aria-hidden="true"></div>
-        <a href="tel:+2349033137432" class="topbar-link" aria-label="Call us">
+        <a href="tel:+2349036851168" class="topbar-link" aria-label="Call us">
           <ion-icon name="call-outline"></ion-icon>
-          <span>+234 903 313 7432</span>
+          <span>+234 903 685 1168</span>
         </a>
       </div>
       <div class="topbar-right">
@@ -168,15 +120,18 @@
                 <li role="none"><a href="<?= pageHref('about') ?>" class="navbar-link" data-nav-link role="menuitem">About</a></li>
                 <li role="none"><a href="<?= pageHref('services') ?>" class="navbar-link" data-nav-link role="menuitem">Services</a></li>
                 <li role="none"><a href="<?= pageHref('property') ?>" class="navbar-link" data-nav-link role="menuitem">Properties</a></li>
+                <li role="none"><a href="<?= pageHref('locations') ?>" class="navbar-link" data-nav-link role="menuitem">Locations</a></li>
+                <li role="none"><a href="<?= pageHref('faqs') ?>" class="navbar-link" data-nav-link role="menuitem">FAQs</a></li>
+                <li role="none"><a href="<?= pageHref('blog') ?>" class="navbar-link" data-nav-link role="menuitem">Blog</a></li>
                 <li role="none"><a href="<?= pageHref('contact') ?>" class="navbar-link" data-nav-link role="menuitem">Contact</a></li>
               </ul>
             </div>
 
             <div class="navbar-footer">
               <p class="navbar-footer-title">Get in Touch</p>
-              <a href="tel:+2349033137432" class="navbar-footer-link">
+              <a href="tel:+2349036851168" class="navbar-footer-link">
                 <ion-icon name="call-outline"></ion-icon>
-                <span>+234 903 313 7432</span>
+                <span>+234 903 685 1168</span>
               </a>
               <a href="mailto:biverroyaltyhomes01@gmail.com" class="navbar-footer-link">
                 <ion-icon name="mail-outline"></ion-icon>
@@ -214,12 +169,11 @@
       <section class="hero" id="home" aria-label="Hero section">
         <div class="hero-bg-slideshow" aria-hidden="true">
           <!-- Slide 1: Eager-loaded — visible immediately -->
-          <div class="bg-slide active bg-slide--1"></div>
+          <div class="bg-slide active bg-slide--1"<?php if (!empty($heroSlidesData[0]['bgImage'])): ?> style="background-image:url('<?= siteEscape($heroSlidesData[0]['bgImage']) ?>')"<?php endif; ?>></div>
           <!-- Slides 2-5: Lazy-loaded via JS after slide 1 is shown (Feature #4) -->
-          <div class="bg-slide" data-bg="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1920&auto=format&fit=crop&q=80"></div>
-          <div class="bg-slide" data-bg="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1920&auto=format&fit=crop&q=80"></div>
-          <div class="bg-slide" data-bg="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&auto=format&fit=crop&q=80"></div>
-          <div class="bg-slide" data-bg="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&auto=format&fit=crop&q=80"></div>
+          <?php foreach (array_slice($heroSlidesData, 1) as $slide): ?>
+          <div class="bg-slide" data-bg="<?= siteEscape($slide['bgImage'] ?? '') ?>"></div>
+          <?php endforeach; ?>
           <div class="bg-overlay"></div>
         </div>
 
@@ -227,12 +181,12 @@
           <div class="hero-content" id="heroContent">
             <p class="hero-eyebrow" id="heroEyebrow">
               <span class="line"></span>
-              <span id="heroEyebrowText">Premium Real Estate Agency</span>
+              <span id="heroEyebrowText"><?= $heroSlidesData[0]['eyebrow'] ?? 'Trusted Real Estate Agency in Owerri' ?></span>
             </p>
             <h1 class="hero-title" id="heroTitle">
-              <span id="heroTitleText">Biver <span class="accent">Royalty</span> Homes</span>
+              <span id="heroTitleText"><?= $heroSlidesData[0]['title'] ?? 'Biver <span class="accent">Royalty</span> Homes — Owerri' ?></span>
             </h1>
-            <p class="hero-tagline" id="heroTagline">Where your dreams come true — find premium properties in Owerri, Imo State, built on a foundation of integrity and excellence.</p>
+            <p class="hero-tagline" id="heroTagline"><?= siteEscape((string) ($heroSlidesData[0]['tagline'] ?? 'Find verified homes for sale and rent in Owerri, Imo State — integrity-first real estate from Wetheral Road.')) ?></p>
             <div class="hero-actions" id="heroActions">
               <a href="<?= pageHref('property') ?>" class="hero-btn-primary">
                 <ion-icon name="home-outline"></ion-icon> Explore Properties
@@ -247,46 +201,27 @@
         <!-- Stats Bar -->
         <div class="hero-stats" aria-label="Company statistics">
           <div class="container">
+            <?php foreach ($heroStatsData as $stat): ?>
             <div class="stat-item">
-              <div class="stat-icon"><ion-icon name="home-outline"></ion-icon></div>
+              <div class="stat-icon"><ion-icon name="<?= siteEscape((string) ($stat['icon'] ?? 'home-outline')) ?>"></ion-icon></div>
               <div class="stat-info">
-                <div class="num">500+</div>
-                <div class="label">Properties Listed</div>
+                <div class="num"><?= siteEscape((string) ($stat['num'] ?? '')) ?></div>
+                <div class="label"><?= siteEscape((string) ($stat['label'] ?? '')) ?></div>
               </div>
             </div>
-            <div class="stat-item">
-              <div class="stat-icon"><ion-icon name="people-outline"></ion-icon></div>
-              <div class="stat-info">
-                <div class="num">1,200+</div>
-                <div class="label">Happy Clients</div>
-              </div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-icon"><ion-icon name="star-outline"></ion-icon></div>
-              <div class="stat-info">
-                <div class="num">5★</div>
-                <div class="label">Service Rating</div>
-              </div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-icon"><ion-icon name="ribbon-outline"></ion-icon></div>
-              <div class="stat-info">
-                <div class="num">10+</div>
-                <div class="label">Years Experience</div>
-              </div>
-            </div>
+            <?php endforeach; ?>
           </div>
         </div>
 
         <!-- Slide dots -->
         <div class="slide-dots" role="tablist" aria-label="Slideshow navigation">
-          <span class="dot active" data-slide="0" role="tab" aria-selected="true" aria-label="Slide 1" tabindex="0"></span>
-          <span class="dot" data-slide="1" role="tab" aria-selected="false" aria-label="Slide 2" tabindex="0"></span>
-          <span class="dot" data-slide="2" role="tab" aria-selected="false" aria-label="Slide 3" tabindex="0"></span>
-          <span class="dot" data-slide="3" role="tab" aria-selected="false" aria-label="Slide 4" tabindex="0"></span>
-          <span class="dot" data-slide="4" role="tab" aria-selected="false" aria-label="Slide 5" tabindex="0"></span>
+          <?php foreach ($heroSlidesData as $i => $slide): ?>
+          <span class="dot<?= $i === 0 ? ' active' : '' ?>" data-slide="<?= (int) $i ?>" role="tab" aria-selected="<?= $i === 0 ? 'true' : 'false' ?>" aria-label="Slide <?= (int) $i + 1 ?>" tabindex="0"></span>
+          <?php endforeach; ?>
         </div>
       </section>
+
+      <div class="container"><?php SeoService::adSlot('top'); ?></div>
 
       <!-- =============================================
            ABOUT
@@ -298,10 +233,10 @@
             <img src="./assets/images/image2.webp" alt="Luxury house interior" class="abs-img" loading="lazy">
           </figure>
           <div class="about-content">
-            <p class="section-subtitle reveal">About Us</p>
-            <h2 class="h2 section-title reveal reveal-delay-1">The Leading Real Estate Rental Marketplace.</h2>
+            <p class="section-subtitle reveal"><?= siteEscape((string) ($homeSections['about']['subtitle'] ?? 'About Us')) ?></p>
+            <h2 class="h2 section-title reveal reveal-delay-1"><?= siteEscape((string) ($homeSections['about']['title'] ?? "Owerri's Trusted Real Estate Agency")) ?></h2>
             <p class="about-text reveal reveal-delay-2">
-              We are a real estate company that is built on Integrity. We ensure that our clients are able to bring their dream homes to reality all on the budget mapped. We ensure our services are high class and meet our 5 star standard.
+              <?= siteEscape((string) ($homeSections['about']['text'] ?? '')) ?>
             </p>
             <ul class="about-list reveal reveal-delay-2">
               <li class="about-item">
@@ -326,6 +261,22 @@
             </p>
             <a href="<?= pageHref('about') ?>" class="btn reveal reveal-delay-4">Meet Our Team</a>
           </div>
+        </div>
+      </section>
+
+      <section class="home-local-seo" aria-labelledby="owerriSeoTitle">
+        <div class="container">
+          <p class="section-subtitle reveal">Owerri &amp; Imo State</p>
+          <h2 class="h2 section-title reveal reveal-delay-1" id="owerriSeoTitle">A real estate agency rooted in Owerri</h2>
+          <p class="home-local-seo-text reveal reveal-delay-2">
+            Biver Royalty Homes Ltd serves buyers, renters, and property owners from our office at
+            <a href="<?= pageHref('locations') ?>">31 Wetheral Road, Angelina Plaza</a>.
+            We inspect and list homes across Aladinma, Ikenegbu, New Owerri, World Bank, Works Layout, Orji, Egbu, Nekede,
+            and other Imo State neighbourhoods. Browse
+            <a href="<?= pageHref('property') ?>">houses for sale and rent</a>,
+            <a href="<?= pageHref('list-your-property') ?>">list your property</a>,
+            or <a href="<?= pageHref('contact') ?>">visit the office</a> for a local search.
+          </p>
         </div>
       </section>
 
@@ -672,9 +623,9 @@
               </a>
             </li>
             <li>
-              <a href="tel:+2349033137432" class="contact-link">
+              <a href="tel:+2349036851168" class="contact-link">
                 <ion-icon name="call-outline"></ion-icon>
-                <span>+234 903 313 7432</span>
+                <span>+234 903 685 1168</span>
               </a>
             </li>
             <li>
@@ -695,38 +646,49 @@
           <ul class="footer-list">
             <li><p class="footer-list-title">Company</p></li>
             <li><a href="<?= pageHref('about') ?>" class="footer-link">About Us</a></li>
-            <li><a href="https://blog.biverroyaltyhomesltd.com/" class="footer-link" target="_blank" rel="noopener noreferrer">Blog</a></li>
+            <li><a href="<?= pageHref('blog') ?>" class="footer-link">Blog</a></li>
             <li><a href="<?= pageHref('property') ?>" class="footer-link">All Properties</a></li>
-            <li><a href="#" class="footer-link">Locations Map</a></li>
-            <li><a href="#" class="footer-link">FAQ</a></li>
+            <li><a href="<?= pageHref('locations') ?>" class="footer-link">Owerri Locations</a></li>
+            <li><a href="<?= pageHref('faqs') ?>" class="footer-link">FAQ</a></li>
+            <li><a href="<?= pageHref('terms') ?>" class="footer-link">Terms &amp; Conditions</a></li>
+            <li><a href="<?= pageHref('privacy') ?>" class="footer-link">Privacy Policy</a></li>
             <li><a href="<?= pageHref('contact') ?>" class="footer-link">Contact Us</a></li>
           </ul>
           <ul class="footer-list">
             <li><p class="footer-list-title">Services</p></li>
-            <li><a href="<?= pageHref('addCart') ?>" class="footer-link">Order Tracking</a></li>
-            <li><a href="<?= pageHref('favorites') ?>" class="footer-link">Wish List</a></li>
-            <li><a href="<?= pageHref('login') ?>" class="footer-link">Login</a></li>
-            <li><a href="<?= pageHref('userDashboard') ?>" class="footer-link">My Account</a></li>
-            <li><a href="#" class="footer-link">Terms &amp; Conditions</a></li>
-            <li><a href="<?= pageHref('property') ?>" class="footer-link">Promotions</a></li>
+            <li><a href="<?= pageHref('services') ?>" class="footer-link">Our Services</a></li>
+            <li><a href="<?= pageHref('property') ?>" class="footer-link">Buy a Home</a></li>
+            <li><a href="<?= pageHref('property') ?>" class="footer-link">Rent a Home</a></li>
+            <li><a href="<?= pageHref('list-your-property') ?>" class="footer-link">List Your Property</a></li>
+            <li><a href="<?= pageHref('services') ?>" class="footer-link">Estate Management</a></li>
+            <li><a href="<?= pageHref('contact') ?>" class="footer-link">Property Consultation</a></li>
           </ul>
           <ul class="footer-list">
-            <li><p class="footer-list-title">Customer Care</p></li>
-            <li><a href="<?= pageHref('login') ?>" class="footer-link">Login</a></li>
-            <li><a href="<?= pageHref('userDashboard') ?>" class="footer-link">My Account</a></li>
-            <li><a href="<?= pageHref('favorites') ?>" class="footer-link">Wish List</a></li>
-            <li><a href="<?= pageHref('addCart') ?>" class="footer-link">Order Tracking</a></li>
-            <li><a href="#" class="footer-link">FAQ</a></li>
+            <li><p class="footer-list-title">Explore</p></li>
+            <li><a href="<?= pageHref('property') ?>" class="footer-link">Browse Properties</a></li>
+            <li><a href="<?= pageHref('list-your-property') ?>" class="footer-link">Sell With Us</a></li>
+            <li><a href="<?= pageHref('faqs') ?>" class="footer-link">FAQ</a></li>
+            <li><a href="<?= pageHref('blog') ?>" class="footer-link">Blog</a></li>
             <li><a href="<?= pageHref('contact') ?>" class="footer-link">Contact Us</a></li>
+            <li><a href="<?= pageHref('terms') ?>" class="footer-link">Terms &amp; Conditions</a></li>
+            <li><a href="<?= pageHref('privacy') ?>" class="footer-link">Privacy Policy</a></li>
+            <li><a href="<?= pageHref('cookie-policy') ?>" class="footer-link">Cookie Policy</a></li>
           </ul>
         </div>
       </div>
     </div>
+    <?php require __DIR__ . '/assets/includes/newsletter-strip.php'; ?>
     <div class="footer-bottom">
       <div class="container">
         <p class="copyright">
-          &copy; 2025 <a href="#">Biver Royalty Homes</a>. All Rights Reserved | Designed by <a href="#">ERIBS Tech</a>
+          &copy; <?= date('Y') ?> <a href="<?= pageHref('index') ?>">Biver Royalty Homes</a>. All Rights Reserved | Designed by <a href="#">ERIBS Tech</a>
         </p>
+        <div class="footer-legal-row">
+          <a href="<?= pageHref('privacy') ?>">Privacy</a>
+          <a href="<?= pageHref('terms') ?>">Terms</a>
+          <a href="<?= pageHref('cookie-policy') ?>">Cookies</a>
+          <button type="button" class="seo-cookie-link" onclick="window.BiverBanners && window.BiverBanners.reopenCookieSettings()">Cookie settings</button>
+        </div>
       </div>
     </div>
   </footer>
@@ -736,26 +698,6 @@
     <ion-icon name="chevron-up-outline"></ion-icon>
   </button>
 
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "RealEstateAgent",
-    "name": "Biver Royalty Homes Ltd",
-    "description": "Leading real estate marketplace in Nigeria specializing in property sales, rentals, and estate management.",
-    "url": "https://biverroyaltyhomesltd.com",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "No. 31 Wetheral Road, Angelina Plaza",
-      "addressLocality": "Owerri",
-      "addressRegion": "Imo State",
-      "addressCountry": "NG"
-    },
-    "telephone": "+2349033137432",
-    "email": "biverroyaltyhomes01@gmail.com"
-  }
-  </script>
-
   <!-- Ionicons -->
     <script src="./assets/js/site-header.js" defer></script>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
@@ -764,145 +706,7 @@
   <script>
     'use strict';
 
-    /* =============================================
-       PRELOADER LOGIC
-       Runs before page interaction is enabled.
-       Uses requestAnimationFrame for smooth, GPU-
-       efficient progress animation.
-       Feature #5: Respects prefers-reduced-motion —
-       if set, skips cinematic delay and exits fast.
-    ============================================= */
-    (function initPreloader() {
-      const preloader  = document.getElementById('preloader');
-      const bar        = document.getElementById('preloaderBar');
-      const pct        = document.getElementById('preloaderPercent');
-      const particles  = document.getElementById('preloaderParticles');
-
-      if (!preloader) return;
-
-      function notifySiteReady() {
-        window.dispatchEvent(new CustomEvent('biver:preloader-done'));
-      }
-
-      function forceDismissPreloader() {
-        preloader.classList.add('exiting', 'hidden');
-        document.body.style.overflow = '';
-        notifySiteReady();
-      }
-
-      // Always dismiss within 4 seconds so the site never stays blocked
-      setTimeout(forceDismissPreloader, 4000);
-
-      // Feature #5: If user prefers reduced motion, skip entirely
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (prefersReduced) {
-        // Show briefly then fade out — no animations, no delay
-        document.body.style.overflow = 'hidden';
-        window.addEventListener('load', () => {
-          setTimeout(() => {
-            if (preloader) preloader.classList.add('hidden');
-            document.body.style.overflow = '';
-            notifySiteReady();
-          }, 300);
-        });
-        // Absolute fallback
-        setTimeout(() => {
-          if (preloader) preloader.classList.add('hidden');
-          document.body.style.overflow = '';
-          notifySiteReady();
-        }, 1500);
-        return; // Exit — no RAF loop, no particles
-      }
-
-      if (!bar || !pct || !particles) {
-        window.addEventListener('load', forceDismissPreloader, { once: true });
-        return;
-      }
-
-      // Generate ambient gold particle dust
-      const PARTICLE_COUNT = 18;
-      for (let i = 0; i < PARTICLE_COUNT; i++) {
-        const p = document.createElement('div');
-        p.className = 'particle';
-        const size = 2 + Math.random() * 3;
-        p.style.cssText = [
-          `width:${size}px`,
-          `height:${size}px`,
-          `left:${10 + Math.random() * 80}%`,
-          `bottom:${Math.random() * 40}%`,
-          `--dur:${3 + Math.random() * 4}s`,
-          `--delay:${Math.random() * 3}s`,
-          `--op:${0.3 + Math.random() * 0.5}`
-        ].join(';');
-        particles.appendChild(p);
-      }
-
-      // Animate progress: fast at first, slows near 90%, then bursts to 100
-      let progress = 0;
-      let raf;
-      const TICK_RATE = 16; // ~60fps
-      let lastTime = 0;
-
-      function animateBar(timestamp) {
-        if (timestamp - lastTime < TICK_RATE) {
-          raf = requestAnimationFrame(animateBar);
-          return;
-        }
-        lastTime = timestamp;
-
-        const speed = progress < 85 ? 0.6 : 0.15;
-        progress = Math.min(progress + speed, 100);
-
-        const display = Math.floor(progress);
-        bar.style.width = display + '%';
-        pct.textContent = display + '%';
-
-        if (progress < 100) {
-          raf = requestAnimationFrame(animateBar);
-        }
-      }
-
-      // Start progress animation
-      raf = requestAnimationFrame(animateBar);
-
-      // Dismiss preloader after page load + min display time
-      const MIN_DISPLAY = 2800; // ms — enough to feel cinematic, not drag
-      const startTime = Date.now();
-
-      function dismissPreloader() {
-        cancelAnimationFrame(raf);
-
-        // Snap to 100%
-        bar.style.width = '100%';
-        pct.textContent = '100%';
-
-        // Brief pause at 100% before exiting
-        setTimeout(() => {
-          preloader.classList.add('exiting');
-
-          // After curtain animation, fully hide
-          setTimeout(() => {
-            preloader.classList.add('hidden');
-            document.body.style.overflow = ''; // restore scroll
-            notifySiteReady();
-          }, 700);
-        }, 400);
-      }
-
-      // Prevent scroll during preload
-      document.body.style.overflow = 'hidden';
-
-      window.addEventListener('load', () => {
-        const elapsed = Date.now() - startTime;
-        const remaining = Math.max(0, MIN_DISPLAY - elapsed);
-        setTimeout(dismissPreloader, remaining);
-      });
-
-      // Fallback: never block user longer than 5s total
-      setTimeout(dismissPreloader, 5000);
-    })();
-
-
+    
     /* =============================================
        API CONFIG
     ============================================= */
@@ -911,7 +715,7 @@
     const TESTIMONIALS_API = window.BIVER_SITE?.testimonialsApi || "api/testimonials.php";
     const LOCATIONS_API = window.BIVER_SITE?.locationsApi || "api/locations.php";
 
-    function fetchWithTimeout(url, options = {}, timeoutMs = 8000) {
+    function fetchWithTimeout(url, options = {}, timeoutMs = 15000) {
       const controller = new AbortController();
       const timer = setTimeout(() => controller.abort(), timeoutMs);
       return fetch(url, { ...options, signal: controller.signal }).finally(() => clearTimeout(timer));
@@ -1003,33 +807,7 @@
     /* =============================================
        HERO SLIDESHOW WITH CONTENT TRANSITIONS
     ============================================= */
-    const heroSlides = [
-      {
-        eyebrow: "Premium Real Estate Agency",
-        title: "Biver <span class='accent'>Royalty</span> Homes",
-        tagline: "Where your dreams come true — find premium properties in Owerri, Imo State, built on a foundation of integrity and excellence."
-      },
-      {
-        eyebrow: "Luxury Properties",
-        title: "Find Your <span class='accent'>Dream</span> Home",
-        tagline: "Explore our curated selection of luxurious homes, from elegant apartments to expansive estates tailored to your lifestyle."
-      },
-      {
-        eyebrow: "Trusted Since 2015",
-        title: "Built on <span class='accent'>Integrity</span>",
-        tagline: "Over 1,200 happy families have trusted us to guide them home. Experience real estate the way it should be — transparent, efficient, and personal."
-      },
-      {
-        eyebrow: "Buy, Rent or Sell",
-        title: "Your Property <span class='accent'>Journey</span> Starts Here",
-        tagline: "Whether you're buying your first home, renting a space, or selling your property, our expert team walks every step with you."
-      },
-      {
-        eyebrow: "Expert Market Knowledge",
-        title: "Owerri's <span class='accent'>Finest</span> Real Estate",
-        tagline: "With deep roots in Imo State, we know the best neighborhoods, the fairest prices, and the right time to make your move."
-      }
-    ];
+    const heroSlides = <?= json_encode($heroSlidesData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>;
 
     let currentSlide = 0;
     let slideTimer;
@@ -1115,29 +893,6 @@
     }
 
     /* =============================================
-       PRELOADER — prefers-reduced-motion awareness
-       If user has reduced motion OS setting, skip the
-       cinematic delay and dismiss immediately.
-       (CSS already disables animations via media query.)
-    ============================================= */
-    function checkReducedMotionForPreloader() {
-      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (prefersReduced) {
-        // Skip the cinematic delay entirely — just fade out fast
-        const preloader = document.getElementById('preloader');
-        if (preloader) {
-          setTimeout(() => {
-            preloader.classList.add('hidden');
-            document.body.style.overflow = '';
-          }, 400);
-        }
-      }
-    }
-
-    /* =============================================
-       PROPERTIES MODULE
-    ============================================= */
-    /* =============================================
        PROPERTIES MODULE
     ============================================= */
     let featuredProperties = [];
@@ -1212,7 +967,10 @@
         }
       } catch (error) {
         console.error('Failed to load properties:', error.message);
-        showPropertiesEmpty('Unable to Load Properties', 'Please refresh the page or try again shortly.', true);
+        hideEl(propertiesSkeleton);
+        hideEl(propertiesList);
+        hideEl(propertiesEmpty);
+        showEl(propertiesError);
       }
     }
 
@@ -1558,9 +1316,6 @@
     ============================================= */
     document.addEventListener('DOMContentLoaded', async () => {
 
-      // Feature #5: Check reduced-motion FIRST — may fast-dismiss preloader
-      checkReducedMotionForPreloader();
-
       // Hero slideshow dots
       const dots = document.querySelectorAll('.slide-dots .dot');
       dots.forEach((dot, i) => {
@@ -1590,8 +1345,8 @@
       ]);
     });
   </script>
-  <?php require __DIR__ . '/assets/includes/cookie-banner.php'; ?>
+  <?php require __DIR__ . '/assets/includes/site-end.php'; ?>
+  <?php require __DIR__ . '/assets/includes/whatsapp-float.php'; ?>
   <?php require __DIR__ . '/chatbot/chatbot.php'; ?>
-  <script src="./assets/js/site-banners.js" defer></script>
 </body>
 </html>

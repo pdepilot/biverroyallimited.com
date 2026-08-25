@@ -3,7 +3,9 @@
     "description": "Biver Royal Estate website",
     "require": {
         "php": ">=8.0",
-        "phpmailer/phpmailer": "^6.9"
+        "phpmailer/phpmailer": "^6.9",
+        "psr/log": "^3.0",
+        "dompdf/dompdf": "^3.1"
     },
     "config": {
         "optimize-autoloader": true

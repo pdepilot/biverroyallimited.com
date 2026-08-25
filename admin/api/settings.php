@@ -67,12 +67,17 @@ try {
 
         if ($action === 'save_site') {
             SiteSettingsService::save([
-                'siteName'     => $body['siteName'] ?? '',
-                'contactEmail' => $body['contactEmail'] ?? '',
-                'contactPhone' => $body['contactPhone'] ?? '',
-                'address'      => $body['address'] ?? '',
-                'aboutText'    => $body['aboutText'] ?? '',
-                'adminPhone'   => SiteSettingsService::get()['adminPhone'] ?? '',
+                'siteName'        => $body['siteName'] ?? '',
+                'contactEmail'    => $body['contactEmail'] ?? '',
+                'contactPhone'    => $body['contactPhone'] ?? '',
+                'address'         => $body['address'] ?? '',
+                'aboutText'       => $body['aboutText'] ?? '',
+                'businessHours'   => $body['businessHours'] ?? '',
+                'socialFacebook'  => $body['socialFacebook'] ?? '',
+                'socialInstagram' => $body['socialInstagram'] ?? '',
+                'socialTiktok'    => $body['socialTiktok'] ?? '',
+                'socialTwitter'   => SiteSettingsService::get()['socialTwitter'] ?? '',
+                'adminPhone'      => SiteSettingsService::get()['adminPhone'] ?? '',
             ]);
             jsonOk(['message' => 'Site settings saved.', 'site' => SiteSettingsService::get()]);
         }

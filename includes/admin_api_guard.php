@@ -11,6 +11,10 @@ require_once __DIR__ . '/AdminPermissions.php';
 AuthSecurity::initSession();
 
 if (!AuthSecurity::isAuthenticated()) {
+    AuthSecurity::attemptRememberLogin();
+}
+
+if (!AuthSecurity::isAuthenticated()) {
     header('Content-Type: application/json');
     http_response_code(401);
     echo json_encode(['success' => false, 'message' => 'Unauthorized. Please log in again.']);

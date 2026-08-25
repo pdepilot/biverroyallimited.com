@@ -1,18 +1,46 @@
 <?php
 /**
- * PDO database connection for Biver Royal Estate admin authentication.
+ * PDO database connection for Biver Royal Estate.
  *
- * Adjust credentials for your environment. XAMPP defaults are shown below.
- * Never commit production passwords to version control — use environment variables.
+ * Credentials load in this order:
+ * 1. config/database.local.php (per-machine secrets — not committed to git)
+ * 2. Environment variables: DB_HOST, DB_NAME, DB_USER, DB_PASS
+ * 3. Defaults below (Hostinger database name/user; password must be set locally)
+ *
+ * Local XAMPP: copy database.local.php.example → database.local.php and use root + empty password.
+ * Hostinger:    same file on the server with your MySQL password from hPanel.
  */
 
 declare(strict_types=1);
 
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'biverroyal_estate');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_CHARSET', 'utf8mb4');
+$localConfig = __DIR__ . '/database.local.php';
+if (is_readable($localConfig)) {
+    require $localConfig;
+}
+
+if (!defined('DB_HOST')) {
+    $host = getenv('DB_HOST');
+    define('DB_HOST', ($host !== false && $host !== '') ? $host : 'localhost');
+}
+
+if (!defined('DB_NAME')) {
+    $name = getenv('DB_NAME');
+    define('DB_NAME', ($name !== false && $name !== '') ? $name : 'u292007149_biverroyalty');
+}
+
+if (!defined('DB_USER')) {
+    $user = getenv('DB_USER');
+    define('DB_USER', ($user !== false && $user !== '') ? $user : 'u292007149_biverroyalty');
+}
+
+if (!defined('DB_PASS')) {
+    $pass = getenv('DB_PASS');
+    define('DB_PASS', $pass !== false ? $pass : '');
+}
+
+if (!defined('DB_CHARSET')) {
+    define('DB_CHARSET', 'utf8mb4');
+}
 
 /**
  * Returns a singleton PDO instance with secure defaults.

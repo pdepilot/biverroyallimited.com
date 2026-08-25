@@ -18,6 +18,34 @@ $pageStylesheet = '../assets/css/admin-locations.css';
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <?php require dirname(__DIR__) . '/includes/admin_assets.php'; ?>
+  <style>
+    .area-upload {
+      border: 2px dashed #d4af37;
+      background: rgba(212, 175, 55, 0.06);
+      border-radius: 14px;
+      padding: 22px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .area-upload:hover, .area-upload.dragover { background: rgba(212, 175, 55, 0.14); border-color: #b8860b; }
+    .area-upload ion-icon { font-size: 36px; color: #b8860b; }
+    .area-upload-title { font-weight: 700; color: #2c2418; margin-top: 4px; }
+    .area-upload-title span { color: #b8860b; text-decoration: underline; }
+    .area-upload-hint { color: #7a6f5e; font-size: 0.78rem; margin-top: 2px; }
+    .area-upload-preview { position: relative; width: 100%; max-width: 260px; margin-bottom: 10px; }
+    .area-upload-preview img {
+      width: 100%; height: 150px; object-fit: cover;
+      border-radius: 12px; border: 1px solid #e7ddc7; display: block;
+    }
+    .area-upload-remove {
+      position: absolute; top: 8px; right: 8px;
+      width: 26px; height: 26px; border: none; border-radius: 50%;
+      background: rgba(0,0,0,0.65); color: #fff; cursor: pointer;
+      font-size: 15px; display: flex; align-items: center; justify-content: center;
+    }
+    .area-upload-remove:hover { background: #dc3545; }
+  </style>
 </head>
 <body>
 <div class="dashboard">
@@ -91,8 +119,17 @@ $pageStylesheet = '../assets/css/admin-locations.css';
         </div>
       </div>
       <div class="form-field">
-        <label for="imageUrl">Image URL</label>
-        <input type="url" id="imageUrl" required placeholder="https://...">
+        <label>Area Image</label>
+        <div id="areaImagePreview" class="area-upload-preview" hidden>
+          <img id="areaImagePreviewImg" src="" alt="Area image preview">
+          <button type="button" class="area-upload-remove" id="areaImageRemove" aria-label="Remove image">&times;</button>
+        </div>
+        <div class="area-upload" id="areaUploadZone">
+          <ion-icon name="cloud-upload-outline"></ion-icon>
+          <div class="area-upload-title">Click to upload or <span>browse</span></div>
+          <div class="area-upload-hint">JPG, PNG, WEBP or GIF · max 5MB</div>
+          <input type="file" id="areaImage" accept="image/*" hidden>
+        </div>
       </div>
       <div class="form-field">
         <label for="description">Description</label>
@@ -140,6 +177,7 @@ $pageStylesheet = '../assets/css/admin-locations.css';
 <script>
   const API = 'api/locations.php';
   let areas = [];
+  let newAreaImage = null; // File selected for upload
 
   async function apiPost(payload) {
     const res = await fetch(API, {
@@ -150,6 +188,13 @@ $pageStylesheet = '../assets/css/admin-locations.css';
     });
     const data = await res.json();
     if (!data.success) throw new Error(data.message || 'Request failed');
+    return data;
+  }
+
+  async function apiForm(formData) {
+    const res = await fetch(API, { method: 'POST', credentials: 'same-origin', body: formData });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.success) throw new Error(data.message || 'Request failed');
     return data;
   }
 
@@ -231,7 +276,9 @@ $pageStylesheet = '../assets/css/admin-locations.css';
     document.getElementById('areaId').value = area ? area.id : '';
     document.getElementById('title').value = area?.title || '';
     document.getElementById('tag').value = area?.tag || '';
-    document.getElementById('imageUrl').value = area?.imageUrl || '';
+    newAreaImage = null;
+    document.getElementById('areaImage').value = '';
+    setImagePreview(area?.imageUrl || '');
     document.getElementById('description').value = area?.description || '';
     document.getElementById('meta1Icon').value = area?.meta1Icon || 'home-outline';
     document.getElementById('meta1Text').value = area?.meta1Text || '';
@@ -263,25 +310,60 @@ $pageStylesheet = '../assets/css/admin-locations.css';
     }
   });
 
+  function setImagePreview(url) {
+    const wrap = document.getElementById('areaImagePreview');
+    const img = document.getElementById('areaImagePreviewImg');
+    if (url) {
+      img.src = url;
+      wrap.hidden = false;
+    } else {
+      img.src = '';
+      wrap.hidden = true;
+    }
+  }
+
+  const areaUploadZone = document.getElementById('areaUploadZone');
+  const areaImageInput = document.getElementById('areaImage');
+  areaUploadZone?.addEventListener('click', () => areaImageInput.click());
+  areaImageInput?.addEventListener('change', () => {
+    const file = areaImageInput.files[0];
+    if (file) {
+      newAreaImage = file;
+      setImagePreview(URL.createObjectURL(file));
+    }
+  });
+  ['dragover', 'dragenter'].forEach(ev => areaUploadZone?.addEventListener(ev, e => { e.preventDefault(); areaUploadZone.classList.add('dragover'); }));
+  ['dragleave', 'drop'].forEach(ev => areaUploadZone?.addEventListener(ev, e => { e.preventDefault(); areaUploadZone.classList.remove('dragover'); }));
+  areaUploadZone?.addEventListener('drop', e => {
+    const file = [...e.dataTransfer.files].find(f => f.type.startsWith('image/'));
+    if (file) { newAreaImage = file; setImagePreview(URL.createObjectURL(file)); }
+  });
+  document.getElementById('areaImageRemove')?.addEventListener('click', () => {
+    newAreaImage = null;
+    areaImageInput.value = '';
+    setImagePreview('');
+  });
+
   document.getElementById('areaForm')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const id = document.getElementById('areaId').value;
     try {
-      await apiPost({
-        action: 'save',
-        id: id ? Number(id) : undefined,
-        title: document.getElementById('title').value,
-        tag: document.getElementById('tag').value,
-        imageUrl: document.getElementById('imageUrl').value,
-        description: document.getElementById('description').value,
-        meta1Icon: document.getElementById('meta1Icon').value,
-        meta1Text: document.getElementById('meta1Text').value,
-        meta2Icon: document.getElementById('meta2Icon').value,
-        meta2Text: document.getElementById('meta2Text').value,
-        linkUrl: document.getElementById('linkUrl').value,
-        sortOrder: document.getElementById('sortOrder').value,
-        isPublished: document.getElementById('isPublished').checked ? '1' : '0'
-      });
+      const fd = new FormData();
+      fd.append('action', 'save');
+      if (id) fd.append('id', id);
+      fd.append('title', document.getElementById('title').value);
+      fd.append('tag', document.getElementById('tag').value);
+      fd.append('description', document.getElementById('description').value);
+      fd.append('meta1Icon', document.getElementById('meta1Icon').value);
+      fd.append('meta1Text', document.getElementById('meta1Text').value);
+      fd.append('meta2Icon', document.getElementById('meta2Icon').value);
+      fd.append('meta2Text', document.getElementById('meta2Text').value);
+      fd.append('linkUrl', document.getElementById('linkUrl').value);
+      fd.append('sortOrder', document.getElementById('sortOrder').value);
+      fd.append('isPublished', document.getElementById('isPublished').checked ? '1' : '0');
+      if (newAreaImage) fd.append('areaImage', newAreaImage);
+
+      await apiForm(fd);
       showToast(id ? 'Area updated' : 'Area created');
       closeModal();
       loadAreas();

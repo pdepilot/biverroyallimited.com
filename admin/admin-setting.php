@@ -151,6 +151,9 @@ require_once dirname(__DIR__) . '/includes/admin_guard.php';
           <div class="form-group">
             <label><input type="checkbox" id="mailNotifyOnContact" checked> Email me when someone submits the contact form</label>
           </div>
+          <div class="form-group">
+            <label><input type="checkbox" id="mailAutoReplyOnContact" checked> Send automatic reply email to the visitor</label>
+          </div>
           <div class="admin-btn-row">
             <button type="submit" class="btn-gold"><i class="fas fa-save"></i> Save Email Settings</button>
             <button type="button" class="btn-outline" id="mailTestBtn"><i class="fas fa-paper-plane"></i> Send Test Email</button>
@@ -190,8 +193,24 @@ require_once dirname(__DIR__) . '/includes/admin_guard.php';
             <textarea id="address" rows="2" placeholder="Royal headquarters address"></textarea>
           </div>
           <div class="form-group">
-            <label>About Text (short)</label>
+            <label>About Text (short — footer)</label>
             <textarea id="aboutText" rows="3" placeholder="Luxury real estate description..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Business Hours</label>
+            <input type="text" id="businessHours" placeholder="Mon – Sat: 9:00 AM – 6:00 PM">
+          </div>
+          <div class="form-group">
+            <label>Facebook URL</label>
+            <input type="url" id="socialFacebook" placeholder="https://facebook.com/...">
+          </div>
+          <div class="form-group">
+            <label>Instagram URL</label>
+            <input type="url" id="socialInstagram" placeholder="https://instagram.com/...">
+          </div>
+          <div class="form-group">
+            <label>TikTok URL</label>
+            <input type="url" id="socialTiktok" placeholder="https://tiktok.com/...">
           </div>
           <button type="submit" class="btn-gold"><i class="fas fa-save"></i> Save Site Settings</button>
         </form>
@@ -242,6 +261,8 @@ require_once dirname(__DIR__) . '/includes/admin_guard.php';
       document.getElementById('mailReplyTo').value = mail.replyTo || '';
       document.getElementById('mailNotifyEmail').value = mail.notifyEmail || '';
       document.getElementById('mailNotifyOnContact').checked = !!mail.notifyOnContact;
+      const autoReplyEl = document.getElementById('mailAutoReplyOnContact');
+      if (autoReplyEl) autoReplyEl.checked = mail.autoReplyOnContact !== false;
       document.getElementById('mailPasswordHint').textContent = mail.passwordSet
         ? 'A password is saved. Leave blank to keep it.'
         : 'No password saved yet — enter your SMTP password or API key.';
@@ -250,6 +271,7 @@ require_once dirname(__DIR__) . '/includes/admin_guard.php';
       status.push(mail.composerInstalled ? 'PHPMailer installed' : 'Run composer install in project root');
       status.push(mail.isReady ? 'SMTP ready' : 'SMTP not fully configured');
       status.push(mail.notifyOnContact ? 'Contact alerts on' : 'Contact alerts off');
+      status.push(mail.autoReplyOnContact !== false ? 'Visitor auto-reply on' : 'Visitor auto-reply off');
       document.getElementById('mailStatusText').textContent = status.join(' · ');
       toggleCustomSmtpFields();
     } catch (err) {
@@ -309,7 +331,8 @@ require_once dirname(__DIR__) . '/includes/admin_guard.php';
           fromName: document.getElementById('mailFromName').value,
           replyTo: document.getElementById('mailReplyTo').value,
           notifyEmail: document.getElementById('mailNotifyEmail').value,
-          notifyOnContact: document.getElementById('mailNotifyOnContact').checked ? '1' : '0'
+          notifyOnContact: document.getElementById('mailNotifyOnContact').checked ? '1' : '0',
+          autoReplyOnContact: document.getElementById('mailAutoReplyOnContact').checked ? '1' : '0'
         })
       });
       const data = await res.json();
@@ -387,6 +410,10 @@ require_once dirname(__DIR__) . '/includes/admin_guard.php';
       document.getElementById('contactPhone').value = site.contactPhone || '';
       document.getElementById('address').value = site.address || '';
       document.getElementById('aboutText').value = site.aboutText || '';
+      document.getElementById('businessHours').value = site.businessHours || '';
+      document.getElementById('socialFacebook').value = site.socialFacebook || '';
+      document.getElementById('socialInstagram').value = site.socialInstagram || '';
+      document.getElementById('socialTiktok').value = site.socialTiktok || '';
     } catch (err) {
       showToast('Could not load settings: ' + err.message, true);
     }
@@ -435,7 +462,11 @@ require_once dirname(__DIR__) . '/includes/admin_guard.php';
         contactEmail: document.getElementById('contactEmail').value,
         contactPhone: document.getElementById('contactPhone').value,
         address: document.getElementById('address').value,
-        aboutText: document.getElementById('aboutText').value
+        aboutText: document.getElementById('aboutText').value,
+        businessHours: document.getElementById('businessHours').value,
+        socialFacebook: document.getElementById('socialFacebook').value,
+        socialInstagram: document.getElementById('socialInstagram').value,
+        socialTiktok: document.getElementById('socialTiktok').value
       });
       showToast('Site settings saved');
     } catch (err) {

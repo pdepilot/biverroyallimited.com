@@ -146,6 +146,144 @@ class PropertyUploadService
         ];
     }
 
+    /**
+     * Store/replace images for an admin-managed property (no video handling).
+     * Unlike updateSubmissionMedia, images are optional here.
+     *
+     * @param list<string> $keepImagePaths Relative stored paths the admin chose to keep
+     * @return array{imageUrl:?string,galleryUrls:list<string>}
+     */
+    public static function storePropertyImages(
+        int $propertyId,
+        array $keepImagePaths,
+        array $files,
+        ?string $currentVideoPath = null
+    ): array {
+        $prefix = self::propertyUploadPrefix($propertyId);
+        $validatedKeep = [];
+
+        foreach ($keepImagePaths as $path) {
+            if (!is_string($path) || $path === '') {
+                continue;
+            }
+            $normalized = str_replace('\\', '/', $path);
+            if (!str_starts_with($normalized, $prefix)) {
+                continue;
+            }
+            if (is_file(self::absolutePath($normalized))) {
+                $validatedKeep[] = $normalized;
+            }
+        }
+
+        // Preserve the video file (if any) so it is not deleted while pruning images.
+        $preserve = $validatedKeep;
+        if ($currentVideoPath !== null && $currentVideoPath !== '') {
+            $preserve[] = str_replace('\\', '/', $currentVideoPath);
+        }
+
+        foreach (self::listStoredPaths($propertyId) as $existingPath) {
+            if (!in_array($existingPath, $preserve, true)) {
+                self::deleteStoredPath($existingPath);
+            }
+        }
+
+        $newPaths = [];
+        if (!empty($files['propertyImages'])) {
+            $baseDir = self::uploadDirectory($propertyId);
+            foreach (self::normalizeFiles($files['propertyImages']) as $index => $file) {
+                self::validateImage($file);
+                $name = self::saveFile($file, $baseDir, 'img_' . ($index + 1));
+                $newPaths[] = self::storagePath($propertyId, $name);
+            }
+        }
+
+        $allImages = array_values(array_unique(array_merge($validatedKeep, $newPaths)));
+
+        return [
+            'imageUrl'    => $allImages[0] ?? null,
+            'galleryUrls' => array_slice($allImages, 1),
+        ];
+    }
+
+    /**
+     * Store/replace images AND an optional video for an admin-managed property.
+     * Both images and video are optional so the admin can choose either or both.
+     *
+     * @param list<string> $keepImagePaths Relative stored image paths to keep
+     * @return array{imageUrl:?string,galleryUrls:list<string>,videoUrl:?string}
+     */
+    public static function storePropertyMedia(
+        int $propertyId,
+        array $keepImagePaths,
+        array $files,
+        ?string $currentVideoPath = null,
+        bool $removeVideo = false
+    ): array {
+        $prefix = self::propertyUploadPrefix($propertyId);
+        $validatedKeep = [];
+
+        foreach ($keepImagePaths as $path) {
+            if (!is_string($path) || $path === '') {
+                continue;
+            }
+            $normalized = str_replace('\\', '/', $path);
+            if (!str_starts_with($normalized, $prefix)) {
+                continue;
+            }
+            if (is_file(self::absolutePath($normalized))) {
+                $validatedKeep[] = $normalized;
+            }
+        }
+
+        $normalizedVideo = ($currentVideoPath !== null && $currentVideoPath !== '')
+            ? str_replace('\\', '/', $currentVideoPath)
+            : null;
+        $newVideos = !empty($files['propertyVideos']) ? self::normalizeFiles($files['propertyVideos']) : [];
+        $hasNewVideo = $newVideos !== [];
+
+        // Preserve the current video during image pruning unless it is being replaced/removed.
+        $preserve = $validatedKeep;
+        if ($normalizedVideo !== null && !$removeVideo && !$hasNewVideo) {
+            $preserve[] = $normalizedVideo;
+        }
+
+        foreach (self::listStoredPaths($propertyId) as $existingPath) {
+            if (!in_array($existingPath, $preserve, true)) {
+                self::deleteStoredPath($existingPath);
+            }
+        }
+
+        $newPaths = [];
+        if (!empty($files['propertyImages'])) {
+            $baseDir = self::uploadDirectory($propertyId);
+            foreach (self::normalizeFiles($files['propertyImages']) as $index => $file) {
+                self::validateImage($file);
+                $name = self::saveFile($file, $baseDir, 'img_' . ($index + 1));
+                $newPaths[] = self::storagePath($propertyId, $name);
+            }
+        }
+
+        $allImages = array_values(array_unique(array_merge($validatedKeep, $newPaths)));
+
+        $videoUrl = null;
+        if ($hasNewVideo) {
+            self::deleteStoredPath($normalizedVideo);
+            self::validateVideo($newVideos[0]);
+            $name = self::saveFile($newVideos[0], self::uploadDirectory($propertyId), 'video');
+            $videoUrl = self::storagePath($propertyId, $name);
+        } elseif ($removeVideo) {
+            self::deleteStoredPath($normalizedVideo);
+        } elseif ($normalizedVideo !== null && str_starts_with($normalizedVideo, $prefix) && is_file(self::absolutePath($normalizedVideo))) {
+            $videoUrl = $normalizedVideo;
+        }
+
+        return [
+            'imageUrl'    => $allImages[0] ?? null,
+            'galleryUrls' => array_slice($allImages, 1),
+            'videoUrl'    => $videoUrl,
+        ];
+    }
+
     public static function deleteStoredPath(?string $relativePath): void
     {
         if ($relativePath === null || $relativePath === '') {

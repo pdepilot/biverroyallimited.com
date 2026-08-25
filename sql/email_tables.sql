@@ -7,11 +7,16 @@ CREATE TABLE IF NOT EXISTS `newsletter_subscribers` (
     `name`         VARCHAR(120) DEFAULT NULL,
     `status`       ENUM('active', 'unsubscribed') NOT NULL DEFAULT 'active',
     `source`       VARCHAR(50) DEFAULT 'website',
+    `country_code` VARCHAR(8) DEFAULT NULL,
+    `country_name` VARCHAR(120) DEFAULT NULL,
+    `ip_address`   VARCHAR(45) DEFAULT NULL,
+    `timezone`     VARCHAR(64) DEFAULT NULL,
     `subscribed_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at`   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     UNIQUE KEY `uq_subscriber_email` (`email`),
-    KEY `idx_subscriber_status` (`status`)
+    KEY `idx_subscriber_status` (`status`),
+    KEY `idx_subscriber_country` (`country_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `email_templates` (

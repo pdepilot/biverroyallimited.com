@@ -1,0 +1,25 @@
+<?php
+/**
+ * Copy this file to database.local.php and set credentials for your environment.
+ * database.local.php is gitignored and must exist on each machine (local + Hostinger).
+ *
+ * Hostinger: hPanel → Databases → MySQL → copy database name, username, and password.
+ * XAMPP:     use root with an empty password and the database name you imported locally.
+ *
+ * Environment variables (optional, override when set):
+ *   DB_HOST, DB_NAME, DB_USER, DB_PASS
+ */
+
+declare(strict_types=1);
+
+// --- Hostinger (production) — uncomment and fill in on the server ---
+// define('DB_HOST', 'localhost');
+// define('DB_NAME', 'u292007149_biverroyalty');
+// define('DB_USER', 'u292007149_biverroyalty');
+// define('DB_PASS', 'your-hostinger-mysql-password');
+
+// --- XAMPP (local development) — uncomment for local use ---
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'u292007149_biverroyalty');
+define('DB_USER', 'root');
+define('DB_PASS', '');

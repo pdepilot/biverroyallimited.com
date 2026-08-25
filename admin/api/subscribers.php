@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin API: newsletter subscribers management.
+ * Admin API: newsletter subscribers management + country breakdown.
  */
 declare(strict_types=1);
 
@@ -10,6 +10,7 @@ require_once dirname(__DIR__, 2) . '/includes/admin_api_guard.php';
 require_once dirname(__DIR__, 2) . '/includes/AuthSecurity.php';
 require_once dirname(__DIR__, 2) . '/includes/EmailRepository.php';
 require_once dirname(__DIR__, 2) . '/includes/AutomatedEmailService.php';
+require_once dirname(__DIR__, 2) . '/includes/GeoIpService.php';
 
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
@@ -27,19 +28,52 @@ try {
     if ($method === 'GET') {
         $status = isset($_GET['status']) ? (string) $_GET['status'] : null;
         $search = trim((string) ($_GET['search'] ?? ''));
-        $list = EmailRepository::getSubscribers($status);
+        $country = trim((string) ($_GET['country'] ?? ''));
+        $list = EmailRepository::getSubscribers(
+            $status !== '' ? $status : null,
+            null,
+            $country !== '' ? $country : null
+        );
 
         if ($search !== '') {
             $q = strtolower($search);
             $list = array_values(array_filter($list, static function (array $row) use ($q): bool {
                 return str_contains(strtolower((string) $row['email']), $q)
-                    || str_contains(strtolower((string) ($row['name'] ?? '')), $q);
+                    || str_contains(strtolower((string) ($row['name'] ?? '')), $q)
+                    || str_contains(strtolower((string) ($row['country_name'] ?? '')), $q)
+                    || str_contains(strtolower((string) ($row['country_code'] ?? '')), $q);
             }));
+        }
+
+        if (($_GET['export'] ?? '') === 'csv') {
+            header('Content-Type: text/csv; charset=utf-8');
+            header('Content-Disposition: attachment; filename="newsletter-subscribers.csv"');
+            $out = fopen('php://output', 'w');
+            if ($out) {
+                fputcsv($out, ['Email', 'Name', 'Status', 'Source', 'Country', 'Country code', 'IP', 'Timezone', 'Subscribed at', 'Subscriber local time']);
+                foreach ($list as $row) {
+                    fputcsv($out, [
+                        $row['email'] ?? '',
+                        $row['name'] ?? '',
+                        $row['status'] ?? '',
+                        $row['source'] ?? '',
+                        $row['country_name'] ?? '',
+                        $row['country_code'] ?? '',
+                        $row['ip_address'] ?? '',
+                        $row['timezone'] ?? '',
+                        $row['subscribed_at_label'] ?? ($row['subscribed_at'] ?? ''),
+                        $row['subscribed_local_label'] ?? '',
+                    ]);
+                }
+                fclose($out);
+            }
+            exit;
         }
 
         jsonOk([
             'subscribers' => $list,
             'stats'       => EmailRepository::getSubscriberStats(),
+            'countries'   => EmailRepository::getSubscriberCountryStats(),
             'csrf_token'  => AuthSecurity::generateCsrfToken(),
         ]);
     }
@@ -52,7 +86,16 @@ try {
         if ($action === 'add') {
             $email = trim((string) ($body['email'] ?? ''));
             $name = trim((string) ($body['name'] ?? ''));
-            $id = EmailRepository::addSubscriber($email, $name !== '' ? $name : null, 'admin');
+            $geo = GeoIpService::lookup();
+            $id = EmailRepository::addSubscriber(
+                $email,
+                $name !== '' ? $name : null,
+                'admin',
+                $geo['country_code'] ?? null,
+                $geo['country_name'] ?? null,
+                $geo['ip'] ?? null,
+                date_default_timezone_get() ?: 'UTC'
+            );
             AutomatedEmailService::onNewsletterSubscribed($email, $name !== '' ? $name : null);
             jsonOk(['message' => 'Subscriber added and welcome email sent.', 'id' => $id]);
         }

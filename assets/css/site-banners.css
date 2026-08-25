@@ -17,7 +17,7 @@
   display: none;
 }
 
-/* Full-screen spotlight — first thing after preloader */
+/* Full-screen spotlight — first thing after page load */
 body.promo-open {
   overflow: hidden;
 }
